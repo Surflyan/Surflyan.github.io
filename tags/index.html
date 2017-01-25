@@ -17,7 +17,7 @@
         
     </title>
 
-    <link rel="canonical" href="https://surflyan.github.io/JBlog/tags/">
+    <link rel="canonical" href="https://surflyan.github.io/JBlog/JBlog/tags/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/JBlog/css/bootstrap.min.css">
@@ -97,14 +97,14 @@
 
                         
                         <li>
-                            <a href="/JBlog/archives/">Archives</a>
+                            <a href="/JBlog/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/JBlog/tags/">Tags</a>
+                            <a href="/JBlog/archives/">Archives</a>
                         </li>
                         
                     
@@ -170,11 +170,11 @@
             <!-- 标签云 -->
             <div id='tag_cloud' class="tags">
                 
-                    <a href="#生活" title="生活" rel="1">生活</a>
-                
                     <a href="#前端开发" title="前端开发" rel="3">前端开发</a>
                 
                     <a href="#JavaScript" title="JavaScript" rel="3">JavaScript</a>
+                
+                    <a href="#生活" title="生活" rel="1">生活</a>
                 
                     <a href="#翻译" title="翻译" rel="1">翻译</a>
                 
@@ -188,32 +188,6 @@
 
             <!-- 标签列表 -->
 
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="生活">
-                    <span class="tag-text">生活</span>
-                </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/JBlog/2014/01/29/hello-2015/">
-                        <h2 class="post-title">
-                            Welcome to Hux Blog
-                        </h2>
-                        
-                            <h3 class="post-subtitle">
-                                 "Hello World, Hello Blog"
-                            </h3>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-            </div>
             
             <div class="one-tag-list">
                 <span class="fa fa-tag listing-seperator" id="前端开发">
@@ -327,6 +301,32 @@
                         <h2 class="post-title">
                             Example Post
                         </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="生活">
+                    <span class="tag-text">生活</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/JBlog/2014/01/29/hello-2015/">
+                        <h2 class="post-title">
+                            Welcome to Hux Blog
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                 "Hello World, Hello Blog"
+                            </h3>
                         
                     </a>
                     <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
@@ -580,7 +580,7 @@
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("https://surflyan.github.io/JBlog/js/jquery.tagcloud.js",function(){
+        async("https://surflyan.github.io/JBlog/JBlog/js/jquery.tagcloud.js",function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},
@@ -644,7 +644,7 @@
 
 
 <!-- Image to hack wechat -->
-<img src="https://surflyan.github.io/JBlog/img/icon_wechat.png" width="0" height="0" />
+<img src="https://surflyan.github.io/JBlog/JBlog/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
 
 </body>
