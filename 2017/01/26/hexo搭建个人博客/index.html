@@ -97,14 +97,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -240,6 +240,34 @@
                 <hr>
 
                 
+                <!-- 多说 Share start -->
+                </style>
+                <div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="2017/01/26/hexo搭建个人博客/"
+                    data-title="hexo搭建个人博客"
+                    data-url="http://codepalace.org/2017/01/26/hexo搭建个人博客/"
+                    data-images=""
+                    data-content="独立个人博客，你有兴趣吗？
+必备技能
+Git
+Linux 命令
+
+在使用hexo搭建个人博客之... | 代码殿堂 | Code Palace " >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
 
                 <ul class="pager">
                     
@@ -251,13 +279,17 @@
                 </ul>
 
                 
-
-                
-                <!-- disqus 评论框 start -->
+                <!-- 多说评论框 start -->
                 <div class="comment">
-                    <div id="disqus_thread" class="disqus-thread"></div>
+                    <div class="ds-thread"
+                        data-thread-key="2017/01/26/hexo搭建个人博客/"
+                        data-title="hexo搭建个人博客"
+                        data-url="http://codepalace.org/2017/01/26/hexo搭建个人博客/" >
+                    </div>
                 </div>
-                <!-- disqus 评论框 end -->
+                <!-- 多说评论框 end -->
+                
+
                 
 
             </div>
@@ -316,22 +348,25 @@
 </article>
 
 
-
-
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "hexo-theme-huxblog";
-    var disqus_identifier = "http://codepalace.org/2017/01/26/hexo搭建个人博客/";
-    var disqus_url = "http://codepalace.org/2017/01/26/hexo搭建个人博客/";
+    // dynamic User by Hux
+    var _user = 'surflyan';
 
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
     (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
 </script>
-<!-- disqus 公共JS代码 end -->
+<!-- 多说公共JS代码 end -->
+
+
 
 
 
@@ -401,7 +436,7 @@
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
-                    Ported by <a href="https://github.com/Surflyan/Surflyan.github.io">Surflyan</a>
+                    Posted by <a href="https://github.com/Surflyan/Surflyan.github.io">Surflyan</a>
                     
                 </p>
             </div>
