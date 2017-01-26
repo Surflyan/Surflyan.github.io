@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="keyword"  content="">
-    <link rel="shortcut icon" href="/JBlog/img/favicon.ico">
+    <link rel="shortcut icon" href="/img/favicon.ico">
 
     <title>
         
@@ -17,16 +17,16 @@
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/JBlog/2014/01/29/hello-2015/">
+    <link rel="canonical" href="http://codepalace.org/2014/01/29/hello-2015/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/JBlog/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/JBlog/css/hux-blog.min.css">
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
 
     <!-- Pygments Highlight CSS -->
-    <link rel="stylesheet" href="/JBlog/css/highlight.css">
+    <link rel="stylesheet" href="/css/highlight.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -67,7 +67,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/JBlog/">代码殿堂-Code Palace</a>
+            <a class="navbar-brand" href="/">代码殿堂-Code Palace</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -80,7 +80,7 @@
             <div class="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="/JBlog/">Home</a>
+                        <a href="/">Home</a>
                     </li>
 
                     
@@ -90,21 +90,21 @@
 
                         
                         <li>
-                            <a href="/JBlog/about/">About</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/JBlog/tags/">Tags</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/JBlog/archives/">Archives</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
@@ -149,7 +149,7 @@
     <!-- Main Content -->
     
 <!-- Image to hack wechat -->
-<!-- <img src="http://codepalace.org/JBlog/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0"> -->
 <!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
 
 <!-- Post Header -->
@@ -165,7 +165,7 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/JBlog/tags/#生活" title="生活">生活</a>
+                          <a class="tag" href="/tags/#生活" title="生活">生活</a>
                         
                     </div>
                     <h1>Welcome to Hux Blog</h1>
@@ -232,6 +232,10 @@
 
                 <ul class="pager">
                     
+                        <li class="previous">
+                            <a href="/2017/01/26/hexo搭建个人博客/" data-toggle="tooltip" data-placement="top" title="hexo搭建个人博客">&larr; Previous Post</a>
+                        </li>
+                    
                     
                 </ul>
 
@@ -260,10 +264,10 @@
                 
                 <section>
                     <!-- no hr -->
-                    <h5><a href="/JBlog/tags/">FEATURED TAGS</a></h5>
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/JBlog/tags/#生活" title="生活">生活</a>
+                          <a class="tag" href="/tags/#生活" title="生活">生活</a>
                         
                     </div>
                 </section>
@@ -293,8 +297,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "hexo-theme-huxblog";
-    var disqus_identifier = "http://codepalace.org/JBlog/2014/01/29/hello-2015/";
-    var disqus_url = "http://codepalace.org/JBlog/2014/01/29/hello-2015/";
+    var disqus_identifier = "http://codepalace.org/2014/01/29/hello-2015/";
+    var disqus_url = "http://codepalace.org/2014/01/29/hello-2015/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -306,40 +310,6 @@
 
 
 
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'always',
-          placement: 'right',
-          icon: '#'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
 
 
 
@@ -402,16 +372,12 @@
                 <p class="copyright text-muted">
                     Copyright &copy; 代码殿堂-Code Palace 2017 
                     <br>
-                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    Theme by <a href="https://github.com/huxpro/huxpro.github.io/">HuxBlog</a> 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
-                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
-                    <iframe
-                        style="margin-left: 2px; margin-bottom:-5px;"
-                        frameborder="0" scrolling="0" width="91px" height="20px"
-                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
-                    </iframe>
+                    Ported by <a href="https://github.com/Surflyan/Surflyan.github.io">Surflyan</a>
+                    
                 </p>
             </div>
         </div>
@@ -419,13 +385,13 @@
 </footer>
 
 <!-- jQuery -->
-<script src="/JBlog/js/jquery.min.js"></script>
+<script src="/js/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="/JBlog/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/JBlog/js/hux-blog.min.js"></script>
+<script src="/js/hux-blog.min.js"></script>
 
 
 <!-- async load function -->
@@ -463,7 +429,7 @@
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("http://codepalace.org/JBlog/js/jquery.tagcloud.js",function(){
+        async("http://codepalace.org/js/jquery.tagcloud.js",function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},
@@ -527,7 +493,7 @@
 
 
 <!-- Image to hack wechat -->
-<img src="http://codepalace.org/JBlog/img/icon_wechat.png" width="0" height="0" />
+<img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
 
 </body>
