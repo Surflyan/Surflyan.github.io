@@ -14,11 +14,11 @@
 
     <title>
         
-          Welcome to Hux Blog - 代码殿堂 | Code Palace
+          Hexo搭建个人博客--准备 - 代码殿堂 | Code Palace
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/2014/01/29/hello-2015/">
+    <link rel="canonical" href="http://codepalace.org/2017/01/25/hexo-搭建个人博客-准备/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -91,13 +91,6 @@
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/about/">About</a>
                         </li>
                         
@@ -106,6 +99,13 @@
                         
                         <li>
                             <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
@@ -156,7 +156,7 @@
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('post-bg-2015.jpg')
+        background-image: url('hexo-prepare.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -166,14 +166,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#生活" title="生活">生活</a>
+                          <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
                         
                     </div>
-                    <h1>Welcome to Hux Blog</h1>
-                    <h2 class="subheading"> &quot;Hello World, Hello Blog&quot;</h2>
+                    <h1>Hexo搭建个人博客--准备</h1>
+                    <h2 class="subheading">所需技能及环境配置</h2>
                     <span class="meta">
-                        Posted by Hux on
-                        2014-01-29
+                        Posted by Surflyan on
+                        2017-01-25
                     </span>
                 </div>
             </div>
@@ -192,39 +192,43 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <blockquote>
-<p>“Yeah It’s on. ”</p>
-</blockquote>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Hux 的 Blog 就这么开通了。</p>
-<p><a href="#build">跳过废话，直接看技术实现 </a></p>
-<p>2015 年，Hux 总算有个地方可以好好写点东西了。</p>
-<p>作为一个程序员， Blog 这种轮子要是挂在大众博客程序上就太没意思了。一是觉得大部分 Blog 服务都太丑，二是觉得不能随便定制不好玩。之前因为太懒没有折腾，结果就一直连个写 Blog 的地儿都没有。</p>
-<p>在玩了一段时间知乎之后，答题的快感又激起了我开博客的冲动。之前的<a href="http://huangxuan.me/portfolio" target="_blank" rel="external">个人网站</a>是作品集形式的（现在集成进来了），并不适合用来写博文，一不做二不休，花一天搞一个吧！</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><p id="build"></p></h2><h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>接下来说说搭建这个博客的技术细节。  </p>
-<p>正好之前就有关注过 <a href="https://pages.github.com/" target="_blank" rel="external">GitHub Pages</a> + <a href="http://jekyllrb.com/" target="_blank" rel="external">Jekyll</a> 快速 Building Blog 的技术方案，非常轻松时尚。</p>
-<p>其优点非常明显：</p>
+                <p>独立个人博客，有兴趣吗？<br>如果你只是想要有一个写东西的地方，对互联网不甚了解，那么众多门户网站是很好的选择。<br>如果你爱折腾，有时间，那么搭建个人定制、独立博客也是蛮有趣味。</p>
+<h1 id="Github-Pages"><a href="#Github-Pages" class="headerlink" title="Github Pages"></a>Github Pages</h1><p>Github 作为全世界程序员的 Facebook ,如今世界上众多的项目都托管在其上。Github Pages 本用于作为 Github 项目的介绍文档站，对项目做出说明。</p>
+<h2 id="为什么选择-Github-Pages"><a href="#为什么选择-Github-Pages" class="headerlink" title="为什么选择 Github Pages"></a>为什么选择 Github Pages</h2><p>为什么选择 Github Pages, 原因很简单：</p>
+<ol>
+<li>数据库，后端啥的我不懂，动态博客目前还建不了；</li>
+<li>博客只是存放文章，静态博客有速度优势；</li>
+<li>Github Pages 免费空间，安全可靠。</li>
+<li>可以绑定自己的域名，不会失去博客入口。</li>
+</ol>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>用 Github Pages 搭建博客也自然有其缺陷：</p>
+<ol>
+<li>动态功能相当有限， 例如评论功能需要依赖第三方</li>
+<li>需要需要熟悉 Git 操作，自己动手配置。</li>
+<li>缺乏像 <code>Wordpress</code> 那样强大的后台。</li>
+</ol>
+<h1 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h1><p><strong>Hexo</strong> 是一个快速、简洁的且高效的博客框架。由台湾大学生开发，基于 Node.js的静态博客程序，支持  <strong>Markdown</strong>解析文章，可快速生成静态网页。<br>与另一流行博客框架 <strong> Jekyll </strong> 相比：</p>
 <ul>
-<li><strong>Markdown</strong> 带来的优雅写作体验</li>
-<li>非常熟悉的 Git workflow ，<strong>Git Commit 即 Blog Post</strong></li>
-<li>利用 GitHub Pages 的域名和免费无限空间，不用自己折腾主机<ul>
-<li>如果需要自定义域名，也只需要简单改改 DNS 加个 CNAME 就好了</li>
+<li>hexo 依赖少，不需安装 python、ruby 以及一些库;</li>
+<li>hexo 入手快，可深度定制。</li>
 </ul>
-</li>
-<li>Jekyll 的自定制非常容易，基本就是个模版引擎</li>
+<h1 id="所需技能"><a href="#所需技能" class="headerlink" title="所需技能"></a>所需技能</h1><ul>
+<li>Git</li>
+<li>Linux 命令</li>
+<li>前端知识</li>
 </ul>
-<p>本来觉得最大的缺点可能是 GitHub 在国内访问起来太慢，所以第二天一起床就到 GitCafe(Chinese GitHub Copy) 迁移了一个<a href="http://huxpro.gitcafe.io" target="_blank" rel="external">镜像</a>出来，结果还是巨慢。</p>
-<p>哥哥可是个前端好嘛！ 果断开 Chrome DevTool 查了下网络请求，原来是 <strong>pending 在了 Google Fonts</strong> 上，页面渲染一直被阻塞到请求超时为止，难怪这么慢。<br>忍痛割爱，只好把 Web Fonts 去了（反正超时看到的也只能是 fallback ），果然一下就正常了，而且 GitHub 和 GitCafe 对比并没有感受到明显的速度差异，虽然 github 的 ping 值明显要高一些，达到了 300ms，于是用 DNSPOD 优化了一下速度。</p>
-<hr>
-<p>配置的过程中也没遇到什么坑，基本就是 Git 的流程，相当顺手</p>
-<p>大的 Jekyll 主题上直接 fork 了 Clean Blog（这个主题也相当有名，就不多赘述了。唯一的缺点大概就是没有标签支持，于是我给它补上了。）</p>
-<p>本地调试环境需要 <code>gem install jekyll</code>，结果 rubygem 的源居然被墙了……后来手动改成了我大淘宝的镜像源才成功</p>
-<p>Theme 的 CSS 是基于 Bootstrap 定制的，看得不爽的地方直接在 Less 里改就好了（平时更习惯 SCSS 些），<strong>不过其实我一直觉得 Bootstrap 在移动端的体验做得相当一般，比我在淘宝参与的团队 CSS 框架差多了……</strong>所以为了体验，也补了不少 CSS 进去</p>
-<p>最后就进入了耗时反而最长的<strong>做图、写字</strong>阶段，也算是进入了<strong>写博客</strong>的正轨，因为是类似 Hack Day 的方式去搭这个站的，所以折腾折腾着大半夜就过去了。</p>
-<p>第二天考虑中文字体的渲染，fork 了 <a href="http://www.typeisbeautiful.com/" target="_blank" rel="external">Type is Beautiful</a> 的 <code>font</code> CSS，调整了字号，适配了 Win 的渣渲染，中英文混排效果好多了。</p>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>回顾这个博客的诞生，纯粹是出于个人兴趣。在知乎相关问题上回答并获得一定的 star 后，我决定把这个博客主题当作一个小小的开源项目来维护。</p>
-<p>在经历 v1.0 - v1.5 的蜕变后，这个博客主题愈发完整，不但增加了诸多 UI 层的优化（opinionated）；在代码层面，更加丰富的配置项也使得这个主题拥有了更好的灵活性与可拓展性。而作为一个开源项目，我也积极的为其完善文档与解决 issue。</p>
-<p>如果你恰好逛到了这里，希望你也能喜欢这个博客主题。</p>
-<p>—— Hux 后记于 2015.10</p>
+<p>基础的Git操作是必须掌握的。<br>Linux命令并非必须掌握，会使用基本的文件操作将会对你后续的写博与维护带来便利。<br>了解一定的前端知识，能帮助你更好的实现博客的私人定制。</p>
+<h1 id="事先准备"><a href="#事先准备" class="headerlink" title="事先准备"></a>事先准备</h1><p>前文已经提到采用 Github Pages 搭建博客需要众多前期准备及环境支持。现在就可以为搭建个人博客做准备了。</p>
+<h3 id="Git环境配置"><a href="#Git环境配置" class="headerlink" title="Git环境配置:"></a>Git环境配置:</h3><p>Git 是什么，不用多说。 如果还没有掌握基础的 Git 操作可参考 <a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">廖雪峰Git教程</a> 或者 <a href="https://git-scm.com/book/zh/v2" target="_blank" rel="external">书籍Pro Git</a>.<br><a href="https://git-scm.com/" target="_blank" rel="external">在此下载</a>.</p>
+<p>建议现在就配置好 <code>Github SSh key</code>，连接本地的 Git 和 Github 账号，在以后的 Git 操作中，省去输入账号和密码的麻烦。详细配置过程<a href="https://gist.github.com/yisibl/8019693" target="_blank" rel="external">参见这儿</a>.</p>
+<h3 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js:"></a>Node.js:</h3><p>Node.js 其实就是运行在服务端的 JavaScript，是一个基于Chrome JavaScript 运行时建立的一个平台。当然如果你不并不想知道什么是 Node.js 那么只管安装环境就行了，这对后面的搭建过程完全没有影响。<br><a href="http://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/001434501245426ad4b91f2b880464ba876a8e3043fc8ef000" target="_blank" rel="external">廖雪峰Node.js介绍及配置教程</a>  |  <a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js下载</a>.</p>
+<h3 id="Github账号"><a href="#Github账号" class="headerlink" title="Github账号"></a>Github账号</h3><p>Github 账户是必须的，既然你有搭建个人博客的想法，你应该不会没有自己的 Github ;<br>如果没有，那么<a href="https://github.com/" target="_blank" rel="external">在这儿注册</a>.</p>
+<h2 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h2><p>域名其实不是必须的，如果你能接受使用user_name.Github.io作为域名，那么可不必购买。<br>域名的购买，个人推荐 <a href="https://sg.godaddy.com/zh/" target="_blank" rel="external">GoDaddy</a>； 如果国内购买，需要备案，挺麻烦的。<br>域名的解析，推荐<a href="https://www.dnspod.cn" target="_blank" rel="external">DNSPod</a>.</p>
+<p>详细操作，在 DNSPod 官方网站有介绍。</p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>本文简单介绍了使用 <code>Github Pages + Hexo</code> 搭建个人网站所需技能以及前期准备工作，下篇是详解搭建过程。</p>
+<blockquote>
+<p>还请多多指教 !</p>
+</blockquote>
 
 
                 <hr>
@@ -234,15 +238,11 @@
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="2014/01/29/hello-2015/"
-                    data-title="Welcome to Hux Blog"
-                    data-url="http://codepalace.org/2014/01/29/hello-2015/"
-                    data-images="http://codepalace.org/2014/01/29/hello-2015/post-bg-2015.jpg"
-                    data-content="
-“Yeah It’s on. ”
-
-前言Hux 的 Blog 就这么开通了。
-跳过废话，直接... | 代码殿堂 | Code Palace " >
+                    data-thread-key="2017/01/25/hexo-搭建个人博客-准备/"
+                    data-title="Hexo搭建个人博客--准备"
+                    data-url="http://codepalace.org/2017/01/25/hexo-搭建个人博客-准备/"
+                    data-images="http://codepalace.org/2017/01/25/hexo-搭建个人博客-准备/hexo-prepare.jpg"
+                    data-content="独立个人博客，有兴趣吗？如果你只是想要有一个写东西的地方，对互联网不甚了解，那么众多门户网站是... | 代码殿堂 | Code Palace " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -261,7 +261,7 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/2017/01/26/hexo搭建个人博客/" data-toggle="tooltip" data-placement="top" title="hexo搭建个人博客">&larr; Previous Post</a>
+                            <a href="/2017/01/26/Hexo搭建个人博客--进阶/" data-toggle="tooltip" data-placement="top" title="Hexo搭建个人博客--进阶">&larr; Previous Post</a>
                         </li>
                     
                     
@@ -271,9 +271,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2014/01/29/hello-2015/"
-                        data-title="Welcome to Hux Blog"
-                        data-url="http://codepalace.org/2014/01/29/hello-2015/" >
+                        data-thread-key="2017/01/25/hexo-搭建个人博客-准备/"
+                        data-title="Hexo搭建个人博客--准备"
+                        data-url="http://codepalace.org/2017/01/25/hexo-搭建个人博客-准备/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -283,6 +283,20 @@
 
             </div>
     <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
         
 
     <!-- Sidebar Container -->
@@ -299,7 +313,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#生活" title="生活">生活</a>
+                          <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
                         
                     </div>
                 </section>
@@ -407,7 +421,7 @@
                 <p class="copyright text-muted">
                     Copyright &copy; 代码殿堂-Code Palace 2017 
                     <br>
-                    Theme by <a href="https://github.com/huxpro/huxpro.github.io/">HuxBlog</a> 
+                    Theme by <a href="https://https://hexo.io/zh-cn/">Hexo</a> 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
@@ -522,6 +536,50 @@
 
 
 <!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Surflyan to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
 
 
 

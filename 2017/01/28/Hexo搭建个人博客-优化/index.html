@@ -14,11 +14,11 @@
 
     <title>
         
-          hexo搭建个人博客 - 代码殿堂 | Code Palace
+          Hexo搭建个人博客--优化 - 代码殿堂 | Code Palace
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/2017/01/26/hexo搭建个人博客/">
+    <link rel="canonical" href="http://codepalace.org/2017/01/28/Hexo搭建个人博客-优化/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -91,13 +91,6 @@
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
                             <a href="/about/">About</a>
                         </li>
                         
@@ -106,6 +99,13 @@
                         
                         <li>
                             <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
@@ -156,7 +156,7 @@
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/header.jpeg')
+        background-image: url('hexo-optimize.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -169,11 +169,11 @@
                           <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
                         
                     </div>
-                    <h1>hexo搭建个人博客</h1>
-                    <h2 class="subheading"></h2>
+                    <h1>Hexo搭建个人博客--优化</h1>
+                    <h2 class="subheading">博客的后期处理、提交 sitemap</h2>
                     <span class="meta">
                         Posted by Surflyan on
-                        2017-01-26
+                        2017-01-28
                     </span>
                 </div>
             </div>
@@ -192,54 +192,36 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>独立个人博客，你有兴趣吗？</p>
-<h1 id="必备技能">必备技能</h1>
-
-
-<ul>
-<li>Git</li>
-<li>Linux 命令</li>
-</ul>
-<p>在使用hexo搭建个人博客之前，你必须掌握基础的Git操作，Linux命令并非必须掌握，会使用基本的文件操作对你后续的写博与维护带来便利。</p>
-<h1 id="事先准备"><a href="#事先准备" class="headerlink" title="事先准备"></a>事先准备</h1><ul>
-<li>域名： </li>
-<li>Git</li>
-<li>Node.js</li>
-<li>Github账号</li>
-</ul>
-<h1 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>打开 <strong>Git bash</strong> ,执行<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm <span class="keyword">install</span> -g hexo</div></pre></td></tr></table></figure></p>
-<p>hexo 安装完之后，就可使用hexo，了解hexo的所有命令。</p>
-<p>如果想快速完成自己的博客，你也可以接着往下做，最常用的命令在后续都会讲到。</p>
-<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><h4 id="小测试"><a href="#小测试" class="headerlink" title="小测试"></a>小测试</h4><p>通过cd选择你想将博客文件放置的位置后<br>执行:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo init B<span class="built_in">log</span></div></pre></td></tr></table></figure></p>
-<p>将会在当前目录下生成一个名为Blog的文件夹。<br>进入Blog：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> B<span class="built_in">log</span></div></pre></td></tr></table></figure></p>
-<p>执行：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm <span class="keyword">install</span></div></pre></td></tr></table></figure></p>
-<p>完成以后，该文件夹下的目录结构如下：</p>
-<p><img src="15-00-38.jpg" alt=""></p>
-<h2 id="生成静态文件"><a href="#生成静态文件" class="headerlink" title="生成静态文件"></a>生成静态文件</h2><p>执行：<br><figure class="highlight verilog"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo <span class="keyword">generate</span></div></pre></td></tr></table></figure></p>
-<p>该命令会创建一个目录public，在public生成所有的静态文件。有了静态文件，通过web server就可以独立运行网站了。</p>
-<h2 id="本地启动"><a href="#本地启动" class="headerlink" title="本地启动"></a>本地启动</h2><p>执行：<br><figure class="highlight axapta"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo <span class="keyword">server</span></div></pre></td></tr></table></figure></p>
-<p>若成功启动则会看到如下</p>
-<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">INFO Hexo is running <span class="keyword">at</span> <span class="keyword">http</span>://localhost:<span class="number">4000</span>/.Press Ctrl+C <span class="built_in">to</span> <span class="built_in">stop</span>.</div></pre></td></tr></table></figure>
-<p>此时端口4000打开，打开浏览器，输入上面的网址，你会看到hexo默认的主题界面landscape，看到了吗？</p>
-<h2 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h2><p>1.执行 hexo server 出现：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">Usage:</span> hexo <span class="params">&lt;Command&gt;</span></div></pre></td></tr></table></figure></p>
-<p>执行：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm <span class="keyword">install</span> hexo-<span class="keyword">server</span> <span class="comment">--save</span></div></pre></td></tr></table></figure></p>
-<p>2.在浏览器输入 localhost:4000后出现：</p>
-<blockquote>
-<p>cannot Get/主题或文件名</p>
+                <p>相信你已经可以通过域名来访问到你的博客了，但还有一些事情是必须要做的，现在我们就来讲讲后续的处理吧</p>
+<h1 id="评论功能"><a href="#评论功能" class="headerlink" title="评论功能"></a>评论功能</h1><p>一篇博文，分享思想。读者有发表自己想法的权利，所以我们必须提供评论的功能。<br>由于使用我们搭建的是静态网站，网站本身并不能存放评论，必须使用第三方提供的服务了。国内一般使用较多的就是 <a href="http://duoshuo.com/" target="_blank" rel="external">多说</a>了。</p>
+<p>首先去注册一个多说账号，之后官网会给出详细的引导，你可以获取到通用代码，你可以将这段通用代码插入 page.ejs 中， 也可以新建存放其他集成功能的代码文件。<br>在通用代码中 有这样的代码：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">var duoshuoQuery</span> = &#123;short_name:<span class="string">"surflyan"</span>&#125;;</div></pre></td></tr></table></figure></p>
+<p>这样不利于程序的可复用性,可以改为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"> &lt;% <span class="keyword">if</span>(config[<span class="string">'duoshuo_username'</span>]) </div><div class="line"> &#123; %&gt;</div><div class="line">  <span class="xml"><span class="comment">&lt;!-- 多说评论框 start --&gt;</span></span></div><div class="line">     <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment"</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"ds-thread"</span></span></div><div class="line">          <span class="attr">data-thread-key</span>=<span class="string">"&lt;%= page.path %&gt;"</span></div><div class="line">          <span class="attr">data-title</span>=<span class="string">"&lt;%= page.title %&gt;"</span></div><div class="line">          <span class="attr">data-url</span>=<span class="string">"&lt;%= page.permalink %&gt;"</span> &gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 多说评论框 end --&gt;</span></div><div class="line"><span class="comment">&lt;!-- 多说公共JS代码 start (一个网页只需插入一次) --&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">                        <span class="comment">// dynamic User by Hux</span></div><div class="line">     <span class="keyword">var</span> _user = <span class="string">'&lt;%= config['</span>duoshuo_username<span class="string">'] %&gt;'</span>;</div><div class="line"></div><div class="line">     <span class="comment">// duoshuo comment query.</span></div><div class="line">     <span class="keyword">var</span> duoshuoQuery = &#123;<span class="attr">short_name</span>: _user &#125;;</div><div class="line"></div><div class="line">     (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">       <span class="keyword">var</span> ds = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</div><div class="line">       ds.type = <span class="string">'text/javascript'</span>;ds.async = <span class="literal">true</span>;</div><div class="line">       ds.src = (<span class="built_in">document</span>.location.protocol == <span class="string">'https:'</span> ? <span class="string">'https:'</span> : <span class="string">'http:'</span>) + <span class="string">'//static.duoshuo.com/embed.js'</span>;</div><div class="line">       ds.charset = <span class="string">'UTF-8'</span>;</div><div class="line">         (<span class="built_in">document</span>.getElementsByTagName(<span class="string">'head'</span>)[<span class="number">0</span>]</div><div class="line">                   || <span class="built_in">document</span>.getElementsByTagName(<span class="string">'body'</span>)[<span class="number">0</span>]).appendChild(ds);</div><div class="line">                    &#125;)();</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span>       </div><div class="line"></div><div class="line"> <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></div><div class="line"><span class="comment">&lt;!-- 多说公共JS代码 end --&gt;</span></div></pre></td></tr></table></figure>
+<p>然后在配置文件中，加入:<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">duoshuo_username:</span>          <span class="comment">//你的多说short_name</span></div></pre></td></tr></table></figure></p>
+<p>这样多说评论就添加完成了。</p>
+<h1 id="主题优化"><a href="#主题优化" class="headerlink" title="主题优化"></a>主题优化</h1><p>关于主题优化，我不想讲太多，有的博客教程很轻松的讲了在主题配置文件中添加就好，修改标签什么的，然而，这一切取决于你的主题支持与否，比如，博主的博客主题配置文件里什么都没有，并没有在里面留有什么接口的。 至于其他的样式什么要修改，你需要有一些前端的知识。在主题的 layout 文件里找到相应的代码文件，在对应部分，可做修改。 </p>
+<h1 id="SEO优化"><a href="#SEO优化" class="headerlink" title="SEO优化"></a>SEO优化</h1><p>现在使用搜索引擎通过搜索你的网站，不能搜到吧。 为什么？因为 google、百度还没有收录你的网站，如果不被收录，那你的博客就只能是写给自己的,如果连搜索引擎都不知道我们博客的诞生，还有谁能知道它的存在呢？</p>
+<h2 id="sitemap"><a href="#sitemap" class="headerlink" title="sitemap"></a>sitemap</h2><blockquote>
+<p>站点地图是一种文件, 包含了网站上的网页信息，google 等搜索引擎网页抓取工具会读取此文件，以便抓取我们的网站。</p>
 </blockquote>
-<p>解决办法：</p>
-<ol>
-<li>确定在站点配置文件（第一个此文件）_config.yml中的root： /目录名<br>目录名为当前博客文件名。</li>
-<li>在当前博客目录Blog下执行 ： <code>$ npm install</code> </li>
-</ol>
-<h2 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h2><p>如果不喜欢 hexo 默认的主题，现在就可以去选择一个自己喜欢的主题了。如果你是新手，可以到hexo主题选择偏爱的主题，如果有能力，也可以自己配置个性化主题。</p>
-<p>更换主题，博主在这儿遇到不少坑。</p>
-<h3 id="选择主题"><a href="#选择主题" class="headerlink" title="选择主题"></a>选择主题</h3><p>找到喜欢的主题，确保其是支持hexo的主题，从github clone到Blog theme文件夹中，或者也可以下载.zip在解压到theme文件夹中。<br>采用clone方式，在theme文件夹中，执行git bansh here，<br>以yilia主题为例，执行命令：</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="keyword">clone</span> <span class="title">https</span>://github.com/litten/hexo-theme-yilia.git themes/yilia</div></pre></td></tr></table></figure>
-<p>若采用解压缩方式，在解压以后修改文件夹名为主题名 yilia。</p>
-<h3 id="修改theme"><a href="#修改theme" class="headerlink" title="修改theme"></a>修改theme</h3><p>在站点配置文件_config.yml 中修改 theme：为 yilia.<br><img src="16-24-10.jpg" alt=""><br><strong>注意</strong>： 后有一个空格；</p>
-<p>如果你初始化了多个 Blog 文件夹，则在站点配置文件的 root：设为你的 Blog 文件夹名。</p>
-<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1>
+<h4 id="生成-sitemap"><a href="#生成-sitemap" class="headerlink" title="生成 sitemap"></a>生成 sitemap</h4><p>首先安装针对 google 和百度的插件,使用 Node.js command 打开，选择博客目录下执行：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> hexo-generater-sitemap <span class="comment">--save</span></div><div class="line">npm <span class="keyword">install</span> hexo-generater-baidu-sitemap <span class="comment">--save</span></div></pre></td></tr></table></figure></p>
+<p>在站点 _config.yml 添加如下代码：<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># 自动生成sitemap</span></div><div class="line"><span class="symbol">sitemap:</span></div><div class="line"><span class="symbol">path:</span> sitemap.xml</div><div class="line"><span class="symbol">baidusitemap:</span></div><div class="line"><span class="symbol">path:</span> baidusitemap.xml</div></pre></td></tr></table></figure></p>
+<p>执行：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">hexo clean</span></div><div class="line">hexo g</div></pre></td></tr></table></figure></p>
+<p>在你的博客目录下 <code>public</code> 下面生成了<code>sitemap.xml</code>和<code>baidusitemap.xml</code>文件，打开可以发现就，里面包含我们网站的网页信息。</p>
+<h4 id="提交sitemap"><a href="#提交sitemap" class="headerlink" title="提交sitemap"></a>提交sitemap</h4><p>现在我们就可以把 sitemap.xml 提交给 google了，使用 google 账号登陆 <a href="https://www.google.com/webmasters/tools/home?hl=zh-CN" target="_blank" rel="external">Search Console</a>官方给出了详细引导，添加了站点验证通过后。就可以手动将站点地图提交了。<br>按照谷歌的效率，第二天，应该就可以搜索到你的网站了。</p>
+<p>至于百度收录，我现在也没有方便的解决的办法。 即使你提交了 baidusitemap 给百度站长或者在网页内嵌了js代码，百度也抓取不到你的网页，因为 Github 屏蔽了 BaiduSpider. 我也很无语啊。<br>不少人的做法是在 Coding pages 在生成一份 ,然后国内访问 coding pages ，将这个生成的 baidusitemap 提交给百度站长，这样做还能弥补国内访问 github 较慢的缺陷。选择使用 Gitcafe 也是一种方法。</p>
+<p>这里有关于此问题的<a href="https://www.zhihu.com/question/30898326" target="_blank" rel="external">知乎讨论</a>.</p>
+<h2 id="添加蜘蛛协议"><a href="#添加蜘蛛协议" class="headerlink" title="添加蜘蛛协议"></a>添加蜘蛛协议</h2><blockquote>
+<p><strong>robots.txt</strong> 是一个纯文本文件，在这个文件中网站管理者可以声明该网站中不想被搜索引擎访问的部分，或者指定搜索引擎只收录指定的内容。当一个搜索引擎访问一个站点时，它会首先检查该站点根目录下是否存在 robots.txt，如果存在，搜索爬虫就会按照该文件中的内容来确定访问的范围；如果该文件不存在，那么搜索爬虫就沿着链接抓取。</p>
+</blockquote>
+<p>将robots.txt 放在你的 \source 目录下，这里有 <a href="http://www.admin10000.com/document/189.html" target="_blank" rel="external">robots.txt的说明</a>;</p>
+<h1 id="站点分析"><a href="#站点分析" class="headerlink" title="站点分析"></a>站点分析</h1><p>应用站点分析工具，我们就能知道有多少人访问了我们的博客，哪些内容受欢迎。我推荐 <a href="">google Analytics</a>,官网给出了详细引导教程，建议将 js代码插入到footerd.ejs 中。</p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p> Github Pages 提供了 1 GB 的空间，每月 100 GB 的流量，所以并没有选择使用图床。</p>
+<p> hexo 告一段落，希望你有一个轻松、快乐的博客生活。</p>
+<blockquote>
+<p>请多多指教！</p>
+</blockquote>
+
 
                 <hr>
 
@@ -248,19 +230,11 @@
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="2017/01/26/hexo搭建个人博客/"
-                    data-title="hexo搭建个人博客"
-                    data-url="http://codepalace.org/2017/01/26/hexo搭建个人博客/"
-                    data-images=""
-                    data-content="独立个人博客，你有兴趣吗？
-必备技能
-
-
-
-Git
-Linux 命令
-
-在使用hexo搭建个人... | 代码殿堂 | Code Palace " >
+                    data-thread-key="2017/01/28/Hexo搭建个人博客-优化/"
+                    data-title="Hexo搭建个人博客--优化"
+                    data-url="http://codepalace.org/2017/01/28/Hexo搭建个人博客-优化/"
+                    data-images="http://codepalace.org/2017/01/28/Hexo搭建个人博客-优化/hexo-optimize.jpg"
+                    data-content="相信你已经可以通过域名来访问到你的博客了，但还有一些事情是必须要做的，现在我们就来讲讲后续的处... | 代码殿堂 | Code Palace " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -280,7 +254,7 @@ Linux 命令
                     
                     
                         <li class="next">
-                            <a href="/2014/01/29/hello-2015/" data-toggle="tooltip" data-placement="top" title="Welcome to Hux Blog">Next Post &rarr;</a>
+                            <a href="/2017/01/26/Hexo搭建个人博客--进阶/" data-toggle="tooltip" data-placement="top" title="Hexo搭建个人博客--进阶">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -289,9 +263,9 @@ Linux 命令
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2017/01/26/hexo搭建个人博客/"
-                        data-title="hexo搭建个人博客"
-                        data-url="http://codepalace.org/2017/01/26/hexo搭建个人博客/" >
+                        data-thread-key="2017/01/28/Hexo搭建个人博客-优化/"
+                        data-title="Hexo搭建个人博客--优化"
+                        data-url="http://codepalace.org/2017/01/28/Hexo搭建个人博客-优化/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -439,7 +413,7 @@ Linux 命令
                 <p class="copyright text-muted">
                     Copyright &copy; 代码殿堂-Code Palace 2017 
                     <br>
-                    Theme by <a href="https://github.com/huxpro/huxpro.github.io/">HuxBlog</a> 
+                    Theme by <a href="https://https://hexo.io/zh-cn/">Hexo</a> 
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
                     </span> 
