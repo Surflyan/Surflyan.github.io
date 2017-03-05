@@ -14,11 +14,11 @@
 
     <title>
         
-          Hexo搭建个人博客--优化 - 代码殿堂 | Code Palace
+          Python进阶之迭代器 - 代码殿堂 | Code Palace
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/JBlog/2017/01/28/Hexo搭建个人博客-优化/">
+    <link rel="canonical" href="http://codepalace.org/JBlog/2017/03/05/Python进阶之迭代器/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/JBlog/css/bootstrap.min.css">
@@ -156,7 +156,7 @@
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('hexo-optimize.jpg')
+        background-image: url('nightstar2.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -166,14 +166,16 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/JBlog/tags/#hexo" title="hexo">hexo</a>
+                          <a class="tag" href="/JBlog/tags/#Python" title="Python">Python</a>
+                        
+                          <a class="tag" href="/JBlog/tags/#Python进阶" title="Python进阶">Python进阶</a>
                         
                     </div>
-                    <h1>Hexo搭建个人博客--优化</h1>
-                    <h2 class="subheading">博客的后期处理、提交 sitemap</h2>
+                    <h1>Python进阶之迭代器</h1>
+                    <h2 class="subheading">Python 可迭代对象、迭代器的介绍</h2>
                     <span class="meta">
                         Posted by Surflyan on
-                        2017-01-28
+                        2017-03-05
                     </span>
                 </div>
             </div>
@@ -192,32 +194,37 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>相信你已经可以通过域名来访问到你的博客了，但还有一些事情是必须要做的，现在我们就来讲讲后续的处理吧。</p>
-<h1 id="评论功能"><a href="#评论功能" class="headerlink" title="评论功能"></a>评论功能</h1><p>一篇博文，分享思想。读者有发表想法的权利，所以我们必须提供评论功能。<br>由于我们搭建的是静态网站，网站本身并不能存放评论，必须使用第三方提供的服务。国内一般使用较多的就是 <a href="http://duoshuo.com/" target="_blank" rel="external">多说</a>了。</p>
-<p>首先注册一个多说账号，之后官网会给出详细的引导，你可以获取到通用代码，你可以将这段通用代码插入 <code>page.ejs</code> 中， 也可以新建存放其他集成功能的代码文件。<br>在通用代码中,有这样的代码：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">var duoshuoQuery</span> = &#123;short_name:<span class="string">"surflyan"</span>&#125;;</div></pre></td></tr></table></figure></p>
-<p>这样不利于程序的可复用性,可以改为：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"> &lt;% <span class="keyword">if</span>(config[<span class="string">'duoshuo_username'</span>]) </div><div class="line"> &#123; %&gt;</div><div class="line">  <span class="xml"><span class="comment">&lt;!-- 多说评论框 start --&gt;</span></span></div><div class="line">     <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment"</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"ds-thread"</span></span></div><div class="line">          <span class="attr">data-thread-key</span>=<span class="string">"&lt;%= page.path %&gt;"</span></div><div class="line">          <span class="attr">data-title</span>=<span class="string">"&lt;%= page.title %&gt;"</span></div><div class="line">          <span class="attr">data-url</span>=<span class="string">"&lt;%= page.permalink %&gt;"</span> &gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 多说评论框 end --&gt;</span></div><div class="line"><span class="comment">&lt;!-- 多说公共JS代码 start (一个网页只需插入一次) --&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">                        <span class="comment">// dynamic User by Hux</span></div><div class="line">     <span class="keyword">var</span> _user = <span class="string">'&lt;%= config['</span>duoshuo_username<span class="string">'] %&gt;'</span>;</div><div class="line"></div><div class="line">     <span class="comment">// duoshuo comment query.</span></div><div class="line">     <span class="keyword">var</span> duoshuoQuery = &#123;<span class="attr">short_name</span>: _user &#125;;</div><div class="line"></div><div class="line">     (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">       <span class="keyword">var</span> ds = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</div><div class="line">       ds.type = <span class="string">'text/javascript'</span>;ds.async = <span class="literal">true</span>;</div><div class="line">       ds.src = (<span class="built_in">document</span>.location.protocol == <span class="string">'https:'</span> ? <span class="string">'https:'</span> : <span class="string">'http:'</span>) + <span class="string">'//static.duoshuo.com/embed.js'</span>;</div><div class="line">       ds.charset = <span class="string">'UTF-8'</span>;</div><div class="line">         (<span class="built_in">document</span>.getElementsByTagName(<span class="string">'head'</span>)[<span class="number">0</span>]</div><div class="line">                   || <span class="built_in">document</span>.getElementsByTagName(<span class="string">'body'</span>)[<span class="number">0</span>]).appendChild(ds);</div><div class="line">                    &#125;)();</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span>       </div><div class="line"></div><div class="line"> <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></div><div class="line"><span class="comment">&lt;!-- 多说公共JS代码 end --&gt;</span></div></pre></td></tr></table></figure>
-<p>然后在配置文件中，加入:<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">duoshuo_username:</span>          <span class="comment">//你的多说short_name</span></div></pre></td></tr></table></figure></p>
-<p>这样多说评论就添加完成了。</p>
-<h1 id="主题优化"><a href="#主题优化" class="headerlink" title="主题优化"></a>主题优化</h1><p>关于主题优化，我不想讲太多，有的博客教程很轻松的讲了在主题配置文件中添加就好，修改标签什么的，然而，这一切取决于你的主题支持与否，比如，博主的博客主题配置文件里什么都没有，并没有在里面留有什么接口的。 至于其他的样式什么要修改，你需要有一些前端的知识。在主题的 layout 文件里找到相应的代码文件，在对应部分，可做修改。 </p>
-<h1 id="SEO优化"><a href="#SEO优化" class="headerlink" title="SEO优化"></a>SEO优化</h1><p>现在使用搜索引擎来直接搜索你的网站，不能搜到吧。 为什么？因为 google、百度还没有收录你的网站，如果不被收录，那你的博客就只能是写给自己的。连搜索引擎都不知道我们博客的诞生，还有谁能知道它的存在呢？</p>
-<h2 id="sitemap"><a href="#sitemap" class="headerlink" title="sitemap"></a>sitemap</h2><blockquote>
-<p>站点地图是一种文件, 包含了网站上的网页信息，google 等搜索引擎网页抓取工具会读取此文件，以便抓取我们的网站。</p>
+                <h1 id="1-容器-container"><a href="#1-容器-container" class="headerlink" title="1.容器(container)"></a>1.容器(container)</h1><p>容器是存储元素的一种数据结构，可进行成员测试，在python中典型的容器有：</p>
+<ul>
+<li>list</li>
+<li>set</li>
+<li>dict</li>
+<li>tuple </li>
+<li>str</li>
+<li>…</li>
+</ul>
+<p>容器较容易理解，可参照生活中容器的理解。</p>
+<h1 id="2-可迭代对象-interable"><a href="#2-可迭代对象-interable" class="headerlink" title="2. 可迭代对象(interable)"></a>2. 可迭代对象(interable)</h1><p><strong> 迭代(interate) </strong> 是指按照某种顺序逐个访问序列中的每一项。<br>大部分容器都是可迭代的，但还有其他对象也可迭代，如文件对象、管道对象，可迭代对象也可用来表示一个包含有限元素的数据结构。<br>可迭代对象可以是任意对象，只要该对象实现了 <code>__iter__</code> 方法。<br>可用<code>isinstance()</code>判断一个对象是否是可迭代对象：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;<span class="keyword">from</span> collections <span class="keyword">import</span> Interable</div><div class="line">&gt;&gt;&gt;isinstance([],Iterable)</div><div class="line"><span class="keyword">True</span></div><div class="line">&gt;&gt;&gt;isinstance(<span class="string">'abc'</span>,Iterable)</div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure></p>
+<p><code>__iter__</code> 方法会返回一个迭代器。那么什么是迭代器?</p>
+<h1 id="3-迭代器-interator"><a href="#3-迭代器-interator" class="headerlink" title="3. 迭代器(interator)"></a>3. 迭代器(interator)</h1><p>所谓的迭代器就是具有 <code>next</code> 方法的对象（<strong> 注：python3中为<code>__next__()</code> </strong> )。在调用 next 方法时，迭代器会返回它的下一个值，如果迭代器中没有值可以返回，会引发一个 <code>StopIteration</code> 异常。所以迭代器本质上是一个产生值的工厂，每次向迭代器请求下一个值，迭代器都会进行计算出相应的值并返回。</p>
+<p>可用 <code>isinstance()</code>判断一个对象是否是迭代器：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;<span class="keyword">from</span> collections <span class="keyword">import</span> Iterator</div><div class="line">&gt;&gt;&gt;isinstance ((x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">2</span>)), Iterator)</div><div class="line"><span class="keyword">True</span></div><div class="line">&gt;&gt;&gt;isinstance([],Iterator)</div><div class="line"><span class="keyword">False</span></div></pre></td></tr></table></figure></p>
+<p>一般来说，迭代器本身也是可迭代的，即迭代器有返回自己的 next 方法。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;<span class="keyword">from</span> collections <span class="keyword">import</span> Iterator</div><div class="line">&gt;&gt;&gt;isinstance ((x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">2</span>)), Iterator)</div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure></p>
+<p>但<code>list</code>、<code>dict</code>、<code>str</code>等虽然都是可迭代对象，却不是迭代器。但可以使用 <code>iter()</code>来使可迭代对象变成迭代器。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>x=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>y=iter(x)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(x)</div><div class="line">&lt;type <span class="string">'list'</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(y)</div><div class="line">&lt;type <span class="string">'listiterator'</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>next(x)</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;pyshell#13&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">    next(x)</div><div class="line">TypeError: list object <span class="keyword">is</span> <span class="keyword">not</span> an iterator</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>next(y)</div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>dir(y)</div><div class="line">[<span class="string">'__class__'</span>, <span class="string">'__delattr__'</span>, <span class="string">'__doc__'</span>, <span class="string">'__format__'</span>, <span class="string">'__getattribute__'</span>, <span class="string">'__hash__'</span>, <span class="string">'__init__'</span>, <span class="string">'__iter__'</span>, <span class="string">'__length_hint__'</span>, <span class="string">'__new__'</span>, <span class="string">'__reduce__'</span>, <span class="string">'__reduce_ex__'</span>, <span class="string">'__repr__'</span>, <span class="string">'__setattr__'</span>, <span class="string">'__sizeof__'</span>, <span class="string">'__str__'</span>, <span class="string">'__subclasshook__'</span>, <span class="string">'next'</span>]</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>可以看出，x 是可迭代对象，y 是迭代器，在迭代器中，有 <code>__iter__()</code> 以及 <code>next()</code> 方法。<br>所有<code>itertools</code>模块中的函数都会返回一个迭代器。</p>
 </blockquote>
-<h4 id="生成-sitemap"><a href="#生成-sitemap" class="headerlink" title="生成 sitemap"></a>生成 sitemap</h4><p>首先安装针对 google 和百度的插件,使用 Node.js command 打开，选择博客目录下执行：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> hexo-generater-sitemap <span class="comment">--save</span></div><div class="line">npm <span class="keyword">install</span> hexo-generater-baidu-sitemap <span class="comment">--save</span></div></pre></td></tr></table></figure></p>
-<p>在站点 _config.yml 添加如下代码：<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># 自动生成sitemap</span></div><div class="line"><span class="symbol">sitemap:</span></div><div class="line"><span class="symbol">path:</span> sitemap.xml</div><div class="line"><span class="symbol">baidusitemap:</span></div><div class="line"><span class="symbol">path:</span> baidusitemap.xml</div></pre></td></tr></table></figure></p>
-<p>执行：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">hexo clean</span></div><div class="line">hexo g</div></pre></td></tr></table></figure></p>
-<p>在你的博客目录下 <code>public</code> 下面生成了<code>sitemap.xml</code>和<code>baidusitemap.xml</code>文件，打开可以发现就，里面包含我们网站的网页信息。</p>
-<h4 id="提交sitemap"><a href="#提交sitemap" class="headerlink" title="提交sitemap"></a>提交sitemap</h4><p>现在我们就可以把 sitemap.xml 提交给 google了，使用 google 账号登陆 <a href="https://www.google.com/webmasters/tools/home?hl=zh-CN" target="_blank" rel="external">Search Console</a>官方给出了详细引导，添加了站点验证通过后。就可以手动将站点地图提交了。<br>按照谷歌的效率，第二天，应该就可以搜索到你的网站了。</p>
-<p>至于百度收录，我现在也没有方便的解决的办法。 即使你提交了 baidusitemap 给百度站长或者在网页内嵌了js代码，百度也抓取不到你的网页，因为 Github 屏蔽了 BaiduSpider. 我也很无语啊。<br>不少人的做法是在 Coding pages 在生成一份 ,然后国内访问 coding pages ，将这个生成的 baidusitemap 提交给百度站长，这样做还能弥补国内访问 github 较慢的缺陷。选择使用 Gitcafe 也是一种方法。</p>
-<p>这里有关于此问题的<a href="https://www.zhihu.com/question/30898326" target="_blank" rel="external">知乎讨论</a>.</p>
-<h2 id="添加蜘蛛协议"><a href="#添加蜘蛛协议" class="headerlink" title="添加蜘蛛协议"></a>添加蜘蛛协议</h2><blockquote>
-<p><strong>robots.txt</strong> 是一个纯文本文件，在这个文件中网站管理者可以声明该网站中不想被搜索引擎访问的部分，或者指定搜索引擎只收录指定的内容。当一个搜索引擎访问一个站点时，它会首先检查该站点根目录下是否存在 robots.txt，如果存在，搜索爬虫就会按照该文件中的内容来确定访问的范围；如果该文件不存在，那么搜索爬虫就沿着链接抓取。</p>
+<p>可自定义实现一个迭代器对象:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRange</span><span class="params">(object)</span>:</span>  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n)</span>:</span></div><div class="line">        self.i = <span class="number">1</span></div><div class="line">        self.n = n</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">next</span><span class="params">(self)</span>:</span>     </div><div class="line">        <span class="keyword">if</span> self.i &lt;= self.n:</div><div class="line">            i = self.i</div><div class="line">            self.i += <span class="number">1</span></div><div class="line">            <span class="keyword">return</span> i</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">raise</span> StopIteration()</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    x = MyRange(<span class="number">6</span>)</div><div class="line">    <span class="keyword">print</span> [i <span class="keyword">for</span> i <span class="keyword">in</span> x] </div><div class="line">`</div></pre></td></tr></table></figure></p>
+<p>运行结果是<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>看出来了吗？上面的代码其实就是自己实现的 <code>range()</code> 函数呢。</p>
 </blockquote>
-<p>将robots.txt 放在你的 \source 目录下，这里有 <a href="http://www.admin10000.com/document/189.html" target="_blank" rel="external">robots.txt的说明</a>;</p>
-<h1 id="站点分析"><a href="#站点分析" class="headerlink" title="站点分析"></a>站点分析</h1><p>应用站点分析工具，我们就能知道有多少人访问了我们的博客，哪些内容受欢迎。我推荐 <a href="">google Analytics</a>,官网给出了详细引导教程，建议将 js代码插入到footerd.ejs 中。</p>
-<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p> Github Pages 提供了 1 GB 的空间，每月 100 GB 的流量，所以并没有选择使用图床。</p>
-<p> hexo 告一段落，希望你有一个轻松、快乐的博客生活。</p>
+<h1 id="4-小结"><a href="#4-小结" class="headerlink" title="4. 小结"></a>4. 小结</h1><ol>
+<li>在 Python 中，迭代器是遵循迭代协议的对象。</li>
+<li>可以使用iter() 以从任何序列得到迭代器（如 list, tuple, dictionary, set 等）。</li>
+<li>编写类，实现<code>__iter__()</code>方法，以及 <code>next()</code>（Python 2）或<code>__next__()</code>（Python 3） 。当没有元素时，则引发 StopIteration异常。</li>
+<li>如果有很多值，列表就会占用太多的内存，而迭代器则占用更少内存。</li>
+<li>迭代器从第一个元素开始访问，直到所有的元素被访问完结束，只能往前不会后退。</li>
+</ol>
 <blockquote>
 <p>请多多指教！</p>
 </blockquote>
@@ -230,11 +237,11 @@
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="2017/01/28/Hexo搭建个人博客-优化/"
-                    data-title="Hexo搭建个人博客--优化"
-                    data-url="http://codepalace.org/JBlog/2017/01/28/Hexo搭建个人博客-优化/"
-                    data-images="http://codepalace.org/JBlog/2017/01/28/Hexo搭建个人博客-优化/hexo-optimize.jpg"
-                    data-content="相信你已经可以通过域名来访问到你的博客了，但还有一些事情是必须要做的，现在我们就来讲讲后续的处... | 代码殿堂 | Code Palace " >
+                    data-thread-key="2017/03/05/Python进阶之迭代器/"
+                    data-title="Python进阶之迭代器"
+                    data-url="http://codepalace.org/JBlog/2017/03/05/Python进阶之迭代器/"
+                    data-images="http://codepalace.org/JBlog/2017/03/05/Python进阶之迭代器/nightstar2.jpg"
+                    data-content="1.容器(container)容器是存储元素的一种数据结构，可进行成员测试，在python中典... | 代码殿堂 | Code Palace " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -252,13 +259,9 @@
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/JBlog/2017/03/05/Python进阶之迭代器/" data-toggle="tooltip" data-placement="top" title="Python进阶之迭代器">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/JBlog/2017/01/26/Hexo搭建个人博客--进阶/" data-toggle="tooltip" data-placement="top" title="Hexo搭建个人博客--进阶">Next Post &rarr;</a>
+                            <a href="/JBlog/2017/01/28/Hexo搭建个人博客-优化/" data-toggle="tooltip" data-placement="top" title="Hexo搭建个人博客--优化">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -267,9 +270,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2017/01/28/Hexo搭建个人博客-优化/"
-                        data-title="Hexo搭建个人博客--优化"
-                        data-url="http://codepalace.org/JBlog/2017/01/28/Hexo搭建个人博客-优化/" >
+                        data-thread-key="2017/03/05/Python进阶之迭代器/"
+                        data-title="Python进阶之迭代器"
+                        data-url="http://codepalace.org/JBlog/2017/03/05/Python进阶之迭代器/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -309,7 +312,9 @@
                     <h5><a href="/JBlog/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/JBlog/tags/#hexo" title="hexo">hexo</a>
+                          <a class="tag" href="/JBlog/tags/#Python" title="Python">Python</a>
+                        
+                          <a class="tag" href="/JBlog/tags/#Python进阶" title="Python进阶">Python进阶</a>
                         
                     </div>
                 </section>
