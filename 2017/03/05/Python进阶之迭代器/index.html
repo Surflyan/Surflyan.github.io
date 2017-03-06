@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="keyword"  content="">
-    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="shortcut icon" href="/JBlog/img/favicon.ico">
 
     <title>
         
@@ -18,16 +18,16 @@
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/2017/03/05/Python进阶之迭代器/">
+    <link rel="canonical" href="http://codepalace.org/JBlog/2017/03/05/Python进阶之迭代器/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/JBlog/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/hux-blog.min.css">
+    <link rel="stylesheet" href="/JBlog/css/hux-blog.min.css">
 
     <!-- Pygments Highlight CSS -->
-    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/JBlog/css/highlight.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -68,7 +68,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">代码殿堂-Code Palace</a>
+            <a class="navbar-brand" href="/JBlog/">代码殿堂-Code Palace</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -81,7 +81,7 @@
             <div class="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="/">Home</a>
+                        <a href="/JBlog/">Home</a>
                     </li>
 
                     
@@ -91,21 +91,21 @@
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/JBlog/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/JBlog/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/JBlog/tags/">Tags</a>
                         </li>
                         
                     
@@ -150,7 +150,7 @@
     <!-- Main Content -->
     
 <!-- Image to hack wechat -->
-<!-- <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="http://codepalace.org/JBlog/img/icon_wechat.png" width="0" height="0"> -->
 <!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
 
 <!-- Post Header -->
@@ -166,9 +166,9 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#Python" title="Python">Python</a>
+                          <a class="tag" href="/JBlog/tags/#Python" title="Python">Python</a>
                         
-                          <a class="tag" href="/tags/#Python进阶" title="Python进阶">Python进阶</a>
+                          <a class="tag" href="/JBlog/tags/#Python进阶" title="Python进阶">Python进阶</a>
                         
                     </div>
                     <h1>Python进阶之迭代器</h1>
@@ -213,16 +213,21 @@
 <blockquote>
 <p>可以看出，x 是可迭代对象，y 是迭代器，在迭代器中，有 <code>__iter__()</code> 以及 <code>next()</code> 方法。<br>所有<code>itertools</code>模块中的函数都会返回一个迭代器。</p>
 </blockquote>
-<p>可自定义实现一个迭代器对象:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRange</span><span class="params">(object)</span>:</span>  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n)</span>:</span></div><div class="line">        self.i = <span class="number">1</span></div><div class="line">        self.n = n</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">next</span><span class="params">(self)</span>:</span>     </div><div class="line">        <span class="keyword">if</span> self.i &lt;= self.n:</div><div class="line">            i = self.i</div><div class="line">            self.i += <span class="number">1</span></div><div class="line">            <span class="keyword">return</span> i</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">raise</span> StopIteration()</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    x = MyRange(<span class="number">6</span>)</div><div class="line">    <span class="keyword">print</span> [i <span class="keyword">for</span> i <span class="keyword">in</span> x] </div><div class="line">`</div></pre></td></tr></table></figure></p>
-<p>运行结果是<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</div></pre></td></tr></table></figure></p>
+<p>综上： 可得出 <strong> 生成迭代器的两种方法 </strong> :</p>
+<ol>
+<li>为容器对象添加 <code>__iter__()</code> 和 <code>next()</code> 方法（Python 3 中是 <code>next()</code>）；<strong>iter</strong>() 返回迭代器对象本身 self, next() 则返回每次调用 next()时或迭代时的元素；</li>
+<li>内置函数 <code>iter()</code>将可迭代对象转化为迭代器</li>
+</ol>
+<p>可自定义实现一个迭代器对象:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRange</span><span class="params">(object)</span>:</span>  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n)</span>:</span> </div><div class="line">        <span class="keyword">print</span> <span class="string">" I made this iterator!"</span>  </div><div class="line">        self.i = <span class="number">1</span></div><div class="line">        self.n = n</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">next</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">" Calling __next__ method!"</span></div><div class="line">        <span class="keyword">if</span> self.i &lt;= self.n:</div><div class="line">            i = self.i</div><div class="line">            self.i += <span class="number">1</span></div><div class="line">            <span class="keyword">return</span> i</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">raise</span> StopIteration()</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    x = MyRange(<span class="number">6</span>)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> x:</div><div class="line">        <span class="keyword">print</span> i</div><div class="line">`</div></pre></td></tr></table></figure></p>
+<p>运行结果是<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"> I made this iterator!</div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">1</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">2</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">3</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">4</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">5</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">6</span></div><div class="line"> Calling __next__ method!</div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure></p>
 <blockquote>
-<p>看出来了吗？上面的代码其实就是自己实现的 <code>range()</code> 函数呢。</p>
+<p>看出来了吗？上面的代码其实就是自己实现的 <code>range()</code> 函数呢,而 for 语句其实时调用了迭代器的 next 函数。</p>
 </blockquote>
 <h1 id="4-小结"><a href="#4-小结" class="headerlink" title="4. 小结"></a>4. 小结</h1><ol>
 <li>在 Python 中，迭代器是遵循迭代协议的对象。</li>
 <li>可以使用iter() 以从任何序列得到迭代器（如 list, tuple, dictionary, set 等）。</li>
 <li>编写类，实现<code>__iter__()</code>方法，以及 <code>next()</code>（Python 2）或<code>__next__()</code>（Python 3） 。当没有元素时，则引发 StopIteration异常。</li>
-<li>如果有很多值，列表就会占用太多的内存，而迭代器则占用更少内存。</li>
+<li>如果有很多值，列表就会占用太多的内存，而迭代器则占用更少内存，每次只记录一个值。</li>
 <li>迭代器从第一个元素开始访问，直到所有的元素被访问完结束，只能往前不会后退。</li>
 </ol>
 <blockquote>
@@ -239,8 +244,8 @@
                     style="text-align: right"
                     data-thread-key="2017/03/05/Python进阶之迭代器/"
                     data-title="Python进阶之迭代器"
-                    data-url="http://codepalace.org/2017/03/05/Python进阶之迭代器/"
-                    data-images="http://codepalace.org/2017/03/05/Python进阶之迭代器/nightstar2.jpg"
+                    data-url="http://codepalace.org/JBlog/2017/03/05/Python进阶之迭代器/"
+                    data-images="http://codepalace.org/JBlog/2017/03/05/Python进阶之迭代器/nightstar2.jpg"
                     data-content="1.容器(container)容器是存储元素的一种数据结构，可进行成员测试，在python中典... | 代码殿堂 | Code Palace " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
@@ -259,9 +264,13 @@
 
                 <ul class="pager">
                     
+                        <li class="previous">
+                            <a href="/JBlog/2017/03/06/Python进阶之生成器/" data-toggle="tooltip" data-placement="top" title="Python进阶之生成器">&larr; Previous Post</a>
+                        </li>
+                    
                     
                         <li class="next">
-                            <a href="/2017/01/28/Hexo搭建个人博客-优化/" data-toggle="tooltip" data-placement="top" title="Hexo搭建个人博客--优化">Next Post &rarr;</a>
+                            <a href="/JBlog/2017/01/28/Hexo搭建个人博客-优化/" data-toggle="tooltip" data-placement="top" title="Hexo搭建个人博客--优化">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -272,7 +281,7 @@
                     <div class="ds-thread"
                         data-thread-key="2017/03/05/Python进阶之迭代器/"
                         data-title="Python进阶之迭代器"
-                        data-url="http://codepalace.org/2017/03/05/Python进阶之迭代器/" >
+                        data-url="http://codepalace.org/JBlog/2017/03/05/Python进阶之迭代器/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -309,12 +318,12 @@
                 
                 <section>
                     <!-- no hr -->
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <h5><a href="/JBlog/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#Python" title="Python">Python</a>
+                          <a class="tag" href="/JBlog/tags/#Python" title="Python">Python</a>
                         
-                          <a class="tag" href="/tags/#Python进阶" title="Python进阶">Python进阶</a>
+                          <a class="tag" href="/JBlog/tags/#Python进阶" title="Python进阶">Python进阶</a>
                         
                     </div>
                 </section>
@@ -435,13 +444,13 @@
 </footer>
 
 <!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
+<script src="/JBlog/js/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
+<script src="/JBlog/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="/js/hux-blog.min.js"></script>
+<script src="/JBlog/js/hux-blog.min.js"></script>
 
 
 <!-- async load function -->
@@ -479,7 +488,7 @@
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("http://codepalace.org/js/jquery.tagcloud.js",function(){
+        async("http://codepalace.org/JBlog/js/jquery.tagcloud.js",function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},
@@ -565,7 +574,7 @@
      * Doc: https://github.com/davist11/jQuery-One-Page-Nav
      * Fork by Surflyan to support padding
      */
-    async("/js/jquery.nav.js", function () {
+    async("/JBlog/js/jquery.nav.js", function () {
         $('.catalog-body').onePageNav({
             currentClass: "active",
             changeHash: !1,
@@ -587,7 +596,7 @@
 
 
 <!-- Image to hack wechat -->
-<img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0" />
+<img src="http://codepalace.org/JBlog/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
 
 </body>

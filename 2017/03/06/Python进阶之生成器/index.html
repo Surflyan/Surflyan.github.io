@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="C_eEXCRkzztEJGJcIUrKnVlTpQ76fgidG6Wp04m0Js0" />
+    <meta name="baidu-site-verification" content="sdTqGlKswq" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/JBlog/img/favicon.ico">
+
+    <title>
+        
+          Python进阶之生成器 - 代码殿堂 | Code Palace
+        
+    </title>
+
+    <link rel="canonical" href="http://codepalace.org/JBlog/2017/03/06/Python进阶之生成器/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/JBlog/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/JBlog/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/JBlog/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/JBlog/">代码殿堂-Code Palace</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/JBlog/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/JBlog/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/JBlog/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/JBlog/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://codepalace.org/JBlog/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('nightstar.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/JBlog/tags/#Python" title="Python">Python</a>
+                        
+                          <a class="tag" href="/JBlog/tags/#Python进阶" title="Python进阶">Python进阶</a>
+                        
+                    </div>
+                    <h1>Python进阶之生成器</h1>
+                    <h2 class="subheading">较详细地介绍了生成器的两种生成方式、特性以及方法</h2>
+                    <span class="meta">
+                        Posted by Surflyan on
+                        2017-03-06
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="1-生成器-generator"><a href="#1-生成器-generator" class="headerlink" title="1. 生成器(generator)"></a>1. 生成器(generator)</h2><p>什么是生成器呢，要理解生成器你就必须先理解什么是迭代器，因为生成器也是一种迭代器，是一种更高级、更优雅的迭代器。<br>关于迭代器，如果你不明白的话，本博文的 <a href="http://www.codepalace.org/2017/03/05/Python%E8%BF%9B%E9%98%B6%E4%B9%8B%E8%BF%AD%E4%BB%A3%E5%99%A8/" target="_blank" rel="external">前一篇</a>有讲解，这里不再赘述。<br>首先，明白下面两点：</p>
+<ul>
+<li>任意生成器都是迭代器 (反之不成立）。</li>
+<li>任意生成器，都是一个延迟产生值的工厂。</li>
+</ul>
+<h2 id="2-yield"><a href="#2-yield" class="headerlink" title="2. yield"></a>2. yield</h2><p>Python 有两种不同的方式提供生成器：<br>现在介绍第一种：<strong> 生成器函数 </strong><br> <strong>生成器函数</strong> ： 包含yield语句的函数。只不过使用 <code>yield</code> 语句来返回结果，而不是<code>return</code>，<code>yield</code> 语句不像 <code>return</code>那样返回值，而是产生多个值，而每次使用<code>yield语句</code> 时产生一个值时，函数就会被  <strong>挂起</strong>，即函数停留在那点等待被重新唤醒。函数被重新唤醒后就从停止的那点开始执行。这么说你可能还不明白，上例子：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">CheckYield</span><span class="params">(n)</span>:</span>  </div><div class="line"><span class="meta">... </span>    <span class="keyword">while</span> n &gt; <span class="number">0</span>:</div><div class="line"><span class="meta">... </span>        <span class="keyword">print</span> <span class="string">"before yield"</span></div><div class="line"><span class="meta">... </span>        <span class="keyword">yield</span> n</div><div class="line"><span class="meta">... </span>        n -= <span class="number">1</span></div><div class="line"><span class="meta">... </span>        <span class="keyword">print</span> <span class="string">"after yield"</span></div><div class="line"><span class="meta">... </span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>ge = CheckYield(<span class="number">2</span>)    <span class="comment">#没有执行函数体内语句</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>ge.next()          <span class="comment">#遇到yield，返回值，并暂停</span></div><div class="line">before <span class="keyword">yield</span></div><div class="line"><span class="number">2</span>                      </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>ge.next()        <span class="comment">#从上次暂停位置开始继续执行</span></div><div class="line">after <span class="keyword">yield</span></div><div class="line">before <span class="keyword">yield</span></div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>yy.next()</div><div class="line">after <span class="keyword">yield</span>            <span class="comment">#没有满足条件的值，抛出异常</span></div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">StopIteration</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>dir(ge)                       <span class="comment">#看到__iter__ 和next 了吧，</span></div><div class="line">[<span class="string">'__class__'</span>, <span class="string">'__delattr__'</span>, <span class="string">'__doc__'</span>, <span class="string">'__format__'</span>, <span class="string">'__getattribute__'</span>, <span class="string">'__hash__'</span>, <span class="string">'__init__'</span>, <span class="string">'__iter__'</span>, <span class="string">'__name__'</span>, <span class="string">'__new__'</span>, <span class="string">'__reduce__'</span>, <span class="string">'__reduce_ex__'</span>, <span class="string">'__repr__'</span>, <span class="string">'__setattr__'</span>, <span class="string">'__sizeof__'</span>, <span class="string">'__str__'</span>, <span class="string">'__subclasshook__'</span>, <span class="string">'close'</span>, <span class="string">'gi_code'</span>, <span class="string">'gi_frame'</span>, <span class="string">'gi_running'</span>, <span class="string">'next'</span>, <span class="string">'send'</span>, <span class="string">'throw'</span>]</div></pre></td></tr></table></figure></p>
+<p>看到了吧，函数会在执行到 yield 语句之后返回一个值，然后下次接着<code>yield</code> 之后的语句运行。</p>
+<h2 id="3-生成器与迭代器的对比"><a href="#3-生成器与迭代器的对比" class="headerlink" title="3. 生成器与迭代器的对比"></a>3. 生成器与迭代器的对比</h2><p>现在我们分别使用迭代器和生成器来写一段打印0-4序列的代码。</p>
+<h4 id="3-1-迭代器"><a href="#3-1-迭代器" class="headerlink" title="3.1 迭代器"></a>3.1 迭代器</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CountIter</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n)</span>:</span></div><div class="line">        self.n = n</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></div><div class="line">        self.x = <span class="number">-1</span></div><div class="line">        <span class="keyword">return</span> self</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">next</span><span class="params">(self)</span>:</span>  <span class="comment"># For Python 2.x</span></div><div class="line">        self.x += <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> self.x &lt; self.n:</div><div class="line">            <span class="keyword">return</span> self.x</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">raise</span> StopIteration</div><div class="line"> <span class="keyword">for</span> i <span class="keyword">in</span> CountIter(<span class="number">5</span>):</div><div class="line">    <span class="keyword">print</span> i</div></pre></td></tr></table></figure>
+<p>CountIter类就是一个迭代器，它的 <code>__iter__()</code>方法返回可迭代对象，<code>next()</code>方法则执行下一次迭代。</p>
+<h4 id="3-2-生成器"><a href="#3-2-生成器" class="headerlink" title="3.2 生成器"></a>3.2 生成器</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">(n)</span>:</span></div><div class="line">    x = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> x &lt; n:</div><div class="line">        <span class="keyword">yield</span> x</div><div class="line">        x += <span class="number">1</span></div><div class="line"> <span class="keyword">for</span> i <span class="keyword">in</span> count(<span class="number">5</span>):</div><div class="line">    <span class="keyword">print</span> i</div></pre></td></tr></table></figure>
+<p>什么感觉？最直观的就是生成器写的代码好少。<br>迭代器每次在执行完 <code>next()</code> 方法并返回之后,该方法的上下文环境就会消失了，所有的<code>next()</code>方法中定义的局变就无法被访问了，在迭代器中，靠<code>self.x+=1</code>来记录next 之后增减。</p>
+<h4 id="3-3-惰性求值"><a href="#3-3-惰性求值" class="headerlink" title="3.3 惰性求值"></a>3.3 惰性求值</h4><p>对于生成器，每次执行<code>next()</code>方法后，执行到<code>yield</code>关键字处，并将<code>yield</code>后的参数值返回，同时当前生成器函数的上下文会被保留下来。也就是函数内所有变量的状态会被保留，同时函数代码执行到的位置会被保留，像是被挂起一样。这个特点被称为 <strong>延迟计算</strong> 或 <strong>惰性求值(Lazy evaluation)</strong>，可以有效的节省内存。惰性求值实际上是现实了<strong>协同程序</strong> 的思想。</p>
+<blockquote>
+<p><strong>协同程序</strong>：是一个可以独立运行的函数调用，该调用可以被暂停或者挂起，之后还能够从程序流挂起的地方继续或重新开始。当协同程序被挂起时，Python 就能够从该协同程序中获取一个处于中间状态的属性的返回值(由 yield 返回)，当调用 next() 方法使得程序流回到协同程序中时，能够为其传入额外的或者是被改变了的参数，并且从上次挂起的下一条语句继续执行。这是一种类似于进程中断的函数调用方式。<strong>这种挂起函数调用并在返回属性中间值后，仍然能够多次继续执行的协同程序被称之为生成器</strong>。</p>
+</blockquote>
+<p>需要注意的是，<strong>生成器也是只能迭代一次 </strong>。如上面的count类，试试这样做：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">lst=count(<span class="number">5</span>)</div><div class="line"><span class="keyword">print</span> list(lst)</div><div class="line"><span class="keyword">print</span> list(lst)</div><div class="line"><span class="comment">#结果：</span></div><div class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</div><div class="line">[]</div></pre></td></tr></table></figure></p>
+<h2 id="4-生成器表达式"><a href="#4-生成器表达式" class="headerlink" title="4.生成器表达式"></a>4.生成器表达式</h2><p>列表解析使用起来非常方便，可是，它必须一次性生成所有的数据，用来创建列表对象。<br>因此，生成器根据列表解析，结合自身每次返回一个值，然后挂起的特点，解决这个问题。</p>
+<p>列表解析:<br><code>[expr for iter_var in iterable if cond_expr]</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;lst=[x*x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">5</span>)]</div><div class="line">&gt;&gt;&gt;lst</div><div class="line">[<span class="number">0</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>]</div></pre></td></tr></table></figure>
+<p>生成器表达式:<br><code>(expr for iter_var in iterable if cond_expr)</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;ge=(x*x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">5</span>))</div><div class="line">&gt;&gt;&gt;ge</div><div class="line">&lt;generator object &lt;genexpr&gt; at <span class="number">0x03E0C8C8</span>&gt;</div><div class="line">&gt;&gt;&gt;ge.next()</div><div class="line"><span class="number">0</span></div><div class="line">&gt;&gt;&gt;lsit(ge)</div><div class="line">[<span class="number">1</span>,<span class="number">4</span>,<span class="number">9</span>,<span class="number">16</span>]</div></pre></td></tr></table></figure>
+<p>两者的语法相似，但生成器表达式返回的不是一个列表类型对象，而是一个生成器对象，生成器是一个内存使用友好的结构。</p>
+<h2 id="5-生成器方法"><a href="#5-生成器方法" class="headerlink" title="5. 生成器方法"></a>5. 生成器方法</h2><p>生成器的新特性是在开始运行后为生成器提供值的能力，表现为和生成器和”外部世界“交流的渠道。</p>
+<h4 id="5-1-close-方法"><a href="#5-1-close-方法" class="headerlink" title="5.1 close()方法"></a>5.1 close()方法</h4><p><code>close()</code>方法就是关闭生成器。生成器被关闭后，再调用next()方法，会立即抛出StopIteration异常。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>ge = (x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">5</span>))</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>ge.close()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>ge.next()</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;pyshell#9&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">    ge.next()</div><div class="line">StopIteration</div></pre></td></tr></table></figure>
+<h4 id="5-2-send-方法"><a href="#5-2-send-方法" class="headerlink" title="5.2 send()方法"></a>5.2 send()方法</h4><p>这或许是生成器最重要的方法，通过 <code>send()</code>想生成器内部传递参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">(n)</span>:</span></div><div class="line">    x = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> x &lt; n:</div><div class="line">        value = <span class="keyword">yield</span> x</div><div class="line">        <span class="keyword">if</span> value <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">'Hello,%s'</span> %value</div><div class="line">        x += <span class="number">1</span></div></pre></td></tr></table></figure>
+<p> 运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;ge=count(<span class="number">2</span>)</div><div class="line">&gt;&gt;&gt;ge.next()</div><div class="line"><span class="number">0</span></div><div class="line">&gt;&gt;&gt;ge.send(<span class="string">"Surflyan"</span>)</div><div class="line">Hello,Surflyan</div><div class="line"><span class="number">1</span></div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
+<h2 id="6-小结"><a href="#6-小结" class="headerlink" title="6. 小结"></a>6. 小结</h2><ol>
+<li>生成器函数语法上与函数类似,差别在于，生成器使用<code>yield</code>语句返回一个值。</li>
+<li>状态挂起，生成器最大的特性在与状态挂起。</li>
+<li>由于惰性求值的特性，使得内存占用极少。</li>
+<li>希望大家能掌握生成器，生成器是高手的标配。</li>
+</ol>
+<p><strong>参考</strong>：</p>
+<p>1.<a href="https://www.zhihu.com/question/20829330" target="_blank" rel="external">知乎： 如何更好的理解Python迭代器和生成器？</a><br>2.<a href="http://python.jobbole.com/86606/?utm_source=blog.jobbole.com&amp;utm_medium=relatedPosts" target="_blank" rel="external">Python进阶_生成器&amp;生成器表达式</a></p>
+<blockquote>
+<p>请多多指教 ！</p>
+</blockquote>
+
+
+                <hr>
+
+                
+                <!-- 多说 Share start -->
+                </style>
+                <div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="2017/03/06/Python进阶之生成器/"
+                    data-title="Python进阶之生成器"
+                    data-url="http://codepalace.org/JBlog/2017/03/06/Python进阶之生成器/"
+                    data-images="http://codepalace.org/JBlog/2017/03/06/Python进阶之生成器/nightstar.jpg"
+                    data-content="1. 生成器(generator)什么是生成器呢，要理解生成器你就必须先理解什么是迭代器，因为... | 代码殿堂 | Code Palace " >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/JBlog/2017/03/05/Python进阶之迭代器/" data-toggle="tooltip" data-placement="top" title="Python进阶之迭代器">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="2017/03/06/Python进阶之生成器/"
+                        data-title="Python进阶之生成器"
+                        data-url="http://codepalace.org/JBlog/2017/03/06/Python进阶之生成器/" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/JBlog/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/JBlog/tags/#Python" title="Python">Python</a>
+                        
+                          <a class="tag" href="/JBlog/tags/#Python进阶" title="Python进阶">Python进阶</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://codebelief.com" target="_blank">代码信条</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'surflyan';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 代码殿堂-Code Palace 2017 
+                    <br>
+                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Posted by <a href="https://github.com/Surflyan/Surflyan.github.io">Surflyan</a>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/JBlog/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/JBlog/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/JBlog/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://codepalace.org/JBlog/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Surflyan
+    var _gaId = 'UA-90996514-1';
+    var _gaDomain = 'www.codepalace.org';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Surflyan
+    var _baId = '5580aadc4c87d87d2202096d9e278ef3';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Surflyan to support padding
+     */
+    async("/JBlog/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://codepalace.org/JBlog/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
