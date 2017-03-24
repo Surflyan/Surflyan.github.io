@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="C_eEXCRkzztEJGJcIUrKnVlTpQ76fgidG6Wp04m0Js0" />
+    <meta name="baidu-site-verification" content="sdTqGlKswq" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          深入理解C++指针、引用及指针的指针 - 代码殿堂 | Code Palace
+        
+    </title>
+
+    <link rel="canonical" href="http://codepalace.org/2017/03/23/深入理解C-指针、引用及指针的指针/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">代码殿堂-Code Palace</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('nightstar2.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#C++" title="C++">C++</a>
+                        
+                    </div>
+                    <h1>深入理解C++指针、引用及指针的指针</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by Surflyan on
+                        2017-03-23
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>C++ 用了这么久，发现身边还是有同学不能理解 C++ 的指针、引用的本质，对指针的指针、指针的引用更是十分迷糊。现在让我们来理解一下它们吧！</p>
+<h1 id="1-指针与引用"><a href="#1-指针与引用" class="headerlink" title="1. 指针与引用"></a>1. 指针与引用</h1><p>指针与引用都可以对对象进行直接的操作，通常作函数的参数传递或是函数返回的对象。</p>
+<h2 id="1-1-理解本质"><a href="#1-1-理解本质" class="headerlink" title="1.1 理解本质"></a>1.1 理解本质</h2><p><strong> 指针 </strong>，本质上是一个变量，指向一块内存空间，只不过该内存存放的是某个变量的地址。这就不难理解，指针可以改变指向，也就是存放别的变量的地址；也可以通过 <code>*</code> 解析所存地址，找到该变量，从而对其修改。<br>例：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> *p= &amp;a；</div></pre></td></tr></table></figure></p>
+<p>这时 <code>p</code> 存放的就是一个<code>int</code>型变量的地址。</p>
+<p><strong> 引用 </strong>，本质上是某个变量的别名，通过引用访问该变量，操纵的其实是同一块内存，同一个对象，因此 <strong>引用不能为空 </strong>，若对象不存在，又怎会存在别名。<br>仔细看下面的例子：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> a=<span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> b=<span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> *p;      <span class="comment">//指针可以不初始化 ，它可以为空 </span></div><div class="line">	<span class="keyword">int</span> &amp;r=b;    <span class="comment">//引用必须初始化 </span></div><div class="line">	</div><div class="line">	p= &amp;a;      <span class="comment">//可在声明时直接初始化  int *p=&amp;a </span></div><div class="line">	</div><div class="line">	(*p)++;      <span class="comment">//注意括号</span></div><div class="line">	 </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"*p="</span>&lt;&lt; *p &lt;&lt;<span class="built_in">endl</span>;    </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"a="</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;             <span class="comment">//修改同一对象 </span></div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"p="</span>&lt;&lt;p&lt;&lt;<span class="built_in">endl</span>;  </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;a="</span>&lt;&lt;&amp;a&lt;&lt;<span class="built_in">endl</span>;           <span class="comment">//p存放的就是a的地址吧 </span></div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;p="</span>&lt;&lt;&amp;p&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line">	r++;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt;<span class="string">"r="</span>&lt;&lt;r&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"b="</span>&lt;&lt;b&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;r="</span>&lt;&lt;&amp;r&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;b="</span>&lt;&lt;&amp;b&lt;&lt;<span class="built_in">endl</span>;           <span class="comment">//二者指向地址一样吧 </span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="20-25-22.jpg" alt=""></p>
+<h2 id="1-2-注意事项"><a href="#1-2-注意事项" class="headerlink" title="1.2 注意事项"></a>1.2 注意事项</h2><p>指针： 指针可以为空，因此在访问指针指向内容之前需要进行判空。由于可以多个指针指向同一块内存区域，一旦通过某一指针释放了内存，会造成野指针的出现。对指针直接操作，改变的回事指针的指向，并非其所指向的内容。<br>引用： 引用必须初始化。引用不可改变指向。对引用操作，会改变引用指向的内容。</p>
+<h2 id="1-3-参数传递"><a href="#1-3-参数传递" class="headerlink" title="1.3 参数传递"></a>1.3 参数传递</h2><p>指针传递参数和引用传递参数具有本质的不同。<br>如果你了解一点汇编语言或者函数调用原理的话，那么这块内容你应该一下就明白了。<br>在函数调用时，被调函数会在栈中开辟一块空间，按照从右到左将实参值保存在栈的最低端（其实还有主函数返回地址等其他要保存的数据，这里不详细赘述）。指针传递参数本质是 <strong> 传值 </strong>，只不过这里的值是实参的地址，这就给了你在被调函数中改变实参的可能。你可以将形参看作一个 <strong> 新的指向实参的指针 </strong>，所以你可以使用星号解析来在被调函数中改变实参的值，但是该形参指针也可以改变指向。</p>
+<p>由于这样访问实参的内容，每次都要用星号来解析。c++ 给出了另一种解决方案-引用。<br>在引用传递参数中，栈中存放的也是实参的地址，被调函数中对引用形参的操作都会根据 <strong> 间接寻址 </strong>（汇编知识）来访问实参的内容，所以，对引用形参的操作都会反映到实参上。</p>
+<p>仔细看例子：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> *p_arg,<span class="keyword">int</span> &amp;r_arg)</span> </span></div><div class="line">&#123;   </div><div class="line">    <span class="keyword">int</span> a=<span class="number">5</span>;</div><div class="line">    </div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"被调函数中："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">    </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"p_arg="</span>&lt;&lt;p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"*p_arg="</span>&lt;&lt;*p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;r_arg="</span>&lt;&lt;&amp;r_arg&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"r_arg="</span>&lt;&lt;r_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line">	p_arg= &amp;a;</div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"*p_arg="</span>&lt;&lt;*p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line">	r_arg=<span class="number">5</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> a=<span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> b=<span class="number">0</span>;</div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"主函数中："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;a="</span>&lt;&lt;&amp;a&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;b="</span>&lt;&lt;&amp;b&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line"> 	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	func(&amp;a,b);</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"函数调用后："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"a="</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"b="</span>&lt;&lt;b&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="21-52-31.jpg" alt=""></p>
+<p>因此，对于引用参数的处理都会因间接寻址转到对主函数中实参的处理。<br>对于指针传递参数，只是相当于再生了一个指向 <strong> 原实参指针指向地址的指针 </strong>，故，你只能通过这个再生指针改变它指向的内容或者是它本身的指向。这时候和实参指针就已经失去了联系，你 <strong> 无法改变实参指针指向 </strong> 。要想改变实参指针的指向，就只能用下面将要介绍的指针的指针或者指针的引用。</p>
+<h2 id="1-4-返回指针、引用："><a href="#1-4-返回指针、引用：" class="headerlink" title="1.4 返回指针、引用："></a>1.4 返回指针、引用：</h2><p>当函数返回一个值时，通常返回的都是这个值的临时对象，也就是一个值的拷贝。<br>当函数返回引用类型时，没有复制返回值，返回的是对象本身。<br>因此 <strong> 注意 </strong>“</p>
+<ul>
+<li>不要返回局部对象的引用！</li>
+<li>不要返回指向局部对象的指针！</li>
+</ul>
+<p>当函数执行完毕时，将释放分配给局部对象的存储空间。此时对局部对象的引用就会指向不确定的内存！同样，返回局部变量的指针，当函数结束时，局部对象被释放，返回的指针就变成了不再存在的对象的悬垂指针。</p>
+<p>到这里，如果还想加深对指针和引用的理解可以查阅 <code>C++符号表</code> 的相关知识。</p>
+<h1 id="2-指针的指针和指针的引用"><a href="#2-指针的指针和指针的引用" class="headerlink" title="2. 指针的指针和指针的引用"></a>2. 指针的指针和指针的引用</h1><p>通过前面的理解，我们能意识到，现在还缺少一种能改变实参指针指向的手段。</p>
+<h2 id="2-1-指针的指针"><a href="#2-1-指针的指针" class="headerlink" title="2.1 指针的指针"></a>2.1 指针的指针</h2><p>不如首先来看一个例子：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> **p_arg)</span> </span></div><div class="line">&#123;   </div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"被调函数中："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"p_arg="</span>&lt;&lt;p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"*p_arg="</span>&lt;&lt;*p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"**p_arg="</span> &lt;&lt;**p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line">	**p_arg=<span class="number">5</span>;          <span class="comment">// 改变实参指向内容的值 	</span></div><div class="line">	 *p_arg=<span class="keyword">new</span> <span class="keyword">int</span> ;          <span class="comment">// 改变实参的指向， new 的对象不随子函数的结束而销毁 	 </span></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> a=<span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> *p=&amp;a;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"主函数中："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;a="</span>&lt;&lt;&amp;a&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    </div><div class="line">	func(&amp;p);</div><div class="line">    </div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"函数调用后："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"*p="</span>&lt;&lt;*p&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"p="</span>&lt;&lt;p&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"a="</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="22-51-48.jpg" alt=""></p>
+<p>首先我们需要先明白这三种形式在被调函数中代表什么：<br><strong> p_arg</strong>: 是一个指向指针的指针,里面存的是 <em>p的地址;<br>** \</em>p_arg <strong>:  就是实参，一个指向变量a的指针，修改它，就可以修改实参指针的指向;
+</strong> * *p_arg **: 是实参指向的内容，即a的值。</p>
+<h2 id="2-2-指针的引用"><a href="#2-2-指针的引用" class="headerlink" title="2.2 指针的引用"></a>2.2 指针的引用</h2><p>同样，看例子：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> *&amp;p_arg)</span> </span></div><div class="line">&#123;   </div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"被调函数中："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"p_arg="</span>&lt;&lt;p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"*p_arg="</span>&lt;&lt;*p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">		</div><div class="line">	 *p_arg=<span class="number">5</span>;                 <span class="comment">// 改变实参指向内容的值 </span></div><div class="line">	</div><div class="line">	 p_arg=<span class="keyword">new</span> <span class="keyword">int</span> ;          <span class="comment">// 改变实参的指向， new 的对象不随子函数的结束而销毁             </span></div><div class="line">	 </div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> a=<span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> *p=&amp;a;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"主函数中："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;(*p)="</span>&lt;&lt;&amp;(*p)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    </div><div class="line">	func(p);</div><div class="line">    </div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"函数调用后："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"*p="</span>&lt;&lt;*p&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"a="</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"p="</span>&lt;&lt;p&lt;&lt;<span class="built_in">endl</span>; </div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="23-01-27.jpg" alt=""></p>
+<p>需要明白下面两种形式在被调函数中代表的意义：<br><strong> p_arg </strong>： 是指针的引用，主函数里的 <em>p；<br>** \</em>p_arg<em>*: 实参的内容，即主函数中a 和 </em>p的值。</p>
+
+
+                <hr>
+
+                
+                <!-- 多说 Share start -->
+                </style>
+                <div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="2017/03/23/深入理解C-指针、引用及指针的指针/"
+                    data-title="深入理解C++指针、引用及指针的指针"
+                    data-url="http://codepalace.org/2017/03/23/深入理解C-指针、引用及指针的指针/"
+                    data-images="http://codepalace.org/2017/03/23/深入理解C-指针、引用及指针的指针/nightstar2.jpg"
+                    data-content="C++ 用了这么久，发现身边还是有同学不能理解 C++ 的指针、引用的本质，对指针的指针、指针... | 代码殿堂 | Code Palace " >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/03/08/转载-从头到尾彻底理解KMP/" data-toggle="tooltip" data-placement="top" title="[转载]:从头到尾彻底理解KMP">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="2017/03/23/深入理解C-指针、引用及指针的指针/"
+                        data-title="深入理解C++指针、引用及指针的指针"
+                        data-url="http://codepalace.org/2017/03/23/深入理解C-指针、引用及指针的指针/" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#C++" title="C++">C++</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://codebelief.com" target="_blank">代码信条</a></li>
+                    
+                </ul>
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'surflyan';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 代码殿堂-Code Palace 2017 
+                    <br>
+                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Posted by <a href="https://github.com/Surflyan/Surflyan.github.io">Surflyan</a>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://codepalace.org/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Surflyan
+    var _gaId = 'UA-90996514-1';
+    var _gaDomain = 'www.codepalace.org';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Surflyan
+    var _baId = '5580aadc4c87d87d2202096d9e278ef3';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Surflyan to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
