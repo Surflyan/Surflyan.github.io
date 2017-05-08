@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://codepalace.org/about/index.html</loc>
+    
+    <lastmod>2017-05-08T16:10:18.911Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://codepalace.org/2017/03/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3C-%E6%8C%87%E9%92%88%E3%80%81%E5%BC%95%E7%94%A8%E5%8F%8A%E6%8C%87%E9%92%88%E7%9A%84%E6%8C%87%E9%92%88/</loc>
     
     <lastmod>2017-03-26T04:30:09.022Z</lastmod>
@@ -47,13 +54,6 @@
     <loc>http://codepalace.org/2017/01/26/Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2--%E8%BF%9B%E9%98%B6/</loc>
     
     <lastmod>2017-01-29T03:14:48.477Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://codepalace.org/about/index.html</loc>
-    
-    <lastmod>2017-01-28T14:11:01.104Z</lastmod>
     
   </url>
   
