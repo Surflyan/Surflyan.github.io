@@ -3,7 +3,7 @@
 
 <!-- Head tag -->
 <head>
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="C_eEXCRkzztEJGJcIUrKnVlTpQ76fgidG6Wp04m0Js0" />
     <meta name="baidu-site-verification" content="sdTqGlKswq" />
@@ -50,14 +50,14 @@
     <![endif]-->
 
     <!-- ga & ba script hoook -->
-    <script></script>
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
 
-    <!-- Navigation -->
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
 <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -98,14 +98,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -212,7 +212,7 @@
 <p><img src="sample.png" alt="">￼<br>我们可以从样本分布中发现，不同的标签值的样本分布存在着一些规律。这就说明，这三个特征值确实和分类关系密切。</p>
 <h1 id="归一化数据"><a href="#归一化数据" class="headerlink" title="归一化数据"></a>归一化数据</h1><p>可以发现，飞行里程数相差较大，这时候这一特征对计算结果的影响最大，远远大于其他两个特征。 而这三个特征是同等重要的，因此需要将数值归一化，使其范围转化到0-1区间。<br>这里采用如下的归一化方法：</p>
 <figure class="highlight plain"><figcaption><span>```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">```python</div><div class="line">def autoNorm(dataset):</div><div class="line">    minVal=dataset.min(axis=0)</div><div class="line">    maxVal=dataset.max(axis=0)</div><div class="line">    rngVal=maxVal-minVal</div><div class="line">    m=dataset.shape[0]</div><div class="line">    norm=dataset-np.tile(minVal,(m,1))</div><div class="line">    norm=norm/np.tile(rngVal,(m,1))</div><div class="line">    return norm </div><div class="line">dataset=autoNorm(dataset)</div><div class="line">print dataset</div></pre></td></tr></table></figure>
-<p>##归一化后的数据<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[[ <span class="number">0.44832535</span>  <span class="number">0.39805139</span>  <span class="number">0.56233353</span>]</div><div class="line"> [ <span class="number">0.15873259</span>  <span class="number">0.34195467</span>  <span class="number">0.98724416</span>]</div><div class="line"> [ <span class="number">0.28542943</span>  <span class="number">0.06892523</span>  <span class="number">0.47449629</span>]</div><div class="line"> ..., </div><div class="line"> [ <span class="number">0.29115949</span>  <span class="number">0.50910294</span>  <span class="number">0.51079493</span>]</div><div class="line"> [ <span class="number">0.52711097</span>  <span class="number">0.43665451</span>  <span class="number">0.4290048</span> ]</div><div class="line"> [ <span class="number">0.47940793</span>  <span class="number">0.3768091</span>   <span class="number">0.78571804</span>]]</div></pre></td></tr></table></figure></p>
+<h3 id="归一化后的数据"><a href="#归一化后的数据" class="headerlink" title="归一化后的数据"></a>归一化后的数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[[ <span class="number">0.44832535</span>  <span class="number">0.39805139</span>  <span class="number">0.56233353</span>]</div><div class="line"> [ <span class="number">0.15873259</span>  <span class="number">0.34195467</span>  <span class="number">0.98724416</span>]</div><div class="line"> [ <span class="number">0.28542943</span>  <span class="number">0.06892523</span>  <span class="number">0.47449629</span>]</div><div class="line"> ..., </div><div class="line"> [ <span class="number">0.29115949</span>  <span class="number">0.50910294</span>  <span class="number">0.51079493</span>]</div><div class="line"> [ <span class="number">0.52711097</span>  <span class="number">0.43665451</span>  <span class="number">0.4290048</span> ]</div><div class="line"> [ <span class="number">0.47940793</span>  <span class="number">0.3768091</span>   <span class="number">0.78571804</span>]]</div></pre></td></tr></table></figure>
 <h1 id="划分数据集"><a href="#划分数据集" class="headerlink" title="划分数据集"></a>划分数据集</h1><p>此处选择将数据的50%作为训练集，剩下的50%作为测试集<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">div=<span class="number">0.5</span></div><div class="line"></div><div class="line">train_num=int(len(dataset)*div)</div><div class="line"></div><div class="line">dataset_x_train=dataset[:-train_num]</div><div class="line">dataset_y_train=labels[:-train_num] </div><div class="line"></div><div class="line">dataset_x_test=dataset[-train_num:]</div><div class="line">dataset_y_test=labels[-train_num:]</div></pre></td></tr></table></figure></p>
 <h1 id="构建KNN分类器"><a href="#构建KNN分类器" class="headerlink" title="构建KNN分类器"></a>构建KNN分类器</h1><p>调用 <code>scikit-learn</code>里的 k近邻分类器来实现<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</div><div class="line"><span class="comment">#定义一个knn分类器对象</span></div><div class="line">KNN=KNeighborsClassifier(n_neighbors=<span class="number">5</span>,p=<span class="number">2</span>)   <span class="comment">#k设为5，p=2距离度量采用欧氏距离</span></div><div class="line"></div><div class="line">KNN.fit(dataset_x_train,dataset_y_train)</div><div class="line"><span class="comment">#调用该对象的训练方法，主要接收两个参数，训练数据集及其样本标签</span></div><div class="line">dataset_y_predict=KNN.predict(dataset_x_test)</div><div class="line"><span class="comment">#对测试集做出预测</span></div></pre></td></tr></table></figure></p>
 <h1 id="测试数据"><a href="#测试数据" class="headerlink" title="测试数据"></a>测试数据</h1><p>打印出测试集最后的是个数据进行查看：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">dataset_y_predict=KNN.predict(dataset_x_test)</div><div class="line"></div><div class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">"dataset_y_predict="</span>)</span></span></div><div class="line">print (dataset_y_predict[-<span class="number">10</span>:])</div><div class="line"></div><div class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">"dataset_y_test="</span>)</span></span></div><div class="line"><span class="function"><span class="title">print</span><span class="params">(dataset_y_test[-<span class="number">10</span>:])</span></span></div><div class="line"></div><div class="line">score=KNN.score(dataset_x_test,dataset_y_test,sample_weight=None)</div><div class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">"accuracy=%f"</span>%score)</span></span></div></pre></td></tr></table></figure></p>
@@ -252,6 +252,10 @@
                 
 
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/05/26/使用-LATEX排版-数学公式/" data-toggle="tooltip" data-placement="top" title="使用 LATEX排版 数学公式">&larr; Previous Post</a>
+                        </li>
                     
                     
                         <li class="next">
@@ -582,7 +586,24 @@
 
 <!-- Image to hack wechat -->
 <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0" />
-<!-- Migrate from head to bottom, no longer block render and still work -->
+<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 </body>
 

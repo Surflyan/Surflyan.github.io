@@ -14,11 +14,11 @@
 
     <title>
         
-          Python进阶之迭代器 - 代码殿堂 | Code Palace
+          使用 LATEX排版 数学公式 - 代码殿堂 | Code Palace
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/2017/03/05/Python进阶之迭代器/">
+    <link rel="canonical" href="http://codepalace.org/2017/05/26/使用-LATEX排版-数学公式/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -156,7 +156,7 @@
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('nightstar2.jpg')
+        background-image: url('/img/header.jpeg')
     }
 </style>
 <header class="intro-header" >
@@ -166,16 +166,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#Python" title="Python">Python</a>
-                        
-                          <a class="tag" href="/tags/#Python进阶" title="Python进阶">Python进阶</a>
+                          <a class="tag" href="/tags/#LATEX" title="LATEX">LATEX</a>
                         
                     </div>
-                    <h1>Python进阶之迭代器</h1>
-                    <h2 class="subheading">Python 可迭代对象、迭代器的介绍</h2>
+                    <h1>使用 LATEX排版 数学公式</h1>
+                    <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by Surflyan on
-                        2017-03-05
+                        2017-05-26
                     </span>
                 </div>
             </div>
@@ -194,45 +192,28 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="1-容器-container"><a href="#1-容器-container" class="headerlink" title="1.容器(container)"></a>1.容器(container)</h1><p>容器是存储元素的一种数据结构，可进行成员测试，在python中典型的容器有：</p>
-<ul>
-<li>list</li>
-<li>set</li>
-<li>dict</li>
-<li>tuple </li>
-<li>str</li>
-<li>…</li>
-</ul>
-<p>容器较容易理解，可参照生活中容器的理解。</p>
-<h1 id="2-可迭代对象-interable"><a href="#2-可迭代对象-interable" class="headerlink" title="2. 可迭代对象(interable)"></a>2. 可迭代对象(interable)</h1><p><strong> 迭代(interate) </strong> 是指按照某种顺序逐个访问序列中的每一项。<br>大部分容器都是可迭代的，但还有其他对象也可迭代，如文件对象、管道对象，可迭代对象也可用来表示一个包含有限元素的数据结构。<br>可迭代对象可以是任意对象，只要该对象实现了 <code>__iter__</code> 方法。<br>可用<code>isinstance()</code>判断一个对象是否是可迭代对象：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;<span class="keyword">from</span> collections <span class="keyword">import</span> Interable</div><div class="line">&gt;&gt;&gt;isinstance([],Iterable)</div><div class="line"><span class="keyword">True</span></div><div class="line">&gt;&gt;&gt;isinstance(<span class="string">'abc'</span>,Iterable)</div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure></p>
-<p><code>__iter__</code> 方法会返回一个迭代器。那么什么是迭代器?</p>
-<h1 id="3-迭代器-interator"><a href="#3-迭代器-interator" class="headerlink" title="3. 迭代器(interator)"></a>3. 迭代器(interator)</h1><p>所谓的迭代器就是具有 <code>next</code> 方法的对象（<strong> 注：python3中为<code>__next__()</code> </strong> )。在调用 next 方法时，迭代器会返回它的下一个值，如果迭代器中没有值可以返回，会引发一个 <code>StopIteration</code> 异常。所以迭代器本质上是一个产生值的工厂，每次向迭代器请求下一个值，迭代器都会进行计算出相应的值并返回。</p>
-<p>可用 <code>isinstance()</code>判断一个对象是否是迭代器：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;<span class="keyword">from</span> collections <span class="keyword">import</span> Iterator</div><div class="line">&gt;&gt;&gt;isinstance ((x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">2</span>)), Iterator)</div><div class="line"><span class="keyword">True</span></div><div class="line">&gt;&gt;&gt;isinstance([],Iterator)</div><div class="line"><span class="keyword">False</span></div></pre></td></tr></table></figure></p>
-<p>一般来说，迭代器本身也是可迭代的，即迭代器有返回自己的 next 方法。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;<span class="keyword">from</span> collections <span class="keyword">import</span> Iterator</div><div class="line">&gt;&gt;&gt;isinstance ((x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">2</span>)), Iterator)</div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure></p>
-<p>但<code>list</code>、<code>dict</code>、<code>str</code>等虽然都是可迭代对象，却不是迭代器。但可以使用 <code>iter()</code>来使可迭代对象变成迭代器。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>x=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>y=iter(x)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(x)</div><div class="line">&lt;type <span class="string">'list'</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(y)</div><div class="line">&lt;type <span class="string">'listiterator'</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>next(x)</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;pyshell#13&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">    next(x)</div><div class="line">TypeError: list object <span class="keyword">is</span> <span class="keyword">not</span> an iterator</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>next(y)</div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>dir(y)</div><div class="line">[<span class="string">'__class__'</span>, <span class="string">'__delattr__'</span>, <span class="string">'__doc__'</span>, <span class="string">'__format__'</span>, <span class="string">'__getattribute__'</span>, <span class="string">'__hash__'</span>, <span class="string">'__init__'</span>, <span class="string">'__iter__'</span>, <span class="string">'__length_hint__'</span>, <span class="string">'__new__'</span>, <span class="string">'__reduce__'</span>, <span class="string">'__reduce_ex__'</span>, <span class="string">'__repr__'</span>, <span class="string">'__setattr__'</span>, <span class="string">'__sizeof__'</span>, <span class="string">'__str__'</span>, <span class="string">'__subclasshook__'</span>, <span class="string">'next'</span>]</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>可以看出，x 是可迭代对象，y 是迭代器，在迭代器中，有 <code>__iter__()</code> 以及 <code>next()</code> 方法。<br>所有<code>itertools</code>模块中的函数都会返回一个迭代器。</p>
-</blockquote>
-<p>综上： 可得出 <strong> 生成迭代器的两种方法 </strong> :</p>
-<ol>
-<li>为容器对象添加 <code>__iter__()</code> 和 <code>next()</code> 方法（Python 3 中是 <code>next()</code>）；<strong>iter</strong>() 返回迭代器对象本身 self, next() 则返回每次调用 next()时或迭代时的元素；</li>
-<li>内置函数 <code>iter()</code>将可迭代对象转化为迭代器</li>
+                <h1 id="使用-LaTeX-排版数学公式"><a href="#使用-LaTeX-排版数学公式" class="headerlink" title="使用 LaTeX 排版数学公式"></a>使用 LaTeX 排版数学公式</h1><h2 id="常见数学符号的实现"><a href="#常见数学符号的实现" class="headerlink" title="常见数学符号的实现"></a>常见数学符号的实现</h2><h4 id="指数及下标的实现"><a href="#指数及下标的实现" class="headerlink" title="指数及下标的实现"></a>指数及下标的实现</h4><p>$x_{1}$</p>
+<figure class="highlight plain"><figcaption><span>```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">$$x_&#123;1&#125;$$</div><div class="line"></div><div class="line">``` $$x_&#123;1&#125;$$ ``` </div><div class="line">双$$为居中</div><div class="line"></div><div class="line">$x^&#123;2&#125;\qquad a_&#123;ij&#125;^&#123;-\alpha t&#125;$</div><div class="line"></div><div class="line">``` $x^&#123;2&#125;\qquad a_&#123;ij&#125;^&#123;-\alpha t&#125;$</div></pre></td></tr></table></figure>
+<h4 id="平方根的实现"><a href="#平方根的实现" class="headerlink" title="平方根的实现"></a>平方根的实现</h4><p>$\sqrt{ x^{2}+\sqrt{y} }$</p>
+<figure class="highlight plain"><figcaption><span>x^&#123;2&#125;+\sqrt&#123;y&#125; &#125;$ ```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 在表达式的上，下画出水平线。</div><div class="line"></div><div class="line">$\overline&#123;a+b&#125;+c \qquad \underline&#123;a+b&#125;+c $</div><div class="line"></div><div class="line">``` $\overline&#123;a+b&#125;+c \qquad \underline&#123;a+b&#125;+c $</div></pre></td></tr></table></figure>
+<h4 id="在表达式上、下给出大括号"><a href="#在表达式上、下给出大括号" class="headerlink" title="在表达式上、下给出大括号"></a>在表达式上、下给出大括号</h4><p>$\underbrace{a+b+\cdots+ z}_{26}$</p>
+<figure class="highlight plain"><figcaption><span>z&#125;_&#123;26&#125;$ ```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">同理overbrace可得上括号</div><div class="line"></div><div class="line">#### 向量（Vectors）的表示</div><div class="line"></div><div class="line">$\vec a$</div><div class="line"></div><div class="line">``` $\vec c$</div></pre></td></tr></table></figure>
+<p>$\overrightarrow{BC}$</p>
+<figure class="highlight plain"><figcaption><span>```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">毫无疑问 overlaftarrow 你也能明白是怎么样的</div><div class="line"></div><div class="line">#### 分数 （Fraction) 的表示</div><div class="line"></div><div class="line">$\frac&#123;k&#125;&#123;k+1&#125;$</div><div class="line"></div><div class="line">``` $\frac&#123;k&#125;&#123;k+1&#125;$</div></pre></td></tr></table></figure>
+<h4 id="积分、求和、连乘运算符"><a href="#积分、求和、连乘运算符" class="headerlink" title="积分、求和、连乘运算符"></a>积分、求和、连乘运算符</h4><p>$\sum<em>{i=1}^{n}\qquad\int</em>{0}^{\frac{1}{2}} \qquad \prod_{i=1}^{j}$</p>
+<figure class="highlight plain"><figcaption><span>\qquad \prod_&#123;i=1&#125;^&#123;j&#125;$ ```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 美化技巧</div><div class="line"></div><div class="line">``` \, ``` 是一个thin space， 增加1/6 quad 间隔 。</div><div class="line"></div><div class="line">``` \! ```  等于-1/6 quad</div><div class="line"></div><div class="line">## 常用数学公式</div><div class="line"></div><div class="line">$$\sum_&#123;p=1&#125;^&#123;n&#125;f(p)=\int_&#123;t&gt;1&#125;f(t)\,d\pi(t).$$</div><div class="line"></div><div class="line">``` $$\sum_&#123;p=1&#125;^&#123;n&#125;f(p)=\int_&#123;t&gt;1&#125;f(t)\,d\pi(t).$$</div></pre></td></tr></table></figure>
+<p>$$\lim<em>{n\to\infty}\sum</em>{k=1}^{n}\frac{1}{k^2}=\frac{\pi^2}{6} $$</p>
+<figure class="highlight plain"><figcaption><span>$$ ```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$$\int\!\!\!\int_D dx\,dy $$</div><div class="line"></div><div class="line">``` $$\int\!\!\!\int_D dx\,dy$$</div></pre></td></tr></table></figure>
+<p>$${1,2,\ldots,n}$$</p>
+<figure class="highlight plain"><figcaption><span>```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$$\&#123;\,x\mid x&gt;5\,\&#125;$$</div><div class="line"></div><div class="line">``` $$\&#123;\,x\mid x&gt;5\,\&#125;$$</div></pre></td></tr></table></figure>
+<p>$$|-x|=|+x|$$</p>
+<figure class="highlight plain"><figcaption><span>```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">这样写并不美观。我们可以这么做</div><div class="line"></div><div class="line">$$\left|-x\right|=\left|+x\right|$$</div><div class="line">``` $$\left|-x\right|=\left|+x\right|$$</div></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><p><a href="http://bbs.emath.ac.cn/thread-5237-1-1.html" target="_blank" rel="external">善用 LaTeX 排版 数学公式</a></p>
+</li>
+<li><p><a href="http://mohu.org/info/symbols/symbols.htm​" target="_blank" rel="external">常用数学符号的 LaTeX 表示方法</a></p>
+</li>
 </ol>
-<p>可自定义实现一个迭代器对象:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRange</span><span class="params">(object)</span>:</span>  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n)</span>:</span> </div><div class="line">        <span class="keyword">print</span> <span class="string">" I made this iterator!"</span>  </div><div class="line">        self.i = <span class="number">1</span></div><div class="line">        self.n = n</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">next</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">" Calling __next__ method!"</span></div><div class="line">        <span class="keyword">if</span> self.i &lt;= self.n:</div><div class="line">            i = self.i</div><div class="line">            self.i += <span class="number">1</span></div><div class="line">            <span class="keyword">return</span> i</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">raise</span> StopIteration()</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    x = MyRange(<span class="number">6</span>)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> x:</div><div class="line">        <span class="keyword">print</span> i</div><div class="line">`</div></pre></td></tr></table></figure></p>
-<p>运行结果是<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"> I made this iterator!</div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">1</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">2</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">3</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">4</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">5</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">6</span></div><div class="line"> Calling __next__ method!</div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>看出来了吗？上面的代码其实就是自己实现的 <code>range()</code> 函数呢,而 for 语句其实时调用了迭代器的 next 函数。</p>
-</blockquote>
-<h1 id="4-小结"><a href="#4-小结" class="headerlink" title="4. 小结"></a>4. 小结</h1><ol>
-<li>在 Python 中，迭代器是遵循迭代协议的对象。</li>
-<li>可以使用iter() 以从任何序列得到迭代器（如 list, tuple, dictionary, set 等）。</li>
-<li>编写类，实现<code>__iter__()</code>方法，以及 <code>next()</code>（Python 2）或<code>__next__()</code>（Python 3） 。当没有元素时，则引发 StopIteration异常。</li>
-<li>如果有很多值，列表就会占用太多的内存，而迭代器则占用更少内存，每次只记录一个值。</li>
-<li>迭代器从第一个元素开始访问，直到所有的元素被访问完结束，只能往前不会后退。</li>
-</ol>
-<blockquote>
-<p>请多多指教！</p>
-</blockquote>
 
 
                 <hr>
@@ -242,11 +223,12 @@
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="2017/03/05/Python进阶之迭代器/"
-                    data-title="Python进阶之迭代器"
-                    data-url="http://codepalace.org/2017/03/05/Python进阶之迭代器/"
-                    data-images="http://codepalace.org/2017/03/05/Python进阶之迭代器/nightstar2.jpg"
-                    data-content="1.容器(container)容器是存储元素的一种数据结构，可进行成员测试，在python中典... | 代码殿堂 | Code Palace " >
+                    data-thread-key="2017/05/26/使用-LATEX排版-数学公式/"
+                    data-title="使用 LATEX排版 数学公式"
+                    data-url="http://codepalace.org/2017/05/26/使用-LATEX排版-数学公式/"
+                    data-images=""
+                    data-content="使用 LaTeX 排版数学公式常见数学符号的实现指数及下标的实现$x_{1}$
+```1234... | 代码殿堂 | Code Palace " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -264,13 +246,9 @@
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2017/03/06/Python进阶之生成器/" data-toggle="tooltip" data-placement="top" title="Python进阶之生成器">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2017/01/28/Hexo搭建个人博客-优化/" data-toggle="tooltip" data-placement="top" title="Hexo搭建个人博客--优化">Next Post &rarr;</a>
+                            <a href="/2017/05/16/KNN实战之改进约会网站的配对效果/" data-toggle="tooltip" data-placement="top" title="KNN实战之改进约会网站的配对效果">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -279,9 +257,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="2017/03/05/Python进阶之迭代器/"
-                        data-title="Python进阶之迭代器"
-                        data-url="http://codepalace.org/2017/03/05/Python进阶之迭代器/" >
+                        data-thread-key="2017/05/26/使用-LATEX排版-数学公式/"
+                        data-title="使用 LATEX排版 数学公式"
+                        data-url="http://codepalace.org/2017/05/26/使用-LATEX排版-数学公式/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -321,9 +299,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#Python" title="Python">Python</a>
-                        
-                          <a class="tag" href="/tags/#Python进阶" title="Python进阶">Python进阶</a>
+                          <a class="tag" href="/tags/#LATEX" title="LATEX">LATEX</a>
                         
                     </div>
                 </section>
