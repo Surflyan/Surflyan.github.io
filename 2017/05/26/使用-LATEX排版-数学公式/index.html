@@ -192,22 +192,44 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="使用-LaTeX-排版数学公式"><a href="#使用-LaTeX-排版数学公式" class="headerlink" title="使用 LaTeX 排版数学公式"></a>使用 LaTeX 排版数学公式</h1><h2 id="常见数学符号的实现"><a href="#常见数学符号的实现" class="headerlink" title="常见数学符号的实现"></a>常见数学符号的实现</h2><h4 id="指数及下标的实现"><a href="#指数及下标的实现" class="headerlink" title="指数及下标的实现"></a>指数及下标的实现</h4><p>$x_{1}$</p>
-<figure class="highlight plain"><figcaption><span>```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">$$x_&#123;1&#125;$$</div><div class="line"></div><div class="line">``` $$x_&#123;1&#125;$$ ``` </div><div class="line">双$$为居中</div><div class="line"></div><div class="line">$x^&#123;2&#125;\qquad a_&#123;ij&#125;^&#123;-\alpha t&#125;$</div><div class="line"></div><div class="line">``` $x^&#123;2&#125;\qquad a_&#123;ij&#125;^&#123;-\alpha t&#125;$</div></pre></td></tr></table></figure>
+                <h2 id="常见数学符号的实现"><a href="#常见数学符号的实现" class="headerlink" title="常见数学符号的实现"></a>常见数学符号的实现</h2><h4 id="指数及下标的实现"><a href="#指数及下标的实现" class="headerlink" title="指数及下标的实现"></a>指数及下标的实现</h4><p>$x_{1}$</p>
+<p><code>$x_{1}$</code></p>
+<p>$$x_{1}$$</p>
+<p><code>$$x_{1}$$</code><br>双$$为居中</p>
+<p>$x^{2}\qquad a_{ij}^{-\alpha t}$</p>
+<p><code>$x^{2}\qquad a_{ij}^{-\alpha t}$</code></p>
 <h4 id="平方根的实现"><a href="#平方根的实现" class="headerlink" title="平方根的实现"></a>平方根的实现</h4><p>$\sqrt{ x^{2}+\sqrt{y} }$</p>
-<figure class="highlight plain"><figcaption><span>x^&#123;2&#125;+\sqrt&#123;y&#125; &#125;$ ```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 在表达式的上，下画出水平线。</div><div class="line"></div><div class="line">$\overline&#123;a+b&#125;+c \qquad \underline&#123;a+b&#125;+c $</div><div class="line"></div><div class="line">``` $\overline&#123;a+b&#125;+c \qquad \underline&#123;a+b&#125;+c $</div></pre></td></tr></table></figure>
+<p><code>$\sqrt{ x^{2}+\sqrt{y} }$</code></p>
+<h4 id="在表达式的上，下画出水平线。"><a href="#在表达式的上，下画出水平线。" class="headerlink" title="在表达式的上，下画出水平线。"></a>在表达式的上，下画出水平线。</h4><p>$\overline{a+b}+c \qquad \underline{a+b}+c $</p>
+<p><code>$\overline{a+b}+c \qquad \underline{a+b}+c $</code></p>
 <h4 id="在表达式上、下给出大括号"><a href="#在表达式上、下给出大括号" class="headerlink" title="在表达式上、下给出大括号"></a>在表达式上、下给出大括号</h4><p>$\underbrace{a+b+\cdots+ z}_{26}$</p>
-<figure class="highlight plain"><figcaption><span>z&#125;_&#123;26&#125;$ ```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">同理overbrace可得上括号</div><div class="line"></div><div class="line">#### 向量（Vectors）的表示</div><div class="line"></div><div class="line">$\vec a$</div><div class="line"></div><div class="line">``` $\vec c$</div></pre></td></tr></table></figure>
+<p><code>$undefbrace{a+b+\cdots+ z}_{26}$</code></p>
+<p>同理overbrace可得上括号</p>
+<h4 id="向量（Vectors）的表示"><a href="#向量（Vectors）的表示" class="headerlink" title="向量（Vectors）的表示"></a>向量（Vectors）的表示</h4><p>$\vec a$</p>
+<p><code>$\vec c$</code></p>
 <p>$\overrightarrow{BC}$</p>
-<figure class="highlight plain"><figcaption><span>```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">毫无疑问 overlaftarrow 你也能明白是怎么样的</div><div class="line"></div><div class="line">#### 分数 （Fraction) 的表示</div><div class="line"></div><div class="line">$\frac&#123;k&#125;&#123;k+1&#125;$</div><div class="line"></div><div class="line">``` $\frac&#123;k&#125;&#123;k+1&#125;$</div></pre></td></tr></table></figure>
+<p><code>$\overrightarrow{BC}$</code></p>
+<p>毫无疑问 overlaftarrow 你也能明白是怎么样的</p>
+<h4 id="分数-（Fraction-的表示"><a href="#分数-（Fraction-的表示" class="headerlink" title="分数 （Fraction) 的表示"></a>分数 （Fraction) 的表示</h4><p>$\frac{k}{k+1}$</p>
+<p><code>$\frac{k}{k+1}$</code></p>
 <h4 id="积分、求和、连乘运算符"><a href="#积分、求和、连乘运算符" class="headerlink" title="积分、求和、连乘运算符"></a>积分、求和、连乘运算符</h4><p>$\sum<em>{i=1}^{n}\qquad\int</em>{0}^{\frac{1}{2}} \qquad \prod_{i=1}^{j}$</p>
-<figure class="highlight plain"><figcaption><span>\qquad \prod_&#123;i=1&#125;^&#123;j&#125;$ ```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 美化技巧</div><div class="line"></div><div class="line">``` \, ``` 是一个thin space， 增加1/6 quad 间隔 。</div><div class="line"></div><div class="line">``` \! ```  等于-1/6 quad</div><div class="line"></div><div class="line">## 常用数学公式</div><div class="line"></div><div class="line">$$\sum_&#123;p=1&#125;^&#123;n&#125;f(p)=\int_&#123;t&gt;1&#125;f(t)\,d\pi(t).$$</div><div class="line"></div><div class="line">``` $$\sum_&#123;p=1&#125;^&#123;n&#125;f(p)=\int_&#123;t&gt;1&#125;f(t)\,d\pi(t).$$</div></pre></td></tr></table></figure>
+<p><code>$\sum_{i=1}^{n}\qquad\int_{0}^{\frac{1}{2}} \qquad \prod_{i=1}^{j}$</code></p>
+<h2 id="美化技巧"><a href="#美化技巧" class="headerlink" title="美化技巧"></a>美化技巧</h2><p><code>\,</code> 是一个thin space， 增加1/6 quad 间隔 。</p>
+<p><code>\!</code>  等于-1/6 quad</p>
+<h2 id="常用数学公式"><a href="#常用数学公式" class="headerlink" title="常用数学公式"></a>常用数学公式</h2><p>$$\sum<em>{p=1}^{n}f(p)=\int</em>{t&gt;1}f(t)\,d\pi(t).$$</p>
+<p><code>$$\sum_{p=1}^{n}f(p)=\int_{t&gt;1}f(t)\,d\pi(t).$$</code></p>
 <p>$$\lim<em>{n\to\infty}\sum</em>{k=1}^{n}\frac{1}{k^2}=\frac{\pi^2}{6} $$</p>
-<figure class="highlight plain"><figcaption><span>$$ ```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$$\int\!\!\!\int_D dx\,dy $$</div><div class="line"></div><div class="line">``` $$\int\!\!\!\int_D dx\,dy$$</div></pre></td></tr></table></figure>
+<p><code>$$\lim_{n\to\infty}\sum_{k=1}^{n}\frac{1}{k^2}=\frac{\pi^2}{6} $$</code></p>
+<p>$$\int!!!\int_D dx\,dy $$</p>
+<p><code>$$\int\!\!\!\int_D dx\,dy$$</code></p>
 <p>$${1,2,\ldots,n}$$</p>
-<figure class="highlight plain"><figcaption><span>```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$$\&#123;\,x\mid x&gt;5\,\&#125;$$</div><div class="line"></div><div class="line">``` $$\&#123;\,x\mid x&gt;5\,\&#125;$$</div></pre></td></tr></table></figure>
+<p><code>$$\{1,2,\ldots,n\}$$</code></p>
+<p>$${\,x\mid x&gt;5\,}$$</p>
+<p><code>$$\{\,x\mid x&gt;5\,\}$$</code></p>
 <p>$$|-x|=|+x|$$</p>
-<figure class="highlight plain"><figcaption><span>```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">这样写并不美观。我们可以这么做</div><div class="line"></div><div class="line">$$\left|-x\right|=\left|+x\right|$$</div><div class="line">``` $$\left|-x\right|=\left|+x\right|$$</div></pre></td></tr></table></figure>
+<p><code>$$|-x|=|+x|$$</code></p>
+<p>这样写并不美观。我们可以这么做</p>
+<p>$$\left|-x\right|=\left|+x\right|$$<br><code>$$\left|-x\right|=\left|+x\right|$$</code></p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
 <li><p><a href="http://bbs.emath.ac.cn/thread-5237-1-1.html" target="_blank" rel="external">善用 LaTeX 排版 数学公式</a></p>
 </li>
@@ -227,8 +249,10 @@
                     data-title="使用 LATEX排版 数学公式"
                     data-url="http://codepalace.org/2017/05/26/使用-LATEX排版-数学公式/"
                     data-images=""
-                    data-content="使用 LaTeX 排版数学公式常见数学符号的实现指数及下标的实现$x_{1}$
-```1234... | 代码殿堂 | Code Palace " >
+                    data-content="常见数学符号的实现指数及下标的实现$x_{1}$
+$x_{1}$
+$$x_{1}$$
+$$x_... | 代码殿堂 | Code Palace " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
