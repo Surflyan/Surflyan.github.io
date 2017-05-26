@@ -194,8 +194,7 @@
 
                 <h2 id="常见数学符号的实现"><a href="#常见数学符号的实现" class="headerlink" title="常见数学符号的实现"></a>常见数学符号的实现</h2><h4 id="指数及下标的实现"><a href="#指数及下标的实现" class="headerlink" title="指数及下标的实现"></a>指数及下标的实现</h4><p>$x_{1}$</p>
 <p><code>$x_{1}$</code></p>
-<p>$$x_{1}$$</p>
-<p><code>$$x_{1}$$</code><br>双$$为居中</p>
+<script type="math/tex; mode=display">x_{1}</script><p><code>$$x_{1}$$</code><br>双$$为居中</p>
 <p>$x^{2}\qquad a_{ij}^{-\alpha t}$</p>
 <p><code>$x^{2}\qquad a_{ij}^{-\alpha t}$</code></p>
 <h4 id="平方根的实现"><a href="#平方根的实现" class="headerlink" title="平方根的实现"></a>平方根的实现</h4><p>$\sqrt{ x^{2}+\sqrt{y} }$</p>
@@ -212,24 +211,21 @@
 <p>毫无疑问 overlaftarrow 你也能明白是怎么样的</p>
 <h4 id="分数-（Fraction-的表示"><a href="#分数-（Fraction-的表示" class="headerlink" title="分数 （Fraction) 的表示"></a>分数 （Fraction) 的表示</h4><p>$\frac{k}{k+1}$</p>
 <p><code>$\frac{k}{k+1}$</code></p>
-<h4 id="积分、求和、连乘运算符"><a href="#积分、求和、连乘运算符" class="headerlink" title="积分、求和、连乘运算符"></a>积分、求和、连乘运算符</h4><p>$\sum<em>{i=1}^{n}\qquad\int</em>{0}^{\frac{1}{2}} \qquad \prod_{i=1}^{j}$</p>
+<h4 id="积分、求和、连乘运算符"><a href="#积分、求和、连乘运算符" class="headerlink" title="积分、求和、连乘运算符"></a>积分、求和、连乘运算符</h4><p>$\sum_{i=1}^{n}$</p>
+<p>$\int_{0}^{\frac{1}{2}}$</p>
+<p>$\prod_{i=1}^{j}$</p>
 <p><code>$\sum_{i=1}^{n}\qquad\int_{0}^{\frac{1}{2}} \qquad \prod_{i=1}^{j}$</code></p>
 <h2 id="美化技巧"><a href="#美化技巧" class="headerlink" title="美化技巧"></a>美化技巧</h2><p><code>\,</code> 是一个thin space， 增加1/6 quad 间隔 。</p>
 <p><code>\!</code>  等于-1/6 quad</p>
-<h2 id="常用数学公式"><a href="#常用数学公式" class="headerlink" title="常用数学公式"></a>常用数学公式</h2><p>$$\sum<em>{p=1}^{n}f(p)=\int</em>{t&gt;1}f(t)\,d\pi(t).$$</p>
-<p><code>$$\sum_{p=1}^{n}f(p)=\int_{t&gt;1}f(t)\,d\pi(t).$$</code></p>
-<p>$$\lim<em>{n\to\infty}\sum</em>{k=1}^{n}\frac{1}{k^2}=\frac{\pi^2}{6} $$</p>
-<p><code>$$\lim_{n\to\infty}\sum_{k=1}^{n}\frac{1}{k^2}=\frac{\pi^2}{6} $$</code></p>
-<p>$$\int!!!\int_D dx\,dy $$</p>
-<p><code>$$\int\!\!\!\int_D dx\,dy$$</code></p>
-<p>$${1,2,\ldots,n}$$</p>
-<p><code>$$\{1,2,\ldots,n\}$$</code></p>
-<p>$${\,x\mid x&gt;5\,}$$</p>
-<p><code>$$\{\,x\mid x&gt;5\,\}$$</code></p>
-<p>$$|-x|=|+x|$$</p>
-<p><code>$$|-x|=|+x|$$</code></p>
+<h2 id="常用数学公式"><a href="#常用数学公式" class="headerlink" title="常用数学公式"></a>常用数学公式</h2><script type="math/tex; mode=display">\sum_{p=1}^{n}f(p)=\int_{t>1}f(t)\,d\pi(t).</script><p><code>$$\sum_{p=1}^{n}f(p)=\int_{t&gt;1}f(t)\,d\pi(t).$$</code></p>
+<script type="math/tex; mode=display">\lim_{n\to\infty}\sum_{k=1}^{n}\frac{1}{k^2}=\frac{\pi^2}{6}</script><p><code>$$\lim_{n\to\infty}\sum_{k=1}^{n}\frac{1}{k^2}=\frac{\pi^2}{6} $$</code></p>
+<script type="math/tex; mode=display">\int\!\!\!\int_D dx\,dy</script><p><code>$$\int\!\!\!\int_D dx\,dy$$</code></p>
+<script type="math/tex; mode=display">\{1,2,\ldots,n\}</script><p><code>$$\{1,2,\ldots,n\}$$</code></p>
+<script type="math/tex; mode=display">\{\,x\mid x>5\,\}</script><p><code>$$\{\,x\mid x&gt;5\,\}$$</code></p>
+<script type="math/tex; mode=display">|-x|=|+x|</script><p><code>$$|-x|=|+x|$$</code></p>
 <p>这样写并不美观。我们可以这么做</p>
-<p>$$\left|-x\right|=\left|+x\right|$$<br><code>$$\left|-x\right|=\left|+x\right|$$</code></p>
+<script type="math/tex; mode=display">\left|-x\right|=\left|+x\right|</script><p><code>$$\left|-x\right|=\left|+x\right|$$</code></p>
+<p>注： 有时由于解析器的原因有些 LaTex 会解析失败。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
 <li><p><a href="http://bbs.emath.ac.cn/thread-5237-1-1.html" target="_blank" rel="external">善用 LaTeX 排版 数学公式</a></p>
 </li>
@@ -251,8 +247,7 @@
                     data-images=""
                     data-content="常见数学符号的实现指数及下标的实现$x_{1}$
 $x_{1}$
-$$x_{1}$$
-$$x_... | 代码殿堂 | Code Palace " >
+x_{1}$$x_{1}$$... | 代码殿堂 | Code Palace " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
