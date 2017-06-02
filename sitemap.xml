@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://codepalace.org/2017/05/16/KNN%E5%AE%9E%E6%88%98%E4%B9%8B%E6%94%B9%E8%BF%9B%E7%BA%A6%E4%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E9%85%8D%E5%AF%B9%E6%95%88%E6%9E%9C/</loc>
+    <loc>http://codepalace.org/2017/05/26/%E4%BD%BF%E7%94%A8-LATEX%E6%8E%92%E7%89%88-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/</loc>
     
-    <lastmod>2017-06-02T10:42:44.288Z</lastmod>
+    <lastmod>2017-06-02T10:46:01.604Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://codepalace.org/2017/05/26/%E4%BD%BF%E7%94%A8-LATEX%E6%8E%92%E7%89%88-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/</loc>
+    <loc>http://codepalace.org/2017/05/16/KNN%E5%AE%9E%E6%88%98%E4%B9%8B%E6%94%B9%E8%BF%9B%E7%BA%A6%E4%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E9%85%8D%E5%AF%B9%E6%95%88%E6%9E%9C/</loc>
     
-    <lastmod>2017-06-02T10:40:06.238Z</lastmod>
+    <lastmod>2017-06-02T10:42:44.288Z</lastmod>
     
   </url>
   
@@ -65,7 +65,7 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-yaml.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/prettify.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -86,14 +86,14 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/prettify.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/prettify.css</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-vhdl.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/lang-yaml.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -107,21 +107,7 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-basic.js</loc>
-    
-    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://codepalace.org/Plugins/prettify/lang-clj.js</loc>
-    
-    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-css.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -135,14 +121,7 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-dart.js</loc>
-    
-    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-go.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/lang-basic.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -156,7 +135,21 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-ex.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/lang-dart.js</loc>
+    
+    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://codepalace.org/Plugins/prettify/lang-css.js</loc>
+    
+    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://codepalace.org/Plugins/prettify/lang-go.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -170,6 +163,13 @@
   </url>
   
   <url>
+    <loc>http://codepalace.org/Plugins/prettify/lang-ex.js</loc>
+    
+    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://codepalace.org/Plugins/prettify/lang-lisp.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
@@ -177,7 +177,7 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/prettify.css</loc>
+    <loc>http://codepalace.org/Plugins/prettify/lang-vhdl.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -191,21 +191,14 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-logtalk.js</loc>
-    
-    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-ml.js</loc>
-    
-    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://codepalace.org/Plugins/prettify/lang-lua.js</loc>
+    
+    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://codepalace.org/Plugins/prettify/lang-logtalk.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -226,14 +219,14 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-n.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/lang-ml.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-pascal.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/lang-n.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -254,14 +247,14 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-rd.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/lang-pascal.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-rust.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/lang-rd.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -275,7 +268,7 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-sql.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/lang-rust.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -283,6 +276,13 @@
   
   <url>
     <loc>http://codepalace.org/Plugins/prettify/lang-swift.js</loc>
+    
+    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://codepalace.org/Plugins/prettify/lang-sql.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
