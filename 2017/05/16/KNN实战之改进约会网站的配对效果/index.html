@@ -34,6 +34,9 @@
     <!-- Hux change font-awesome CDN to qiniu -->
     <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <!-- add by Surflyan-->
+    <link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="/js/google-code-prettify/tomorrow-night-eighties.min.css" type="text/css" rel="stylesheet" />
 
     <!-- Hux Delete, sad but pending in China
     <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -91,6 +94,13 @@
 
                         
                         <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/archives/">Archives</a>
                         </li>
                         
@@ -99,13 +109,6 @@
                         
                         <li>
                             <a href="/tags/">Tags</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -315,20 +318,146 @@
 </ul>
 <p>于是可以通过这些特征来预测A是否对某一个人感兴趣。</p>
 <h1 id="3-数据集介绍"><a href="#3-数据集介绍" class="headerlink" title="3. 数据集介绍"></a>3. 数据集介绍</h1><p>数据集包含以上三种特征以及评价，共有1000个样本。可以在<a href="http://pan.baidu.com/s/1c0NeKCg" target="_blank" rel="external">此处下载</a>。</p>
-<h1 id="3-1-读取数据集"><a href="#3-1-读取数据集" class="headerlink" title="3.1 读取数据集"></a>3.1 读取数据集</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_data_from_file</span><span class="params">(file_path)</span>:</span></div><div class="line">    dataset = []</div><div class="line">    labels = []</div><div class="line">    <span class="keyword">with</span> open(file_path, <span class="string">'r'</span>) <span class="keyword">as</span> f:</div><div class="line">        line = f.readline()</div><div class="line">        <span class="keyword">while</span> line != <span class="string">''</span>:</div><div class="line">            line = line.strip()</div><div class="line">            data = line.split(<span class="string">'\t'</span>) </div><div class="line">            <span class="comment">#get data with list</span></div><div class="line">            dataset.append(map(float, data[:<span class="number">3</span>]))</div><div class="line">            labels.append(int(data[<span class="number">-1</span>]))          </div><div class="line">            line = f.readline()         </div><div class="line">    <span class="comment"># tran to np.array()</span></div><div class="line">    <span class="keyword">return</span> np.array(dataset), labels</div><div class="line">dataset, labels = get_data_from_file(<span class="string">'datingTestSet2.txt'</span>)</div></pre></td></tr></table></figure>
-<h1 id="4-样本分布"><a href="#4-样本分布" class="headerlink" title="4. 样本分布"></a>4. 样本分布</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#coding:utf-8</span></div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d <span class="keyword">import</span> Axes3D</div><div class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>]=[<span class="string">'SimHei'</span>] </div><div class="line">plt.rcParams[<span class="string">'axes.unicode_minus'</span>]=<span class="keyword">False</span> <span class="comment">#中文显示</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span>  <span class="title">chart</span><span class="params">(dataset,labels)</span>:</span></div><div class="line">    fig=plt.figure()</div><div class="line">    ax=fig.add_subplot(<span class="number">111</span>,projection=<span class="string">'3d'</span>)</div><div class="line">    ls = <span class="number">15.</span>*np.array(labels)</div><div class="line">    ax.scatter(dataset[:,<span class="number">0</span>],dataset[:,<span class="number">1</span>],dataset[:,<span class="number">2</span>],ls,ls,ls,marker=<span class="string">'o'</span>)</div><div class="line">    ax.set_xlabel(<span class="string">u"飞行里程数"</span>)</div><div class="line">    ax.set_ylabel(<span class="string">u"玩游戏时间比"</span>)</div><div class="line">    ax.set_zlabel(<span class="string">u"冰激凌消费数"</span>)</div><div class="line">    plt.show(chart(dataset,labels)</div><div class="line">chart(dataset,labels)</div></pre></td></tr></table></figure>
+<h1 id="3-1-读取数据集"><a href="#3-1-读取数据集" class="headerlink" title="3.1 读取数据集"></a>3.1 读取数据集</h1><pre><code class="lang-python">import numpy as np
+def get_data_from_file(file_path):
+    dataset = []
+    labels = []
+    with open(file_path, &#39;r&#39;) as f:
+        line = f.readline()
+        while line != &#39;&#39;:
+            line = line.strip()
+            data = line.split(&#39;\t&#39;) 
+            #get data with list
+            dataset.append(map(float, data[:3]))
+            labels.append(int(data[-1]))          
+            line = f.readline()         
+    # tran to np.array()
+    return np.array(dataset), labels
+dataset, labels = get_data_from_file(&#39;datingTestSet2.txt&#39;)
+</code></pre>
+<h1 id="4-样本分布"><a href="#4-样本分布" class="headerlink" title="4. 样本分布"></a>4. 样本分布</h1><pre><code class="lang-python">#coding:utf-8
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+plt.rcParams[&#39;font.sans-serif&#39;]=[&#39;SimHei&#39;] 
+plt.rcParams[&#39;axes.unicode_minus&#39;]=False #中文显示
+
+def  chart(dataset,labels):
+    fig=plt.figure()
+    ax=fig.add_subplot(111,projection=&#39;3d&#39;)
+    ls = 15.*np.array(labels)
+    ax.scatter(dataset[:,0],dataset[:,1],dataset[:,2],ls,ls,ls,marker=&#39;o&#39;)
+    ax.set_xlabel(u&quot;飞行里程数&quot;)
+    ax.set_ylabel(u&quot;玩游戏时间比&quot;)
+    ax.set_zlabel(u&quot;冰激凌消费数&quot;)
+    plt.show(chart(dataset,labels)
+chart(dataset,labels)
+</code></pre>
 <p><img src="sample.png" alt="">￼<br>我们可以从样本分布中发现，不同的标签值的样本分布存在着一些规律。这就说明，这三个特征值确实和分类关系密切。</p>
 <h1 id="5-归一化数据"><a href="#5-归一化数据" class="headerlink" title="5. 归一化数据"></a>5. 归一化数据</h1><p>可以发现，飞行里程数相差较大，这时候这一特征对计算结果的影响最大，远远大于其他两个特征。 而这三个特征是同等重要的，因此需要将数值归一化，使其范围转化到0-1区间。<br>这里采用如下的归一化方法：</p>
-<figure class="highlight plain"><figcaption><span>```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">```python</div><div class="line">def autoNorm(dataset):</div><div class="line">    minVal=dataset.min(axis=0)</div><div class="line">    maxVal=dataset.max(axis=0)</div><div class="line">    rngVal=maxVal-minVal</div><div class="line">    m=dataset.shape[0]</div><div class="line">    norm=dataset-np.tile(minVal,(m,1))</div><div class="line">    norm=norm/np.tile(rngVal,(m,1))</div><div class="line">    return norm </div><div class="line">dataset=autoNorm(dataset)</div><div class="line">print dataset</div></pre></td></tr></table></figure>
-<h3 id="5-1-归一化后的数据"><a href="#5-1-归一化后的数据" class="headerlink" title="5.1 归一化后的数据"></a>5.1 归一化后的数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[[ <span class="number">0.44832535</span>  <span class="number">0.39805139</span>  <span class="number">0.56233353</span>]</div><div class="line"> [ <span class="number">0.15873259</span>  <span class="number">0.34195467</span>  <span class="number">0.98724416</span>]</div><div class="line"> [ <span class="number">0.28542943</span>  <span class="number">0.06892523</span>  <span class="number">0.47449629</span>]</div><div class="line"> ..., </div><div class="line"> [ <span class="number">0.29115949</span>  <span class="number">0.50910294</span>  <span class="number">0.51079493</span>]</div><div class="line"> [ <span class="number">0.52711097</span>  <span class="number">0.43665451</span>  <span class="number">0.4290048</span> ]</div><div class="line"> [ <span class="number">0.47940793</span>  <span class="number">0.3768091</span>   <span class="number">0.78571804</span>]]</div></pre></td></tr></table></figure>
-<h1 id="6-划分数据集"><a href="#6-划分数据集" class="headerlink" title="6. 划分数据集"></a>6. 划分数据集</h1><p>此处选择将数据的50%作为训练集，剩下的50%作为测试集<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">div=<span class="number">0.5</span></div><div class="line"></div><div class="line">train_num=int(len(dataset)*div)</div><div class="line"></div><div class="line">dataset_x_train=dataset[:-train_num]</div><div class="line">dataset_y_train=labels[:-train_num] </div><div class="line"></div><div class="line">dataset_x_test=dataset[-train_num:]</div><div class="line">dataset_y_test=labels[-train_num:]</div></pre></td></tr></table></figure></p>
-<h1 id="7-构建KNN分类器"><a href="#7-构建KNN分类器" class="headerlink" title="7. 构建KNN分类器"></a>7. 构建KNN分类器</h1><p>调用 <code>scikit-learn</code>里的 k近邻分类器来实现<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</div><div class="line"><span class="comment">#定义一个knn分类器对象</span></div><div class="line">KNN=KNeighborsClassifier(n_neighbors=<span class="number">5</span>,p=<span class="number">2</span>)   <span class="comment">#k设为5，p=2距离度量采用欧氏距离</span></div><div class="line"></div><div class="line">KNN.fit(dataset_x_train,dataset_y_train)</div><div class="line"><span class="comment">#调用该对象的训练方法，主要接收两个参数，训练数据集及其样本标签</span></div><div class="line">dataset_y_predict=KNN.predict(dataset_x_test)</div><div class="line"><span class="comment">#对测试集做出预测</span></div></pre></td></tr></table></figure></p>
-<h1 id="8-测试数据"><a href="#8-测试数据" class="headerlink" title="8. 测试数据"></a>8. 测试数据</h1><p>打印出测试集最后的是个数据进行查看：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">dataset_y_predict=KNN.predict(dataset_x_test)</div><div class="line"></div><div class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">"dataset_y_predict="</span>)</span></span></div><div class="line">print (dataset_y_predict[-<span class="number">10</span>:])</div><div class="line"></div><div class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">"dataset_y_test="</span>)</span></span></div><div class="line"><span class="function"><span class="title">print</span><span class="params">(dataset_y_test[-<span class="number">10</span>:])</span></span></div><div class="line"></div><div class="line">score=KNN.score(dataset_x_test,dataset_y_test,sample_weight=None)</div><div class="line"><span class="function"><span class="title">print</span><span class="params">(<span class="string">"accuracy=%f"</span>%score)</span></span></div></pre></td></tr></table></figure></p>
-<p>运行结果<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dataset_y_predict=</div><div class="line">[<span class="number">3</span> <span class="number">2</span> <span class="number">2</span> <span class="number">3</span> <span class="number">2</span> <span class="number">2</span> <span class="number">1</span> <span class="number">3</span> <span class="number">3</span> <span class="number">3</span>]</div><div class="line">dataset_y_test=</div><div class="line">[<span class="number">3</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]</div><div class="line">accuracy=<span class="number">0.958000</span></div></pre></td></tr></table></figure></p>
+<p><code>x=(x-min)/(max-min)</code></p>
+<pre><code class="lang-python">def autoNorm(dataset):
+    minVal=dataset.min(axis=0)
+    maxVal=dataset.max(axis=0)
+    rngVal=maxVal-minVal
+    m=dataset.shape[0]
+    norm=dataset-np.tile(minVal,(m,1))
+    norm=norm/np.tile(rngVal,(m,1))
+    return norm 
+dataset=autoNorm(dataset)
+print dataset
+</code></pre>
+<h3 id="5-1-归一化后的数据"><a href="#5-1-归一化后的数据" class="headerlink" title="5.1 归一化后的数据"></a>5.1 归一化后的数据</h3><pre><code class="lang-python">[[ 0.44832535  0.39805139  0.56233353]
+ [ 0.15873259  0.34195467  0.98724416]
+ [ 0.28542943  0.06892523  0.47449629]
+ ..., 
+ [ 0.29115949  0.50910294  0.51079493]
+ [ 0.52711097  0.43665451  0.4290048 ]
+ [ 0.47940793  0.3768091   0.78571804]]
+</code></pre>
+<h1 id="6-划分数据集"><a href="#6-划分数据集" class="headerlink" title="6. 划分数据集"></a>6. 划分数据集</h1><p>此处选择将数据的50%作为训练集，剩下的50%作为测试集</p>
+<pre><code class="lang-python">div=0.5
+
+train_num=int(len(dataset)*div)
+
+dataset_x_train=dataset[:-train_num]
+dataset_y_train=labels[:-train_num] 
+
+dataset_x_test=dataset[-train_num:]
+dataset_y_test=labels[-train_num:]
+</code></pre>
+<h1 id="7-构建KNN分类器"><a href="#7-构建KNN分类器" class="headerlink" title="7. 构建KNN分类器"></a>7. 构建KNN分类器</h1><p>调用 <code>scikit-learn</code>里的 k近邻分类器来实现</p>
+<pre><code class="lang-python">from sklearn.neighbors import KNeighborsClassifier
+#定义一个knn分类器对象
+KNN=KNeighborsClassifier(n_neighbors=5,p=2)   #k设为5，p=2距离度量采用欧氏距离
+
+KNN.fit(dataset_x_train,dataset_y_train)
+#调用该对象的训练方法，主要接收两个参数，训练数据集及其样本标签
+dataset_y_predict=KNN.predict(dataset_x_test)
+#对测试集做出预测
+</code></pre>
+<h1 id="8-测试数据"><a href="#8-测试数据" class="headerlink" title="8. 测试数据"></a>8. 测试数据</h1><p>打印出测试集最后的是个数据进行查看：</p>
+<pre><code>dataset_y_predict=KNN.predict(dataset_x_test)
+
+print(&quot;dataset_y_predict=&quot;)
+print (dataset_y_predict[-10:])
+
+print(&quot;dataset_y_test=&quot;)
+print(dataset_y_test[-10:])
+
+score=KNN.score(dataset_x_test,dataset_y_test,sample_weight=None)
+print(&quot;accuracy=%f&quot;%score)
+</code></pre><p>运行结果</p>
+<pre><code class="lang-python">dataset_y_predict=
+[3 2 2 3 2 2 1 3 3 3]
+dataset_y_test=
+[3, 2, 2, 2, 2, 2, 1, 3, 3, 3]
+accuracy=0.958000
+</code></pre>
 <p>可以看到，只有第四个预测数据预测错误。<br>accuracy 为整个测试集的预测准确度。</p>
-<h1 id="9-其他测试"><a href="#9-其他测试" class="headerlink" title="9. 其他测试"></a>9. 其他测试</h1><h3 id="9-1-数据集的划分"><a href="#9-1-数据集的划分" class="headerlink" title="9.1 数据集的划分"></a>9.1 数据集的划分</h3><p>调整训练集和测试集的划分，训练集从20%到90%<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> interpolate</div><div class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>]=[<span class="string">'SimHei'</span>] </div><div class="line">plt.rcParams[<span class="string">'axes.unicode_minus'</span>]=<span class="keyword">False</span></div><div class="line"></div><div class="line">div=[<span class="number">0.2</span>,<span class="number">0.3</span>,<span class="number">0.4</span>,<span class="number">0.5</span>,<span class="number">0.6</span>,<span class="number">0.7</span>,<span class="number">0.8</span>,<span class="number">0.9</span>]</div><div class="line">score=[<span class="number">0.945</span>,<span class="number">0.950</span>,<span class="number">0.955</span>,<span class="number">0.958</span>,<span class="number">0.950</span>,<span class="number">0.951</span>,<span class="number">0.943</span>,<span class="number">0.920</span>]</div><div class="line"></div><div class="line">plt.plot(div,score,<span class="string">'ro'</span>)</div><div class="line"></div><div class="line">fun=interpolate.interp1d(div,score,kind=<span class="string">'cubic'</span>)</div><div class="line">line=np.arange(<span class="number">0.2</span>,<span class="number">0.9</span>)</div><div class="line">yline=fun(line)</div><div class="line">plt.plot(line,yline,<span class="string">'r'</span>)</div><div class="line"></div><div class="line"></div><div class="line">plt.title(<span class="string">u"不同划分下预测精确度"</span>)</div><div class="line">plt.xlabel(<span class="string">u"训练集所占百分比"</span>)</div><div class="line">plt.ylabel(<span class="string">u"预测精度"</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure></p>
+<h1 id="9-其他测试"><a href="#9-其他测试" class="headerlink" title="9. 其他测试"></a>9. 其他测试</h1><h3 id="9-1-数据集的划分"><a href="#9-1-数据集的划分" class="headerlink" title="9.1 数据集的划分"></a>9.1 数据集的划分</h3><p>调整训练集和测试集的划分，训练集从20%到90%</p>
+<pre><code class="lang-python">from scipy import interpolate
+plt.rcParams[&#39;font.sans-serif&#39;]=[&#39;SimHei&#39;] 
+plt.rcParams[&#39;axes.unicode_minus&#39;]=False
+
+div=[0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]
+score=[0.945,0.950,0.955,0.958,0.950,0.951,0.943,0.920]
+
+plt.plot(div,score,&#39;ro&#39;)
+
+fun=interpolate.interp1d(div,score,kind=&#39;cubic&#39;)
+line=np.arange(0.2,0.9)
+yline=fun(line)
+plt.plot(line,yline,&#39;r&#39;)
+
+
+plt.title(u&quot;不同划分下预测精确度&quot;)
+plt.xlabel(u&quot;训练集所占百分比&quot;)
+plt.ylabel(u&quot;预测精度&quot;)
+plt.show()
+</code></pre>
 <p><img src="div.png" alt=""></p>
-<h3 id="9-2-k值的选取"><a href="#9-2-k值的选取" class="headerlink" title="9.2 k值的选取"></a>9.2 k值的选取</h3><p>k值从1到10<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> interpolate</div><div class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>]=[<span class="string">'SimHei'</span>] </div><div class="line">plt.rcParams[<span class="string">'axes.unicode_minus'</span>]=<span class="keyword">False</span></div><div class="line"></div><div class="line">k=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>]</div><div class="line">score=[<span class="number">0.952</span>,<span class="number">0.950</span>,<span class="number">0.958</span>,<span class="number">0.958</span>,<span class="number">0.958</span>,<span class="number">0.958</span>,<span class="number">0.960</span>,<span class="number">0.952</span>,<span class="number">0.956</span>,<span class="number">0.956</span>]</div><div class="line"></div><div class="line">plt.plot(k,score,<span class="string">'ro'</span>)</div><div class="line"></div><div class="line">fun=interpolate.interp1d(k,score,kind=<span class="string">'cubic'</span>)</div><div class="line">line=np.arange(<span class="number">1</span>,<span class="number">11</span>)</div><div class="line">yline=fun(line)</div><div class="line">plt.plot(line,yline,<span class="string">'r'</span>)</div><div class="line"></div><div class="line"></div><div class="line">plt.title(<span class="string">u"不同k值下预测精确度"</span>)</div><div class="line">plt.xlabel(<span class="string">u"k"</span>)</div><div class="line">plt.ylabel(<span class="string">u"预测精度"</span>)</div><div class="line">plt.savefig(<span class="string">"k.png"</span>,dpi=<span class="number">100</span>)</div><div class="line">plt.show()</div></pre></td></tr></table></figure></p>
+<h3 id="9-2-k值的选取"><a href="#9-2-k值的选取" class="headerlink" title="9.2 k值的选取"></a>9.2 k值的选取</h3><p>k值从1到10</p>
+<pre><code class="lang-python">from scipy import interpolate
+plt.rcParams[&#39;font.sans-serif&#39;]=[&#39;SimHei&#39;] 
+plt.rcParams[&#39;axes.unicode_minus&#39;]=False
+
+k=[1,2,3,4,5,6,7,8,9,10]
+score=[0.952,0.950,0.958,0.958,0.958,0.958,0.960,0.952,0.956,0.956]
+
+plt.plot(k,score,&#39;ro&#39;)
+
+fun=interpolate.interp1d(k,score,kind=&#39;cubic&#39;)
+line=np.arange(1,11)
+yline=fun(line)
+plt.plot(line,yline,&#39;r&#39;)
+
+
+plt.title(u&quot;不同k值下预测精确度&quot;)
+plt.xlabel(u&quot;k&quot;)
+plt.ylabel(u&quot;预测精度&quot;)
+plt.savefig(&quot;k.png&quot;,dpi=100)
+plt.show()
+</code></pre>
 <p><img src="k.png" alt=""></p>
 
 
@@ -702,7 +831,21 @@
 
 <!-- Image to hack wechat -->
 <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0" />
-<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+
+<!-- Add By Surflayn -->
+<!--添加google-prettify 代码解析2017.6.2 -->
+
+<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+<script type="text/javascript">
+$(window).load(function(){
+   $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   prettyPrint();
+ })    
+
+
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -720,7 +863,6 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-
 </body>
 
 </html>

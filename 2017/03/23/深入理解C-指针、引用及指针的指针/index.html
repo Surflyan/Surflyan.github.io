@@ -34,6 +34,9 @@
     <!-- Hux change font-awesome CDN to qiniu -->
     <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <!-- add by Surflyan-->
+    <link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="/js/google-code-prettify/tomorrow-night-eighties.min.css" type="text/css" rel="stylesheet" />
 
     <!-- Hux Delete, sad but pending in China
     <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -91,6 +94,13 @@
 
                         
                         <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/archives/">Archives</a>
                         </li>
                         
@@ -99,13 +109,6 @@
                         
                         <li>
                             <a href="/tags/">Tags</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -302,14 +305,85 @@
 
                 <p>C++ 用了这么久，发现身边还是有同学不能理解 C++ 的指针、引用的本质，对指针的指针、指针的引用更是十分迷糊。现在让我们来理解一下它们吧！</p>
 <h1 id="1-指针与引用"><a href="#1-指针与引用" class="headerlink" title="1. 指针与引用"></a>1. 指针与引用</h1><p>指针与引用都可以对对象进行直接的操作，通常作函数的参数传递或是函数返回的对象。</p>
-<h2 id="1-1-理解本质"><a href="#1-1-理解本质" class="headerlink" title="1.1 理解本质"></a>1.1 理解本质</h2><p><strong> 指针 </strong>，本质上是一个变量，指向一块内存空间，只不过该内存存放的是某个变量的地址。这就不难理解，指针可以改变指向，也就是存放别的变量的地址；也可以通过 <code>*</code> 解析所存地址，找到该变量，从而对其修改。<br>例：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> *p= &amp;a；</div></pre></td></tr></table></figure></p>
-<p>这时 <code>p</code> 存放的就是一个<code>int</code>型变量的地址。</p>
-<p><strong> 引用 </strong>，本质上是某个变量的别名，通过引用访问该变量，操纵的其实是同一块内存，同一个对象，因此 <strong>引用不能为空 </strong>，若对象不存在，又怎会存在别名。<br>仔细看下面的例子：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> a=<span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> b=<span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> *p;      <span class="comment">//指针可以不初始化 ，它可以为空 </span></div><div class="line">	<span class="keyword">int</span> &amp;r=b;    <span class="comment">//引用必须初始化 </span></div><div class="line">	</div><div class="line">	p= &amp;a;      <span class="comment">//可在声明时直接初始化  int *p=&amp;a </span></div><div class="line">	</div><div class="line">	(*p)++;      <span class="comment">//注意括号</span></div><div class="line">	 </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"*p="</span>&lt;&lt; *p &lt;&lt;<span class="built_in">endl</span>;    </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"a="</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;             <span class="comment">//修改同一对象 </span></div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"p="</span>&lt;&lt;p&lt;&lt;<span class="built_in">endl</span>;  </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;a="</span>&lt;&lt;&amp;a&lt;&lt;<span class="built_in">endl</span>;           <span class="comment">//p存放的就是a的地址吧 </span></div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;p="</span>&lt;&lt;&amp;p&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line">	r++;</div><div class="line">	<span class="built_in">cout</span> &lt;&lt;<span class="string">"r="</span>&lt;&lt;r&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"b="</span>&lt;&lt;b&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;r="</span>&lt;&lt;&amp;r&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;b="</span>&lt;&lt;&amp;b&lt;&lt;<span class="built_in">endl</span>;           <span class="comment">//二者指向地址一样吧 </span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="1-1-理解本质"><a href="#1-1-理解本质" class="headerlink" title="1.1 理解本质"></a>1.1 理解本质</h2><p><strong> 指针 </strong>，本质上是一个变量，指向一块内存空间，只不过该内存存放的是某个变量的地址。这就不难理解，指针可以改变指向，也就是存放别的变量的地址；也可以通过 <code>*</code> 解析所存地址，找到该变量，从而对其修改。<br>例：</p>
+<pre><code> int *p= &amp;a；
+</code></pre><p>这时 <code>p</code> 存放的就是一个<code>int</code>型变量的地址。</p>
+<p><strong> 引用 </strong>，本质上是某个变量的别名，通过引用访问该变量，操纵的其实是同一块内存，同一个对象，因此 <strong>引用不能为空 </strong>，若对象不存在，又怎会存在别名。<br>仔细看下面的例子：</p>
+<pre><code class="lang-c++">int main()
+{
+    int a=0;
+    int b=0;
+    int *p;      //指针可以不初始化 ，它可以为空 
+    int &amp;r=b;    //引用必须初始化 
+
+    p= &amp;a;      //可在声明时直接初始化  int *p=&amp;a 
+
+    (*p)++;      //注意括号
+
+    cout&lt;&lt;&quot;*p=&quot;&lt;&lt; *p &lt;&lt;endl;    
+    cout&lt;&lt;&quot;a=&quot;&lt;&lt;a&lt;&lt;endl;             //修改同一对象 
+
+    cout&lt;&lt;&quot;p=&quot;&lt;&lt;p&lt;&lt;endl;  
+    cout&lt;&lt;&quot;&amp;a=&quot;&lt;&lt;&amp;a&lt;&lt;endl;           //p存放的就是a的地址吧 
+
+    cout&lt;&lt;&quot;&amp;p=&quot;&lt;&lt;&amp;p&lt;&lt;endl;
+
+    r++;
+    cout &lt;&lt;&quot;r=&quot;&lt;&lt;r&lt;&lt;endl;
+    cout&lt;&lt;&quot;b=&quot;&lt;&lt;b&lt;&lt;endl;
+
+    cout&lt;&lt;&quot;&amp;r=&quot;&lt;&lt;&amp;r&lt;&lt;endl;
+    cout&lt;&lt;&quot;&amp;b=&quot;&lt;&lt;&amp;b&lt;&lt;endl;           //二者指向地址一样吧 
+}
+</code></pre>
 <p><img src="20-25-22.jpg" alt=""></p>
 <h2 id="1-2-注意事项"><a href="#1-2-注意事项" class="headerlink" title="1.2 注意事项"></a>1.2 注意事项</h2><p>指针： 指针可以为空，因此在访问指针指向内容之前需要进行判空。由于可以多个指针指向同一块内存区域，一旦通过某一指针释放了内存，会造成野指针的出现。对指针直接操作，改变的回事指针的指向，并非其所指向的内容。<br>引用： 引用必须初始化。引用不可改变指向。对引用操作，会改变引用指向的内容。</p>
 <h2 id="1-3-参数传递"><a href="#1-3-参数传递" class="headerlink" title="1.3 参数传递"></a>1.3 参数传递</h2><p>指针传递参数和引用传递参数具有本质的不同。<br>如果你了解一点汇编语言或者函数调用原理的话，那么这块内容你应该一下就明白了。<br>在函数调用时，被调函数会在栈中开辟一块空间，按照从右到左将实参值保存在栈的最低端（其实还有主函数返回地址等其他要保存的数据，这里不详细赘述）。指针传递参数本质是 <strong> 传值 </strong>，只不过这里的值是实参的地址，这就给了你在被调函数中改变实参的可能。你可以将形参看作一个 <strong> 新的指向实参的指针 </strong>，所以你可以使用星号解析来在被调函数中改变实参的值，但是该形参指针也可以改变指向。</p>
 <p>由于这样访问实参的内容，每次都要用星号来解析。c++ 给出了另一种解决方案-引用。<br>在引用传递参数中，栈中存放的也是实参的地址，被调函数中对引用形参的操作都会根据 <strong> 间接寻址 </strong>（汇编知识）来访问实参的内容，所以，对引用形参的操作都会反映到实参上。</p>
-<p>仔细看例子：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> *p_arg,<span class="keyword">int</span> &amp;r_arg)</span> </span></div><div class="line">&#123;   </div><div class="line">    <span class="keyword">int</span> a=<span class="number">5</span>;</div><div class="line">    </div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"被调函数中："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">    </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"p_arg="</span>&lt;&lt;p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"*p_arg="</span>&lt;&lt;*p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;r_arg="</span>&lt;&lt;&amp;r_arg&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"r_arg="</span>&lt;&lt;r_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line">	p_arg= &amp;a;</div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"*p_arg="</span>&lt;&lt;*p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line">	r_arg=<span class="number">5</span>;</div><div class="line">	</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> a=<span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> b=<span class="number">0</span>;</div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"主函数中："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;a="</span>&lt;&lt;&amp;a&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;b="</span>&lt;&lt;&amp;b&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line"> 	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	func(&amp;a,b);</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"函数调用后："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"a="</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"b="</span>&lt;&lt;b&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>仔细看例子：</p>
+<pre><code class="lang-C++">#include &lt;iostream&gt;
+using namespace std;
+
+int func(int *p_arg,int &amp;r_arg) 
+{   
+    int a=5;
+
+    cout&lt;&lt;&quot;被调函数中：&quot;&lt;&lt;endl; 
+
+    cout&lt;&lt;&quot;p_arg=&quot;&lt;&lt;p_arg&lt;&lt;endl;
+    cout&lt;&lt;&quot;*p_arg=&quot;&lt;&lt;*p_arg&lt;&lt;endl;
+
+    cout&lt;&lt;&quot;&amp;r_arg=&quot;&lt;&lt;&amp;r_arg&lt;&lt;endl; 
+    cout&lt;&lt;&quot;r_arg=&quot;&lt;&lt;r_arg&lt;&lt;endl;
+
+    p_arg= &amp;a;
+
+    cout&lt;&lt;&quot;*p_arg=&quot;&lt;&lt;*p_arg&lt;&lt;endl;
+
+    r_arg=5;
+
+    return 0;
+}
+
+int main()
+{
+    int a=0;
+    int b=0;
+
+    cout&lt;&lt;&quot;主函数中：&quot;&lt;&lt;endl; 
+
+    cout&lt;&lt;&quot;&amp;a=&quot;&lt;&lt;&amp;a&lt;&lt;endl;
+    cout&lt;&lt;&quot;&amp;b=&quot;&lt;&lt;&amp;b&lt;&lt;endl;
+
+     cout&lt;&lt;endl; 
+    func(&amp;a,b);
+    cout&lt;&lt;endl;
+    cout&lt;&lt;&quot;函数调用后：&quot;&lt;&lt;endl; 
+    cout&lt;&lt;&quot;a=&quot;&lt;&lt;a&lt;&lt;endl;
+    cout&lt;&lt;&quot;b=&quot;&lt;&lt;b&lt;&lt;endl;
+
+}
+</code></pre>
 <p><img src="21-52-31.jpg" alt=""></p>
 <p>因此，对于引用参数的处理都会因间接寻址转到对主函数中实参的处理。<br>对于指针传递参数，只是相当于再生了一个指向 <strong> 原实参指针指向地址的指针 </strong>，故，你只能通过这个再生指针改变它指向的内容或者是它本身的指向。这时候和实参指针就已经失去了联系，你 <strong> 无法改变实参指针指向 </strong> 。要想改变实参指针的指向，就只能用下面将要介绍的指针的指针或者指针的引用。</p>
 <h2 id="1-4-返回指针、引用："><a href="#1-4-返回指针、引用：" class="headerlink" title="1.4 返回指针、引用："></a>1.4 返回指针、引用：</h2><p>当函数返回一个值时，通常返回的都是这个值的临时对象，也就是一个值的拷贝。<br>当函数返回引用类型时，没有复制返回值，返回的是对象本身。<br>因此 <strong> 注意 </strong>:</p>
@@ -320,10 +394,78 @@
 <p>当函数执行完毕时，将释放分配给局部对象的存储空间。此时对局部对象的引用就会指向不确定的内存！同样，返回局部变量的指针，当函数结束时，局部对象被释放，返回的指针就变成了不再存在的对象的悬垂指针。</p>
 <p>到这里，如果还想加深对指针和引用的理解可以查阅 <code>C++符号表</code> 的相关知识。</p>
 <h1 id="2-指针的指针和指针的引用"><a href="#2-指针的指针和指针的引用" class="headerlink" title="2. 指针的指针和指针的引用"></a>2. 指针的指针和指针的引用</h1><p>通过前面的理解，我们能意识到，现在还缺少一种能改变实参指针指向的手段。</p>
-<h2 id="2-1-指针的指针"><a href="#2-1-指针的指针" class="headerlink" title="2.1 指针的指针"></a>2.1 指针的指针</h2><p>不如首先来看一个例子：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> **p_arg)</span> </span></div><div class="line">&#123;   </div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"被调函数中："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"p_arg="</span>&lt;&lt;p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"*p_arg="</span>&lt;&lt;*p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"**p_arg="</span> &lt;&lt;**p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line">	**p_arg=<span class="number">5</span>;          <span class="comment">// 改变实参指向内容的值 	</span></div><div class="line">	 *p_arg=<span class="keyword">new</span> <span class="keyword">int</span> ;          <span class="comment">// 改变实参的指向， new 的对象不随子函数的结束而销毁 	 </span></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> a=<span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> *p=&amp;a;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"主函数中："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;a="</span>&lt;&lt;&amp;a&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    </div><div class="line">	func(&amp;p);</div><div class="line">    </div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"函数调用后："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"*p="</span>&lt;&lt;*p&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"p="</span>&lt;&lt;p&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"a="</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="2-1-指针的指针"><a href="#2-1-指针的指针" class="headerlink" title="2.1 指针的指针"></a>2.1 指针的指针</h2><p>不如首先来看一个例子：</p>
+<pre><code class="lang-C++">int func(int **p_arg) 
+{   
+    cout&lt;&lt;&quot;被调函数中：&quot;&lt;&lt;endl; 
+    cout&lt;&lt;&quot;p_arg=&quot;&lt;&lt;p_arg&lt;&lt;endl;
+    cout&lt;&lt;&quot;*p_arg=&quot;&lt;&lt;*p_arg&lt;&lt;endl;
+    cout&lt;&lt;&quot;**p_arg=&quot; &lt;&lt;**p_arg&lt;&lt;endl;
+
+    **p_arg=5;          // 改变实参指向内容的值     
+     *p_arg=new int ;          // 改变实参的指向， new 的对象不随子函数的结束而销毁      
+    return 0;
+}
+int main()
+{
+    int a=0;
+    int *p=&amp;a;
+    cout&lt;&lt;&quot;主函数中：&quot;&lt;&lt;endl; 
+
+    cout&lt;&lt;&quot;&amp;a=&quot;&lt;&lt;&amp;a&lt;&lt;endl;
+    cout&lt;&lt;endl;
+
+    func(&amp;p);
+
+    cout&lt;&lt;endl;
+    cout&lt;&lt;&quot;函数调用后：&quot;&lt;&lt;endl; 
+
+    cout&lt;&lt;&quot;*p=&quot;&lt;&lt;*p&lt;&lt;endl;
+    cout&lt;&lt;&quot;p=&quot;&lt;&lt;p&lt;&lt;endl; 
+    cout&lt;&lt;&quot;a=&quot;&lt;&lt;a&lt;&lt;endl;
+
+
+}
+</code></pre>
 <p><img src="22-51-48.jpg" alt=""></p>
 <p>首先我们需要先明白这三种形式在被调函数中代表什么：<br><code>p_arg</code>: 是一个指向指针的指针,里面存的是 *p的地址;<br><code>*p_arg</code>:  就是实参，一个指向变量 a 的指针，修改它，就可以修改实参指针的指向;<br><code>**p_arg</code>: 是实参指向的内容，即  a的值。</p>
-<h2 id="2-2-指针的引用"><a href="#2-2-指针的引用" class="headerlink" title="2.2 指针的引用"></a>2.2 指针的引用</h2><p>同样，看例子：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> *&amp;p_arg)</span> </span></div><div class="line">&#123;   </div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"被调函数中："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"p_arg="</span>&lt;&lt;p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"*p_arg="</span>&lt;&lt;*p_arg&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">		</div><div class="line">	 *p_arg=<span class="number">5</span>;                 <span class="comment">// 改变实参指向内容的值 </span></div><div class="line">	</div><div class="line">	 p_arg=<span class="keyword">new</span> <span class="keyword">int</span> ;          <span class="comment">// 改变实参的指向， new 的对象不随子函数的结束而销毁             </span></div><div class="line">	 </div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> a=<span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> *p=&amp;a;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"主函数中："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"&amp;(*p)="</span>&lt;&lt;&amp;(*p)&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    </div><div class="line">	func(p);</div><div class="line">    </div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"函数调用后："</span>&lt;&lt;<span class="built_in">endl</span>; </div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"*p="</span>&lt;&lt;*p&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"a="</span>&lt;&lt;a&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">	</div><div class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="string">"p="</span>&lt;&lt;p&lt;&lt;<span class="built_in">endl</span>; </div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="2-2-指针的引用"><a href="#2-2-指针的引用" class="headerlink" title="2.2 指针的引用"></a>2.2 指针的引用</h2><p>同样，看例子：</p>
+<pre><code class="lang-C++">#include &lt;iostream&gt;
+using namespace std;
+
+int func(int *&amp;p_arg) 
+{   
+    cout&lt;&lt;&quot;被调函数中：&quot;&lt;&lt;endl; 
+    cout&lt;&lt;&quot;p_arg=&quot;&lt;&lt;p_arg&lt;&lt;endl;
+    cout&lt;&lt;&quot;*p_arg=&quot;&lt;&lt;*p_arg&lt;&lt;endl;
+
+     *p_arg=5;                 // 改变实参指向内容的值 
+
+     p_arg=new int ;          // 改变实参的指向， new 的对象不随子函数的结束而销毁             
+
+    return 0;
+}
+int main()
+{
+    int a=0;
+    int *p=&amp;a;
+    cout&lt;&lt;&quot;主函数中：&quot;&lt;&lt;endl; 
+
+    cout&lt;&lt;&quot;&amp;(*p)=&quot;&lt;&lt;&amp;(*p)&lt;&lt;endl;
+    cout&lt;&lt;endl;
+
+    func(p);
+
+    cout&lt;&lt;endl;
+    cout&lt;&lt;&quot;函数调用后：&quot;&lt;&lt;endl; 
+
+    cout&lt;&lt;&quot;*p=&quot;&lt;&lt;*p&lt;&lt;endl;
+    cout&lt;&lt;&quot;a=&quot;&lt;&lt;a&lt;&lt;endl;
+
+    cout&lt;&lt;&quot;p=&quot;&lt;&lt;p&lt;&lt;endl; 
+
+}
+</code></pre>
 <p><img src="23-01-27.jpg" alt=""></p>
 <p>需要明白下面两种形式在被调函数中代表的意义：<br><code>p_arg</code>： 是指针的引用，主函数里的 *p；<br><code>*p_arg</code> : 实参的内容，即主函数中a 和 *p的值。</p>
 <p>首先从名称上来理解，<strong> 指针 </strong> 的 <strong> 引用 </strong>, 既然是引用， 那么它就是一个别名，是一个指针的别名，这就说明它本质上还是一个指针，所以在函数内它还是和指针一样的用法。只不过这个指针改变指向会影响实参指针的指向。<br>而 *解析得到的还是内容。</p>
@@ -706,7 +848,21 @@
 
 <!-- Image to hack wechat -->
 <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0" />
-<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+
+<!-- Add By Surflayn -->
+<!--添加google-prettify 代码解析2017.6.2 -->
+
+<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+<script type="text/javascript">
+$(window).load(function(){
+   $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   prettyPrint();
+ })    
+
+
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -724,7 +880,6 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-
 </body>
 
 </html>

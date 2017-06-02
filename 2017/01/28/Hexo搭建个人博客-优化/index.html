@@ -34,6 +34,9 @@
     <!-- Hux change font-awesome CDN to qiniu -->
     <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <!-- add by Surflyan-->
+    <link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="/js/google-code-prettify/tomorrow-night-eighties.min.css" type="text/css" rel="stylesheet" />
 
     <!-- Hux Delete, sad but pending in China
     <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -91,6 +94,13 @@
 
                         
                         <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/archives/">Archives</a>
                         </li>
                         
@@ -99,13 +109,6 @@
                         
                         <li>
                             <a href="/tags/">Tags</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -302,20 +305,63 @@
 
                 <p>相信你已经可以通过域名来访问到你的博客了，但还有一些事情是必须要做的，现在我们就来讲讲后续的处理吧。</p>
 <h1 id="评论功能"><a href="#评论功能" class="headerlink" title="评论功能"></a>评论功能</h1><p>一篇博文，分享思想。读者有发表想法的权利，所以我们必须提供评论功能。<br>由于我们搭建的是静态网站，网站本身并不能存放评论，必须使用第三方提供的服务。国内一般使用较多的就是 <a href="http://duoshuo.com/" target="_blank" rel="external">多说</a>了。</p>
-<p>首先注册一个多说账号，之后官网会给出详细的引导，你可以获取到通用代码，你可以将这段通用代码插入 <code>page.ejs</code> 中， 也可以新建存放其他集成功能的代码文件。<br>在通用代码中,有这样的代码：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">var duoshuoQuery</span> = &#123;short_name:<span class="string">"surflyan"</span>&#125;;</div></pre></td></tr></table></figure></p>
-<p>这样不利于程序的可复用性,可以改为：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"> &lt;% <span class="keyword">if</span>(config[<span class="string">'duoshuo_username'</span>]) </div><div class="line"> &#123; %&gt;</div><div class="line">  <span class="xml"><span class="comment">&lt;!-- 多说评论框 start --&gt;</span></span></div><div class="line">     <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment"</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"ds-thread"</span></span></div><div class="line">          <span class="attr">data-thread-key</span>=<span class="string">"&lt;%= page.path %&gt;"</span></div><div class="line">          <span class="attr">data-title</span>=<span class="string">"&lt;%= page.title %&gt;"</span></div><div class="line">          <span class="attr">data-url</span>=<span class="string">"&lt;%= page.permalink %&gt;"</span> &gt;</div><div class="line">       <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 多说评论框 end --&gt;</span></div><div class="line"><span class="comment">&lt;!-- 多说公共JS代码 start (一个网页只需插入一次) --&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">                        <span class="comment">// dynamic User by Hux</span></div><div class="line">     <span class="keyword">var</span> _user = <span class="string">'&lt;%= config['</span>duoshuo_username<span class="string">'] %&gt;'</span>;</div><div class="line"></div><div class="line">     <span class="comment">// duoshuo comment query.</span></div><div class="line">     <span class="keyword">var</span> duoshuoQuery = &#123;<span class="attr">short_name</span>: _user &#125;;</div><div class="line"></div><div class="line">     (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">       <span class="keyword">var</span> ds = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>);</div><div class="line">       ds.type = <span class="string">'text/javascript'</span>;ds.async = <span class="literal">true</span>;</div><div class="line">       ds.src = (<span class="built_in">document</span>.location.protocol == <span class="string">'https:'</span> ? <span class="string">'https:'</span> : <span class="string">'http:'</span>) + <span class="string">'//static.duoshuo.com/embed.js'</span>;</div><div class="line">       ds.charset = <span class="string">'UTF-8'</span>;</div><div class="line">         (<span class="built_in">document</span>.getElementsByTagName(<span class="string">'head'</span>)[<span class="number">0</span>]</div><div class="line">                   || <span class="built_in">document</span>.getElementsByTagName(<span class="string">'body'</span>)[<span class="number">0</span>]).appendChild(ds);</div><div class="line">                    &#125;)();</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span>       </div><div class="line"></div><div class="line"> <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></div><div class="line"><span class="comment">&lt;!-- 多说公共JS代码 end --&gt;</span></div></pre></td></tr></table></figure>
-<p>然后在配置文件中，加入:<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">duoshuo_username:</span>          <span class="comment">//你的多说short_name</span></div></pre></td></tr></table></figure></p>
-<p>这样多说评论就添加完成了。</p>
+<p>首先注册一个多说账号，之后官网会给出详细的引导，你可以获取到通用代码，你可以将这段通用代码插入 <code>page.ejs</code> 中， 也可以新建存放其他集成功能的代码文件。<br>在通用代码中,有这样的代码：</p>
+<pre><code>var duoshuoQuery = {short_name:&quot;surflyan&quot;};
+</code></pre><p>这样不利于程序的可复用性,可以改为：</p>
+<pre><code class="lang-js"> &lt;% if(config[&#39;duoshuo_username&#39;]) 
+ { %&gt;
+  &lt;!-- 多说评论框 start --&gt;
+     &lt;div class=&quot;comment&quot;&gt;
+       &lt;div class=&quot;ds-thread&quot;
+          data-thread-key=&quot;&lt;%= page.path %&gt;&quot;
+          data-title=&quot;&lt;%= page.title %&gt;&quot;
+          data-url=&quot;&lt;%= page.permalink %&gt;&quot; &gt;
+       &lt;/div&gt;
+     &lt;/div&gt;
+
+&lt;!-- 多说评论框 end --&gt;
+&lt;!-- 多说公共JS代码 start (一个网页只需插入一次) --&gt;
+ &lt;script type=&quot;text/javascript&quot;&gt;
+                        // dynamic User by Hux
+     var _user = &#39;&lt;%= config[&#39;duoshuo_username&#39;] %&gt;&#39;;
+
+     // duoshuo comment query.
+     var duoshuoQuery = {short_name: _user };
+
+     (function() {
+       var ds = document.createElement(&#39;script&#39;);
+       ds.type = &#39;text/javascript&#39;;ds.async = true;
+       ds.src = (document.location.protocol == &#39;https:&#39; ? &#39;https:&#39; : &#39;http:&#39;) + &#39;//static.duoshuo.com/embed.js&#39;;
+       ds.charset = &#39;UTF-8&#39;;
+         (document.getElementsByTagName(&#39;head&#39;)[0]
+                   || document.getElementsByTagName(&#39;body&#39;)[0]).appendChild(ds);
+                    })();
+&lt;/script&gt;       
+
+ &lt;% } %&gt;
+&lt;!-- 多说公共JS代码 end --&gt;
+</code></pre>
+<p>然后在配置文件中，加入:</p>
+<pre><code>duoshuo_username:          //你的多说short_name
+</code></pre><p>这样多说评论就添加完成了。</p>
 <h1 id="主题优化"><a href="#主题优化" class="headerlink" title="主题优化"></a>主题优化</h1><p>关于主题优化，我不想讲太多，有的博客教程很轻松的讲了在主题配置文件中添加就好，修改标签什么的，然而，这一切取决于你的主题支持与否，比如，博主的博客主题配置文件里什么都没有，并没有在里面留有什么接口的。 至于其他的样式什么要修改，你需要有一些前端的知识。在主题的 layout 文件里找到相应的代码文件，在对应部分，可做修改。 </p>
 <h1 id="SEO优化"><a href="#SEO优化" class="headerlink" title="SEO优化"></a>SEO优化</h1><p>现在使用搜索引擎来直接搜索你的网站，不能搜到吧。 为什么？因为 google、百度还没有收录你的网站，如果不被收录，那你的博客就只能是写给自己的。连搜索引擎都不知道我们博客的诞生，还有谁能知道它的存在呢？</p>
 <h2 id="sitemap"><a href="#sitemap" class="headerlink" title="sitemap"></a>sitemap</h2><blockquote>
 <p>站点地图是一种文件, 包含了网站上的网页信息，google 等搜索引擎网页抓取工具会读取此文件，以便抓取我们的网站。</p>
 </blockquote>
-<h4 id="生成-sitemap"><a href="#生成-sitemap" class="headerlink" title="生成 sitemap"></a>生成 sitemap</h4><p>首先安装针对 google 和百度的插件,使用 Node.js command 打开，选择博客目录下执行：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm <span class="keyword">install</span> hexo-generater-sitemap <span class="comment">--save</span></div><div class="line">npm <span class="keyword">install</span> hexo-generater-baidu-sitemap <span class="comment">--save</span></div></pre></td></tr></table></figure></p>
-<p>在站点 _config.yml 添加如下代码：<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta"># 自动生成sitemap</span></div><div class="line"><span class="symbol">sitemap:</span></div><div class="line"><span class="symbol">path:</span> sitemap.xml</div><div class="line"><span class="symbol">baidusitemap:</span></div><div class="line"><span class="symbol">path:</span> baidusitemap.xml</div></pre></td></tr></table></figure></p>
-<p>执行：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">hexo clean</span></div><div class="line">hexo g</div></pre></td></tr></table></figure></p>
-<p>在你的博客目录下 <code>public</code> 下面生成了<code>sitemap.xml</code>和<code>baidusitemap.xml</code>文件，打开可以发现就，里面包含我们网站的网页信息。</p>
+<h4 id="生成-sitemap"><a href="#生成-sitemap" class="headerlink" title="生成 sitemap"></a>生成 sitemap</h4><p>首先安装针对 google 和百度的插件,使用 Node.js command 打开，选择博客目录下执行：</p>
+<pre><code>npm install hexo-generater-sitemap --save
+npm install hexo-generater-baidu-sitemap --save
+</code></pre><p>在站点 _config.yml 添加如下代码：</p>
+<pre><code># 自动生成sitemap
+sitemap:
+path: sitemap.xml
+baidusitemap:
+path: baidusitemap.xml
+</code></pre><p>执行：</p>
+<pre><code>hexo clean
+hexo g
+</code></pre><p>在你的博客目录下 <code>public</code> 下面生成了<code>sitemap.xml</code>和<code>baidusitemap.xml</code>文件，打开可以发现就，里面包含我们网站的网页信息。</p>
 <h4 id="提交sitemap"><a href="#提交sitemap" class="headerlink" title="提交sitemap"></a>提交sitemap</h4><p>现在我们就可以把 sitemap.xml 提交给 google了，使用 google 账号登陆 <a href="https://www.google.com/webmasters/tools/home?hl=zh-CN" target="_blank" rel="external">Search Console</a>官方给出了详细引导，添加了站点验证通过后。就可以手动将站点地图提交了。<br>按照谷歌的效率，第二天，应该就可以搜索到你的网站了。</p>
 <p>至于百度收录，我现在也没有方便的解决的办法。 即使你提交了 baidusitemap 给百度站长或者在网页内嵌了js代码，百度也抓取不到你的网页，因为 Github 屏蔽了 BaiduSpider. 我也很无语啊。<br>不少人的做法是在 Coding pages 在生成一份 ,然后国内访问 coding pages ，将这个生成的 baidusitemap 提交给百度站长，这样做还能弥补国内访问 github 较慢的缺陷。选择使用 Gitcafe 也是一种方法。</p>
 <p>这里有关于此问题的<a href="https://www.zhihu.com/question/30898326" target="_blank" rel="external">知乎讨论</a>.</p>
@@ -701,7 +747,21 @@
 
 <!-- Image to hack wechat -->
 <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0" />
-<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+
+<!-- Add By Surflayn -->
+<!--添加google-prettify 代码解析2017.6.2 -->
+
+<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+<script type="text/javascript">
+$(window).load(function(){
+   $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   prettyPrint();
+ })    
+
+
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -719,7 +779,6 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-
 </body>
 
 </html>

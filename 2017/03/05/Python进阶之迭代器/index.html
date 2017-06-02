@@ -34,6 +34,9 @@
     <!-- Hux change font-awesome CDN to qiniu -->
     <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <!-- add by Surflyan-->
+    <link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="/js/google-code-prettify/tomorrow-night-eighties.min.css" type="text/css" rel="stylesheet" />
 
     <!-- Hux Delete, sad but pending in China
     <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -91,6 +94,13 @@
 
                         
                         <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/archives/">Archives</a>
                         </li>
                         
@@ -99,13 +109,6 @@
                         
                         <li>
                             <a href="/tags/">Tags</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -312,12 +315,44 @@
 <li>…</li>
 </ul>
 <p>容器较容易理解，可参照生活中容器的理解。</p>
-<h1 id="2-可迭代对象-interable"><a href="#2-可迭代对象-interable" class="headerlink" title="2. 可迭代对象(interable)"></a>2. 可迭代对象(interable)</h1><p><strong> 迭代(interate) </strong> 是指按照某种顺序逐个访问序列中的每一项。<br>大部分容器都是可迭代的，但还有其他对象也可迭代，如文件对象、管道对象，可迭代对象也可用来表示一个包含有限元素的数据结构。<br>可迭代对象可以是任意对象，只要该对象实现了 <code>__iter__</code> 方法。<br>可用<code>isinstance()</code>判断一个对象是否是可迭代对象：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;<span class="keyword">from</span> collections <span class="keyword">import</span> Interable</div><div class="line">&gt;&gt;&gt;isinstance([],Iterable)</div><div class="line"><span class="keyword">True</span></div><div class="line">&gt;&gt;&gt;isinstance(<span class="string">'abc'</span>,Iterable)</div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure></p>
+<h1 id="2-可迭代对象-interable"><a href="#2-可迭代对象-interable" class="headerlink" title="2. 可迭代对象(interable)"></a>2. 可迭代对象(interable)</h1><p><strong> 迭代(interate) </strong> 是指按照某种顺序逐个访问序列中的每一项。<br>大部分容器都是可迭代的，但还有其他对象也可迭代，如文件对象、管道对象，可迭代对象也可用来表示一个包含有限元素的数据结构。<br>可迭代对象可以是任意对象，只要该对象实现了 <code>__iter__</code> 方法。<br>可用<code>isinstance()</code>判断一个对象是否是可迭代对象：</p>
+<pre><code class="lang-python">&gt;&gt;&gt;from collections import Interable
+&gt;&gt;&gt;isinstance([],Iterable)
+True
+&gt;&gt;&gt;isinstance(&#39;abc&#39;,Iterable)
+True
+</code></pre>
 <p><code>__iter__</code> 方法会返回一个迭代器。那么什么是迭代器?</p>
 <h1 id="3-迭代器-interator"><a href="#3-迭代器-interator" class="headerlink" title="3. 迭代器(interator)"></a>3. 迭代器(interator)</h1><p>所谓的迭代器就是具有 <code>next</code> 方法的对象（<strong> 注：python3中为<code>__next__()</code> </strong> )。在调用 next 方法时，迭代器会返回它的下一个值，如果迭代器中没有值可以返回，会引发一个 <code>StopIteration</code> 异常。所以迭代器本质上是一个产生值的工厂，每次向迭代器请求下一个值，迭代器都会进行计算出相应的值并返回。</p>
-<p>可用 <code>isinstance()</code>判断一个对象是否是迭代器：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;<span class="keyword">from</span> collections <span class="keyword">import</span> Iterator</div><div class="line">&gt;&gt;&gt;isinstance ((x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">2</span>)), Iterator)</div><div class="line"><span class="keyword">True</span></div><div class="line">&gt;&gt;&gt;isinstance([],Iterator)</div><div class="line"><span class="keyword">False</span></div></pre></td></tr></table></figure></p>
-<p>一般来说，迭代器本身也是可迭代的，即迭代器有返回自己的 next 方法。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;<span class="keyword">from</span> collections <span class="keyword">import</span> Iterator</div><div class="line">&gt;&gt;&gt;isinstance ((x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">2</span>)), Iterator)</div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure></p>
-<p>但<code>list</code>、<code>dict</code>、<code>str</code>等虽然都是可迭代对象，却不是迭代器。但可以使用 <code>iter()</code>来使可迭代对象变成迭代器。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>x=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>y=iter(x)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(x)</div><div class="line">&lt;type <span class="string">'list'</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>type(y)</div><div class="line">&lt;type <span class="string">'listiterator'</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>next(x)</div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;pyshell#13&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">    next(x)</div><div class="line">TypeError: list object <span class="keyword">is</span> <span class="keyword">not</span> an iterator</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>next(y)</div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>dir(y)</div><div class="line">[<span class="string">'__class__'</span>, <span class="string">'__delattr__'</span>, <span class="string">'__doc__'</span>, <span class="string">'__format__'</span>, <span class="string">'__getattribute__'</span>, <span class="string">'__hash__'</span>, <span class="string">'__init__'</span>, <span class="string">'__iter__'</span>, <span class="string">'__length_hint__'</span>, <span class="string">'__new__'</span>, <span class="string">'__reduce__'</span>, <span class="string">'__reduce_ex__'</span>, <span class="string">'__repr__'</span>, <span class="string">'__setattr__'</span>, <span class="string">'__sizeof__'</span>, <span class="string">'__str__'</span>, <span class="string">'__subclasshook__'</span>, <span class="string">'next'</span>]</div></pre></td></tr></table></figure></p>
+<p>可用 <code>isinstance()</code>判断一个对象是否是迭代器：</p>
+<pre><code class="lang-python">&gt;&gt;&gt;from collections import Iterator
+&gt;&gt;&gt;isinstance ((x for x in range(2)), Iterator)
+True
+&gt;&gt;&gt;isinstance([],Iterator)
+False
+</code></pre>
+<p>一般来说，迭代器本身也是可迭代的，即迭代器有返回自己的 next 方法。</p>
+<pre><code class="lang-python">&gt;&gt;&gt;from collections import Iterator
+&gt;&gt;&gt;isinstance ((x for x in range(2)), Iterator)
+True
+</code></pre>
+<p>但<code>list</code>、<code>dict</code>、<code>str</code>等虽然都是可迭代对象，却不是迭代器。但可以使用 <code>iter()</code>来使可迭代对象变成迭代器。</p>
+<pre><code class="lang-python">&gt;&gt;&gt; x=[1,2,3]
+&gt;&gt;&gt; y=iter(x)
+&gt;&gt;&gt; type(x)
+&lt;type &#39;list&#39;&gt;
+&gt;&gt;&gt; type(y)
+&lt;type &#39;listiterator&#39;&gt;
+&gt;&gt;&gt; next(x)
+Traceback (most recent call last):
+  File &quot;&lt;pyshell#13&gt;&quot;, line 1, in &lt;module&gt;
+    next(x)
+TypeError: list object is not an iterator
+&gt;&gt;&gt; next(y)
+1
+&gt;&gt;&gt; dir(y)
+[&#39;__class__&#39;, &#39;__delattr__&#39;, &#39;__doc__&#39;, &#39;__format__&#39;, &#39;__getattribute__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__iter__&#39;, &#39;__length_hint__&#39;, &#39;__new__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__subclasshook__&#39;, &#39;next&#39;]
+</code></pre>
 <blockquote>
 <p>可以看出，x 是可迭代对象，y 是迭代器，在迭代器中，有 <code>__iter__()</code> 以及 <code>next()</code> 方法。<br>所有<code>itertools</code>模块中的函数都会返回一个迭代器。</p>
 </blockquote>
@@ -326,8 +361,45 @@
 <li>为容器对象添加 <code>__iter__()</code> 和 <code>next()</code> 方法（Python 3 中是 <code>next()</code>）；<strong>iter</strong>() 返回迭代器对象本身 self, next() 则返回每次调用 next()时或迭代时的元素；</li>
 <li>内置函数 <code>iter()</code>将可迭代对象转化为迭代器</li>
 </ol>
-<p>可自定义实现一个迭代器对象:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyRange</span><span class="params">(object)</span>:</span>  </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, n)</span>:</span> </div><div class="line">        <span class="keyword">print</span> <span class="string">" I made this iterator!"</span>  </div><div class="line">        self.i = <span class="number">1</span></div><div class="line">        self.n = n</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">next</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">print</span> <span class="string">" Calling __next__ method!"</span></div><div class="line">        <span class="keyword">if</span> self.i &lt;= self.n:</div><div class="line">            i = self.i</div><div class="line">            self.i += <span class="number">1</span></div><div class="line">            <span class="keyword">return</span> i</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">raise</span> StopIteration()</div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    x = MyRange(<span class="number">6</span>)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> x:</div><div class="line">        <span class="keyword">print</span> i</div><div class="line">`</div></pre></td></tr></table></figure></p>
-<p>运行结果是<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"> I made this iterator!</div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">1</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">2</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">3</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">4</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">5</span></div><div class="line"> Calling __next__ method!</div><div class="line"><span class="number">6</span></div><div class="line"> Calling __next__ method!</div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure></p>
+<p>可自定义实现一个迭代器对象:</p>
+<pre><code class="lang-python">class MyRange(object):  
+    def __init__(self, n): 
+        print &quot; I made this iterator!&quot;  
+        self.i = 1
+        self.n = n
+    def __iter__(self):
+        return self
+    def next(self):
+        print &quot; Calling __next__ method!&quot;
+        if self.i &lt;= self.n:
+            i = self.i
+            self.i += 1
+            return i
+        else:
+            raise StopIteration()
+if __name__ == &quot;__main__&quot;:
+    x = MyRange(6)
+    for i in x:
+        print i
+`
+</code></pre>
+<p>运行结果是</p>
+<pre><code class="lang-python"> I made this iterator!
+ Calling __next__ method!
+1
+ Calling __next__ method!
+2
+ Calling __next__ method!
+3
+ Calling __next__ method!
+4
+ Calling __next__ method!
+5
+ Calling __next__ method!
+6
+ Calling __next__ method!
+&gt;&gt;&gt;
+</code></pre>
 <blockquote>
 <p>看出来了吗？上面的代码其实就是自己实现的 <code>range()</code> 函数呢,而 for 语句其实时调用了迭代器的 next 函数。</p>
 </blockquote>
@@ -715,7 +787,21 @@
 
 <!-- Image to hack wechat -->
 <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0" />
-<!-- Migrate from head to bottom, no longer block render and still work --><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+
+<!-- Add By Surflayn -->
+<!--添加google-prettify 代码解析2017.6.2 -->
+
+<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+<script type="text/javascript">
+$(window).load(function(){
+   $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   prettyPrint();
+ })    
+
+
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -733,7 +819,6 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-
 </body>
 
 </html>
