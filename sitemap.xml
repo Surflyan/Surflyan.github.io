@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://codepalace.org/2017/05/16/KNN%E5%AE%9E%E6%88%98%E4%B9%8B%E6%94%B9%E8%BF%9B%E7%BA%A6%E4%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E9%85%8D%E5%AF%B9%E6%95%88%E6%9E%9C/</loc>
+    
+    <lastmod>2017-06-02T10:42:44.288Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://codepalace.org/2017/05/26/%E4%BD%BF%E7%94%A8-LATEX%E6%8E%92%E7%89%88-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/</loc>
+    
+    <lastmod>2017-06-02T10:40:06.238Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://codepalace.org/2017/01/25/hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2-%E5%87%86%E5%A4%87/</loc>
+    
+    <lastmod>2017-06-02T10:34:44.089Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://codepalace.org/about/index.html</loc>
     
     <lastmod>2017-06-02T10:13:09.490Z</lastmod>
@@ -12,20 +33,6 @@
     <loc>http://codepalace.org/2017/06/02/%E9%AB%98%E7%BA%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8BPatricia-Tree/</loc>
     
     <lastmod>2017-06-02T10:09:38.379Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://codepalace.org/2017/05/26/%E4%BD%BF%E7%94%A8-LATEX%E6%8E%92%E7%89%88-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/</loc>
-    
-    <lastmod>2017-05-26T15:56:18.592Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://codepalace.org/2017/05/16/KNN%E5%AE%9E%E6%88%98%E4%B9%8B%E6%94%B9%E8%BF%9B%E7%BA%A6%E4%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E9%85%8D%E5%AF%B9%E6%95%88%E6%9E%9C/</loc>
-    
-    <lastmod>2017-05-16T15:32:44.509Z</lastmod>
     
   </url>
   
@@ -44,7 +51,7 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-lisp.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/lang-lasso.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -52,13 +59,6 @@
   
   <url>
     <loc>http://codepalace.org/Plugins/prettify/run_prettify.js</loc>
-    
-    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://codepalace.org/Plugins/prettify/prettify.css</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -107,21 +107,14 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-clj.js</loc>
-    
-    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-apollo.js</loc>
-    
-    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://codepalace.org/Plugins/prettify/lang-basic.js</loc>
+    
+    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://codepalace.org/Plugins/prettify/lang-clj.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -135,7 +128,21 @@
   </url>
   
   <url>
+    <loc>http://codepalace.org/Plugins/prettify/lang-apollo.js</loc>
+    
+    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://codepalace.org/Plugins/prettify/lang-dart.js</loc>
+    
+    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://codepalace.org/Plugins/prettify/lang-go.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -156,13 +163,6 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-go.js</loc>
-    
-    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://codepalace.org/Plugins/prettify/lang-hs.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
@@ -170,14 +170,14 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-lasso.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/lang-lisp.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-tex.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/prettify.css</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -191,7 +191,7 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-lua.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/lang-logtalk.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -205,7 +205,7 @@
   </url>
   
   <url>
-    <loc>http://codepalace.org/Plugins/prettify/lang-logtalk.js</loc>
+    <loc>http://codepalace.org/Plugins/prettify/lang-lua.js</loc>
     
     <lastmod>2017-03-15T14:13:01.000Z</lastmod>
     
@@ -296,6 +296,13 @@
   </url>
   
   <url>
+    <loc>http://codepalace.org/Plugins/prettify/lang-tex.js</loc>
+    
+    <lastmod>2017-03-15T14:13:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://codepalace.org/2017/03/08/%E8%BD%AC%E8%BD%BD-%E4%BB%8E%E5%A4%B4%E5%88%B0%E5%B0%BE%E5%BD%BB%E5%BA%95%E7%90%86%E8%A7%A3KMP/</loc>
     
     <lastmod>2017-03-07T08:45:44.093Z</lastmod>
@@ -313,13 +320,6 @@
     <loc>http://codepalace.org/2017/03/05/Python%E8%BF%9B%E9%98%B6%E4%B9%8B%E8%BF%AD%E4%BB%A3%E5%99%A8/</loc>
     
     <lastmod>2017-03-06T12:28:48.600Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://codepalace.org/2017/01/25/hexo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2-%E5%87%86%E5%A4%87/</loc>
-    
-    <lastmod>2017-01-29T03:19:48.235Z</lastmod>
     
   </url>
   
