@@ -14,11 +14,11 @@
 
     <title>
         
-          代码殿堂 | Code Palace
+          算法分析之分治算法 - 代码殿堂 | Code Palace
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/404.html">
+    <link rel="canonical" href="http://codepalace.org/2017/07/04/算法分析之分治算法/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -152,24 +152,187 @@
 
     <!-- Main Content -->
     
-<!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/404-bg.jpg')">
+<!-- Image to hack wechat -->
+<!-- <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/header.jpeg')
+    }
+</style>
+<header class="intro-header" >
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>404</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">你来到了没有知识的荒原 :(</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#算法(Algorithm)" title="算法(Algorithm)">算法(Algorithm)</a>
+                        
+                    </div>
+                    <h1>算法分析之分治算法</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by Surflyan on
+                        2017-07-04
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<script>
-    document.body.classList.add('page-fullscreen');
-</script>
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="1-基本原理"><a href="#1-基本原理" class="headerlink" title="1. 基本原理"></a>1. 基本原理</h2><p>经验告诉我们，小规模问题的解通常比大规模问题的解更容易得到，所以，在面对一个大规模问题时，可以考虑转换为几个具有相同形式的子问题来求解。实践证明，这种分而治之的策略简单而实用。</p>
+<hr>
+<h2 id="2-适用前提"><a href="#2-适用前提" class="headerlink" title="2. 适用前提"></a>2. 适用前提</h2><ol>
+<li>问题的规模缩小到一定程度可以轻易解决</li>
+<li>问题可以分解为若干个规模较小的相同问题，即该问题具有最优子结构性质</li>
+<li>利用该问题分解出的子问题的解可以合并为该问题的解</li>
+<li>该问题所分解出的各个子问题是相互独立的，即子问题之间不包含公共的子问题</li>
+</ol>
+<hr>
+<h2 id="3-处理步骤"><a href="#3-处理步骤" class="headerlink" title="3. 处理步骤"></a>3. 处理步骤</h2><p><strong> 划分 </strong> ： 将原问题分解成一些子问题，子问题在形式上与原问题相同。<br><strong> 递归求解 </strong> ：递归调用设计中的算法求解这些子问题。若递归调用时子问题的规模足够小，可以直接给出子问题的解。<br><strong> 合并 </strong> ：将子问题的解合并成原问题的解。</p>
+<hr>
+<h2 id="4-复杂度分析"><a href="#4-复杂度分析" class="headerlink" title="4. 复杂度分析"></a>4. 复杂度分析</h2><p>划分阶段的复杂度为 D(n) , 递归求解阶段的复杂度为 aT（n/b）， 合并阶段复杂度C(n);<br>可以得到分治算法递归方程：</p>
+<pre><code>T(n)=Θ(1)                   n≤c
+T(n)=aT(n/b)+ D(n) +C(n)    n&gt;c
+</code></pre><hr>
+<h2 id="5-实例分析"><a href="#5-实例分析" class="headerlink" title="5. 实例分析"></a>5. 实例分析</h2><p>通过 <code>Strassen矩阵乘法</code> 和 <code>线性时间选择算法</code> 两个实例来进一步理解分治算法，以及降低复杂度的两个方向。</p>
+<h3 id="5-1-Strassen矩阵乘法"><a href="#5-1-Strassen矩阵乘法" class="headerlink" title="5.1 Strassen矩阵乘法"></a>5.1 Strassen矩阵乘法</h3><p>输入： n<em>n的矩阵X和Y<br>输出： X和Y的乘积XY=X</em>Y;<br>矩阵乘法公式：${z<em>{ij}} = \sum</em>{k=1}^n { {x<em>{ik} }{ y</em>{kj} } } $，时间复杂度为$\Theta (n^3)$。<br>考虑分治算法处理该问题，矩阵X，Y，XY都可以分成如下四个矩阵：</p>
+<script type="math/tex; mode=display">X = \left[ {\matrix{ A &ensp;   B  \cr  C &ensp; D  \cr } } \right],Y = \left[ {\matrix{ E &ensp; F  \cr   G &ensp; H  \cr } } \right],XY = \left[ {\matrix{   {AE + BG} &ensp; {AF + BH}  \cr {CE + DG} &ensp; {CF + DH}  \cr } } \right]</script><p>采用上述分块矩阵的做法，递归调用8次，时间复杂度仍然为$\Theta (n^3)$。<br>Strassen首先观察到矩阵乘法具有如下的特征：</p>
+<script type="math/tex; mode=display">{P_1} = A(F - H),{P_2} = (A + B)H,{P_3} = (C + D)E,{P_4} = D(G - E)</script><script type="math/tex; mode=display">{P_5} = (A + D)(E + H),{P_6} = (B - D)(G + H),{P_7} = (A - C)(E + F)</script><script type="math/tex; mode=display">XY = \left[ {\matrix{  {AE + BG} &ensp; {AF + BH}  \cr   {CE + DG} &ensp;{CF + DH}  \cr } } \right] = \left[ { \matrix{   { {P_5} + {P_4} - {P_2} + {P_7} } &ensp; { {P_1} + {P_2} }  \cr { {P_3} + {P_4} } &ensp;{ {P_1} + {P_5} - {P_3} - {P_7} }  \cr } } \right]</script><p>因此，分治算法的递归求解阶段只需求解7个规模为n/2的子问题。<br>该算法时间复杂度约为$\Theta (n^{2.81})$</p>
+<hr>
+<h3 id="5-2-线性时间选择算法"><a href="#5-2-线性时间选择算法" class="headerlink" title="5.2 线性时间选择算法"></a>5.2 线性时间选择算法</h3><p>中位数的线性时间选择算法，经数十年前人的努力，证明了从n个数中选取中位数需要的比较操作次数介于 1.5n 到 5.43n 之间。<br>问题：<br>输入： n个(不同)数构成的集合X,整数i,其中1≤i≤n<br>输出：  x∈X使得X中恰有i-1个元素小于x</p>
+<ol>
+<li>分组，每组5个数 最后一组可能少于5个数 </li>
+<li>将每组数分别用InsertionSort排序 选出每组元素的中位数</li>
+<li>递归调用算法求得这些中位数的中位数(MoM)</li>
+<li>用MoM完成划分，A={x|x∈X，且x＜Mon};B={x|x∈X，且x=Mon};C={x|x∈X，且x＞Mon}；</li>
+<li>设x是中位数的中位数(MoM),划分完成后其下标为k <ul>
+<li>如果i=k,则返回x 、</li>
+<li>如果i&lt;k,则在A中递归选取第i-大的数 </li>
+<li>如果i&gt;k,则在C中递归选取第(i-k)-大的数</li>
+</ul>
+</li>
+</ol>
+<p>算法：<br>Input:   数组A[1:n], 1≤i≤n<br>Output: A[1:n]中的第i-大的数</p>
+<pre><code> for  j=1   to  n/5
+       InsertSort(A[(j-1)*5+1 :(j-1)*5+5]); 
+       swap(A[j], A[[(j-1)*5+3]); 
+x=Select(A[1: n/5],  n/10 ); 
+k=partition(A[1:n], x); 
+if   k=i  then   return x; 
+else if  k&gt;i  then  
+    return  Select(A[1:k-1],i);  
+else     
+   retrun Select(A[k+1:n],i-k);
+</code></pre><p>可以发现，在A或C上求解子问题时算法至少剪除[ $\frac{3n}{10}$] 的数据。时间复杂度T(n)=Θ(n)</p>
+<hr>
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><ul>
+<li>实例一：启示我们，应该观察问题的解的构成，尽可能减少要求解的子问题的个数，从而降低复杂度。</li>
+<li>实例二：实质是一种基于剪枝搜索方法的分治算法。 关键在于每回递归求解不论在何种情况下都能剪除至少为n的常数因子个数据。</li>
+</ul>
+<blockquote>
+<p>请多多指教！</p>
+</blockquote>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/06/02/高级数据结构之Patricia-Tree/" data-toggle="tooltip" data-placement="top" title="Next Post">高级数据结构之Patricia Tree &rarr;</a>
+                        </li>
+                    
+                </ul>
+               
+          <!--Add by Surflyan -->
+           <!-- Share-->
+           <section>
+           <hr>
+             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>   
+          </section>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
+
+               
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#算法(Algorithm)" title="算法(Algorithm)">算法(Algorithm)</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://codebelief.com" target="_blank">代码信条</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/js1568" target="_blank">ksboys</a></li>
+                    
+                </ul>
+                
+
+ 
+ 
+           </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
 
 
     <!-- Footer -->
@@ -354,6 +517,50 @@
 
 
 <!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Surflyan to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
 
 
 
