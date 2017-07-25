@@ -14,11 +14,11 @@
 
     <title>
         
-          代码殿堂 | Code Palace
+          树的搜索策略 - 代码殿堂 | Code Palace
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/page/2/">
+    <link rel="canonical" href="http://codepalace.org/2017/07/25/树的搜索策略/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -151,306 +151,163 @@
 
 
     <!-- Main Content -->
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/header.jpeg')">
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/header.jpeg')
+    }
+</style>
+<header class="intro-header" >
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>代码殿堂-Code Palace</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">keep alive, keep enthusiastic</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#算法(Algorithm)" title="算法(Algorithm)">算法(Algorithm)</a>
+                        
+                    </div>
+                    <h1>树的搜索策略</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by Surflyan on
+                        2017-07-25
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
 
-
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        
-
-<!-- USE SIDEBAR -->
     <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-            
-                <!-- Main Content -->
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-
-<div class="post-preview">
-
-    <a href="/2017/03/06/Python进阶之生成器/">
-        <h2 class="post-title">
-            Python进阶之生成器
-        </h2>
-        <h3 class="post-subtitle">
-            较详细地介绍了生成器的两种生成方式、特性以及方法
-        </h3>
-        <div class="post-content-preview">
-            1. 生成器(generator)什么是生成器呢，要理解生成器你就必须先理解什么是迭代器，因为生成器也是一种迭代器，是一种更高级、更优雅的迭代器。关于迭代器，如果你不明白的话，本博文的 前一篇有讲解，这里不再赘述。首先，明白下面两点：
-
-任意生成器都是迭代器 (反之不成立）。
-任意生成器，都是一个延迟产生值的工厂。
-
-2. yieldPython 有两种不同的方式提供生成器：现在介绍第一种：......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-03-06
-    </p>
-
-</div>
+                <p>许多实际问题的解空间可以组织成一棵树，那么问题的优化解变成了搜索解空间对应的搜索树。这里介绍五种典型搜索策略。</p>
 <hr>
-
-<div class="post-preview">
-
-    <a href="/2017/03/05/Python进阶之迭代器/">
-        <h2 class="post-title">
-            Python进阶之迭代器
-        </h2>
-        <h3 class="post-subtitle">
-            Python 可迭代对象、迭代器的介绍
-        </h3>
-        <div class="post-content-preview">
-            1.容器(container)容器是存储元素的一种数据结构，可进行成员测试，在python中典型的容器有：
-
-list
-set
-dict
-tuple 
-str
-…
-
-容器较容易理解，可参照生活中容器的理解。
-2. 可迭代对象(interable) 迭代(interate)  是指按照某种顺序逐个访问序列中的每一项。大部分容器都是可迭代的，但还有其他对象也可迭代，如文件对象、管道对象，可迭代对......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-03-05
-    </p>
-
-</div>
+<h1 id="1-广度优先搜索"><a href="#1-广度优先搜索" class="headerlink" title="1. 广度优先搜索"></a>1. 广度优先搜索</h1><h4 id="1-1-算法思想"><a href="#1-1-算法思想" class="headerlink" title="1.1 算法思想"></a>1.1 算法思想</h4><p>广度优先搜索从树根开始，逐层访问树中的结点。在第k层处理完之后，再处理第k+1层的节点。由此，广度优先搜索使用队列来扩展节点，在处理完该结点之后就将该节点的孩子节点添加到队列中，使得第k+1层节点按序分布；</p>
+<h4 id="1-2-算法步骤"><a href="#1-2-算法步骤" class="headerlink" title="1.2 算法步骤"></a>1.2 算法步骤</h4><ol>
+<li>构造由根组成的队列Q； </li>
+<li>If Q的第一个元素x是目标节点 Then 停止; </li>
+<li>从Q中删除x，把x的所有子节点加入Q的末尾; </li>
+<li>If Q空 Then 失败 Else goto 2.</li>
+</ol>
 <hr>
-
-<div class="post-preview">
-
-    <a href="/2017/01/28/Hexo搭建个人博客-优化/">
-        <h2 class="post-title">
-            Hexo搭建个人博客--优化
-        </h2>
-        <h3 class="post-subtitle">
-            博客的后期处理、提交 sitemap
-        </h3>
-        <div class="post-content-preview">
-            相信你已经可以通过域名来访问到你的博客了，但还有一些事情是必须要做的，现在我们就来讲讲后续的处理吧。
-评论功能一篇博文，分享思想。读者有发表想法的权利，所以我们必须提供评论功能。由于我们搭建的是静态网站，网站本身并不能存放评论，必须使用第三方提供的服务。国内一般使用较多的就是 多说了。
-首先注册一个多说账号，之后官网会给出详细的引导，你可以获取到通用代码，你可以将这段通用代码插入 page.......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-01-28
-    </p>
-
-</div>
+<h1 id="2-深度优先搜索"><a href="#2-深度优先搜索" class="headerlink" title="2. 深度优先搜索"></a>2. 深度优先搜索</h1><h4 id="2-1-算法思想"><a href="#2-1-算法思想" class="headerlink" title="2.1 算法思想"></a>2.1 算法思想</h4><p>深度优先搜索从根节点开始，总是首先扩展其子节点，往更深的方向搜索，直到不能访问为止；若最近访问的节点的所有孩子都已访问过，则回溯到其兄弟节点继续深度优先搜索；由此，深度优先搜索采用栈结构扩展结构。</p>
+<h4 id="2-2-算法步骤"><a href="#2-2-算法步骤" class="headerlink" title="2.2 算法步骤"></a>2.2 算法步骤</h4><ol>
+<li>构造一个由根构成的单元素栈S; </li>
+<li>If  Top(S)是目标节点 Then  停止; </li>
+<li>Pop(S),  把Top(S)的所有子节点压入栈顶; </li>
+<li>If  S空 Then  失败 Else  goto 2.</li>
+</ol>
 <hr>
-
-<div class="post-preview">
-
-    <a href="/2017/01/26/Hexo搭建个人博客--进阶/">
-        <h2 class="post-title">
-            Hexo搭建个人博客--进阶
-        </h2>
-        <h3 class="post-subtitle">
-            hexo 搭建博客完整实现
-        </h3>
-        <div class="post-content-preview">
-            前一篇博文已经交代了准备工作，完成以后，就可以开始搭建自己的博客了，本博文按照博主建站顺序来引导，从本地预览到上传 github ，再到绑定域名浏览。 希望可以帮助你快速完成搭建。开始吧。
-安装 hexo.打开 Git bash ,执行：
-$ npm install -g hexo
-执行：
-hexo -v
-查看 hexo 是否安装完成，及hexo版本号
-hexo 安装完之后，就可使用hexo......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-01-26
-    </p>
-
-</div>
+<h1 id="3-爬山法"><a href="#3-爬山法" class="headerlink" title="3. 爬山法"></a>3. 爬山法</h1><h4 id="3-1-算法思想"><a href="#3-1-算法思想" class="headerlink" title="3.1 算法思想"></a>3.1 算法思想</h4><p>在深度优先搜索过程中, 经常遇到多个节点可以扩展的情况, 爬山策略使用贪心方法确定搜索的方向,使用启发式测度来排序节点扩展的顺序。对于每一个节点有一个隐式约束P(X)，不仅可以判断x是否为目标节点，还可以判断距离目标节点的距离。爬山法在深度优先搜索时每次先扩展距离目标节点近的节点，使得目标节点能尽早被发现。</p>
+<h4 id="3-2-算法步骤"><a href="#3-2-算法步骤" class="headerlink" title="3.2 算法步骤"></a>3.2 算法步骤</h4><ol>
+<li>构造由根组成的单元素栈S; </li>
+<li>If  Top(S)是目标节点 Then  停止; </li>
+<li>Pop(S); </li>
+<li>S的子节点按照其启发测度由大到小的顺序压入S;  </li>
+<li>If  S空 Then  失败，Else  goto 2.</li>
+</ol>
+<p>爬山法发现的解为可行解；</p>
 <hr>
-
-<div class="post-preview">
-
-    <a href="/2017/01/25/hexo-搭建个人博客-准备/">
-        <h2 class="post-title">
-            Hexo搭建个人博客--准备
-        </h2>
-        <h3 class="post-subtitle">
-            所需技能及环境配置
-        </h3>
-        <div class="post-content-preview">
-            独立个人博客，有兴趣吗？如果你只是想要有一个写东西的地方，对互联网不甚了解，那么众多门户网站是很好的选择。如果你爱折腾，有时间，那么搭建个人定制、独立博客也是蛮有趣味。
-Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多的项目都托管在其上。Github Pages 本用于作为 Github 项目的介绍文档站，对项目做出说明。
-为什么选择 Github......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-01-25
-    </p>
-
-</div>
+<h1 id="4-最佳优先搜索"><a href="#4-最佳优先搜索" class="headerlink" title="4. 最佳优先搜索"></a>4. 最佳优先搜索</h1><h4 id="4-1-算法思想"><a href="#4-1-算法思想" class="headerlink" title="4.1 算法思想"></a>4.1 算法思想</h4><p>最佳优先搜索同爬山法不同的是，它每次从全局范围内选取扩展方向。即从当前所有的可扩展节点中选取隐式约束P(X)最小的节点作为扩展方向。最佳优先搜索使用堆结构扩展节点。</p>
+<h4 id="4-2-算法步骤"><a href="#4-2-算法步骤" class="headerlink" title="4.2 算法步骤"></a>4.2 算法步骤</h4><ol>
+<li>使用评价函数构造一个堆H, 首先构造由根组成的单元素堆; </li>
+<li>If   H的根r是目标节点 Then  停止; </li>
+<li>从H中删除r, 把r的子节点插入H; </li>
+<li>If   H空 Then  失败 Else   goto 2. </li>
+</ol>
+<p>最佳优先搜索找到的是可行解；</p>
 <hr>
+<h1 id="5-分支限界法"><a href="#5-分支限界法" class="headerlink" title="5. 分支限界法"></a>5. 分支限界法</h1><h4 id="5-1-算法思想"><a href="#5-1-算法思想" class="headerlink" title="5.1 算法思想"></a>5.1 算法思想</h4><p>分支限界法要点为： 利用已发现的可行解的代价剪除不能取得优化解的分支，从而避免对不能产生优化解的分支进行搜索。</p>
+<p>分支限界法具有两个要素： </p>
+<ol>
+<li>产生可行解的策略。可以选择爬上法、DFS、BestFS策略，值得注意的是不能采用BFS，自行体会。</li>
+<li>剪除分支的策略。如何判定节点为根的子树任意可行解的代价大于已知可行解的代价。这需根据具体问题建立绑定函数。</li>
+</ol>
+<h4 id="5-2-算法步骤"><a href="#5-2-算法步骤" class="headerlink" title="5.2 算法步骤"></a>5.2 算法步骤</h4><ol>
+<li>建立根节点, 其权值为解代价下界; </li>
+<li>使用爬山法, 类似于拓朴排序序列树生成算法求解问题, 每产生一个节点, 其权值为加工后的代价矩阵对应元素加其父节点权值; </li>
+<li>一旦发现一个可能解, 将其代价作为界限, 循环地进行分支界限搜索: 剪掉不能导致优化解的子解, 使用爬山法继续扩展新增节点, 直至发现优化解.</li>
+</ol>
+<p>分支界限法要想取得比较好的效果，可从两个方面考虑：</p>
+<ol>
+<li>如何尽快找到一个相对较优的可行解。 以便剪除较多的分支。</li>
+<li>如何尽早的剪除分支，也就是越在靠近根节点的地方剪除，越能产生良好的效果。可考虑一开始就对代价矩阵进行变换，给根节点一个代价下界。</li>
+</ol>
 
 
+                <hr>
 
-<!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/07/10/算法分析之贪心算法/" data-toggle="tooltip" data-placement="top" title="Next Post">算法分析之贪心算法 &rarr;</a>
+                        </li>
+                    
+                </ul>
+               
+          <!--Add by Surflyan -->
+           <!-- Share-->
+           <section>
+           <hr>
+             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>   
+          </section>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
 
-<ul class="pager">
-    
-        <li class="previous">
-            <a href="/">&larr; Newer Posts</a>
-        </li>
-    
-    
-</ul>
-
-
-
-                <!-- 如果开启评论功能 -->
-                
-
+               
             </div>
-    <!-- Sidebar Container -->
+    <!-- Side Catalog Container -->
+        
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
                 sidebar-container
-            ">
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
                 <section>
                     <!-- no hr -->
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-                        
-                            
-                            <a href="/tags/#hexo" title="hexo" rel="3">hexo</a>
-                            
-                        
-                            
-                        
-                            
-                            <a href="/tags/#Python" title="Python" rel="2">Python</a>
-                            
-                        
-                            
-                            <a href="/tags/#Python进阶" title="Python进阶" rel="2">Python进阶</a>
-                            
-                        
-                            
-                        
-                            
-                            <a href="/tags/#算法(Algorithm)" title="算法(Algorithm)" rel="5">算法(Algorithm)</a>
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
+                       
+                          <a class="tag" href="/tags/#算法(Algorithm)" title="算法(Algorithm)">算法(Algorithm)</a>
                         
                     </div>
                 </section>
                 
 
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
-                    <div class="short-about">
-
-                        
-                            <img src="/img/picture.jpg" />
-                        
-
-                        
-                            <p>尽吾志而无悔！</p>
-                        
-
-                        <!-- SNS Link -->
-                        <ul class="list-inline">
-                            
-                            
-                            
-                                <li>
-                                    <a target="_blank" href="https://www.zhihu.com/people/surflyan">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa  fa-stack-1x fa-inverse">知</i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-
-                            
-                                <li>
-                                    <a target="_blank" href="http://weibo.com/Surflyan">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-
-                            
-                                <li>
-                                    <a target="_blank" href="https://www.facebook.com/Surflyan">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-
-                            
-                                <li>
-                                    <a target="_blank"  href="https://github.com/Surflyan">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-                            
-                            
-                            
-                        </ul>
-                    </div>
-                </section>
-                
                 <!-- Friends Blog -->
                 
                 <hr>
@@ -464,10 +321,18 @@ Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多�
                     
                 </ul>
                 
-            </div>
-        
+
+ 
+ 
+           </div>
+
+        </div>
     </div>
-</div>
+</article>
+
+
+
+
 
 
     <!-- Footer -->
@@ -652,6 +517,50 @@ Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多�
 
 
 <!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Surflyan to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
 
 
 

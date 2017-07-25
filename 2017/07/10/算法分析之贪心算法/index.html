@@ -14,11 +14,11 @@
 
     <title>
         
-          代码殿堂 | Code Palace
+          算法分析之贪心算法 - 代码殿堂 | Code Palace
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/page/2/">
+    <link rel="canonical" href="http://codepalace.org/2017/07/10/算法分析之贪心算法/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -151,306 +151,126 @@
 
 
     <!-- Main Content -->
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/header.jpeg')">
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/header.jpeg')
+    }
+</style>
+<header class="intro-header" >
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>代码殿堂-Code Palace</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">keep alive, keep enthusiastic</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#算法(Algorithm)" title="算法(Algorithm)">算法(Algorithm)</a>
+                        
+                    </div>
+                    <h1>算法分析之贪心算法</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by Surflyan on
+                        2017-07-10
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
 
-
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        
-
-<!-- USE SIDEBAR -->
     <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-            
-                <!-- Main Content -->
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-
-<div class="post-preview">
-
-    <a href="/2017/03/06/Python进阶之生成器/">
-        <h2 class="post-title">
-            Python进阶之生成器
-        </h2>
-        <h3 class="post-subtitle">
-            较详细地介绍了生成器的两种生成方式、特性以及方法
-        </h3>
-        <div class="post-content-preview">
-            1. 生成器(generator)什么是生成器呢，要理解生成器你就必须先理解什么是迭代器，因为生成器也是一种迭代器，是一种更高级、更优雅的迭代器。关于迭代器，如果你不明白的话，本博文的 前一篇有讲解，这里不再赘述。首先，明白下面两点：
-
-任意生成器都是迭代器 (反之不成立）。
-任意生成器，都是一个延迟产生值的工厂。
-
-2. yieldPython 有两种不同的方式提供生成器：现在介绍第一种：......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-03-06
-    </p>
-
-</div>
+                <h1 id="1-算法思想"><a href="#1-算法思想" class="headerlink" title="1. 算法思想"></a>1. 算法思想</h1><p>求解优化问题通常可以一步一步来选择求解，贪心算法处理优化问题时，在每一步都选择当前最佳策略，希望通过局部优化来达到全局优化的效果。一般情况下，贪心算法仅会得到一个可行解，并非最优解。如 <code>0-1背包问题</code> （这里不包括分数背包问题）。</p>
 <hr>
-
-<div class="post-preview">
-
-    <a href="/2017/03/05/Python进阶之迭代器/">
-        <h2 class="post-title">
-            Python进阶之迭代器
-        </h2>
-        <h3 class="post-subtitle">
-            Python 可迭代对象、迭代器的介绍
-        </h3>
-        <div class="post-content-preview">
-            1.容器(container)容器是存储元素的一种数据结构，可进行成员测试，在python中典型的容器有：
-
-list
-set
-dict
-tuple 
-str
-…
-
-容器较容易理解，可参照生活中容器的理解。
-2. 可迭代对象(interable) 迭代(interate)  是指按照某种顺序逐个访问序列中的每一项。大部分容器都是可迭代的，但还有其他对象也可迭代，如文件对象、管道对象，可迭代对......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-03-05
-    </p>
-
-</div>
+<h1 id="2-前提条件"><a href="#2-前提条件" class="headerlink" title="2. 前提条件"></a>2. 前提条件</h1><p>任何问题只要其具备了贪心选择性和优化子结构就可通过贪心算法获得该问题的最优解。</p>
+<p><strong> 贪心选择性 </strong> ： 如果一个优化问题的贪心选择必然出现在该问题的一个最优解中，称该问题具备贪心选择性；<br><strong> 优化子结构 </strong> : 如果一个优化问题的贪心选择和贪心选择之后剩下的子问题的解一起构成该问题的一个优化解，称该问题具有贪心子结构；</p>
+<p>这两条性质，通常可通过反证法证明之。</p>
 <hr>
-
-<div class="post-preview">
-
-    <a href="/2017/01/28/Hexo搭建个人博客-优化/">
-        <h2 class="post-title">
-            Hexo搭建个人博客--优化
-        </h2>
-        <h3 class="post-subtitle">
-            博客的后期处理、提交 sitemap
-        </h3>
-        <div class="post-content-preview">
-            相信你已经可以通过域名来访问到你的博客了，但还有一些事情是必须要做的，现在我们就来讲讲后续的处理吧。
-评论功能一篇博文，分享思想。读者有发表想法的权利，所以我们必须提供评论功能。由于我们搭建的是静态网站，网站本身并不能存放评论，必须使用第三方提供的服务。国内一般使用较多的就是 多说了。
-首先注册一个多说账号，之后官网会给出详细的引导，你可以获取到通用代码，你可以将这段通用代码插入 page.......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-01-28
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/01/26/Hexo搭建个人博客--进阶/">
-        <h2 class="post-title">
-            Hexo搭建个人博客--进阶
-        </h2>
-        <h3 class="post-subtitle">
-            hexo 搭建博客完整实现
-        </h3>
-        <div class="post-content-preview">
-            前一篇博文已经交代了准备工作，完成以后，就可以开始搭建自己的博客了，本博文按照博主建站顺序来引导，从本地预览到上传 github ，再到绑定域名浏览。 希望可以帮助你快速完成搭建。开始吧。
-安装 hexo.打开 Git bash ,执行：
-$ npm install -g hexo
-执行：
-hexo -v
-查看 hexo 是否安装完成，及hexo版本号
-hexo 安装完之后，就可使用hexo......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-01-26
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/01/25/hexo-搭建个人博客-准备/">
-        <h2 class="post-title">
-            Hexo搭建个人博客--准备
-        </h2>
-        <h3 class="post-subtitle">
-            所需技能及环境配置
-        </h3>
-        <div class="post-content-preview">
-            独立个人博客，有兴趣吗？如果你只是想要有一个写东西的地方，对互联网不甚了解，那么众多门户网站是很好的选择。如果你爱折腾，有时间，那么搭建个人定制、独立博客也是蛮有趣味。
-Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多的项目都托管在其上。Github Pages 本用于作为 Github 项目的介绍文档站，对项目做出说明。
-为什么选择 Github......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-01-25
-    </p>
-
-</div>
-<hr>
+<h1 id="3-典型问题"><a href="#3-典型问题" class="headerlink" title="3. 典型问题"></a>3. 典型问题</h1><p>贪心算法在一些经典问题求解上的应用：</p>
+<ol>
+<li>活动选择问题</li>
+<li>哈夫曼编码问题</li>
+<li>最小生成树问题</li>
+</ol>
 
 
+                <hr>
 
-<!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/07/25/树的搜索策略/" data-toggle="tooltip" data-placement="top" title="Previous Post">&larr; 树的搜索策略</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/07/07/算法分析之动态规划/" data-toggle="tooltip" data-placement="top" title="Next Post">算法分析之动态规划 &rarr;</a>
+                        </li>
+                    
+                </ul>
+               
+          <!--Add by Surflyan -->
+           <!-- Share-->
+           <section>
+           <hr>
+             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>   
+          </section>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
 
-<ul class="pager">
-    
-        <li class="previous">
-            <a href="/">&larr; Newer Posts</a>
-        </li>
-    
-    
-</ul>
-
-
-
-                <!-- 如果开启评论功能 -->
-                
-
+               
             </div>
-    <!-- Sidebar Container -->
+    <!-- Side Catalog Container -->
+        
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
                 sidebar-container
-            ">
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
                 <section>
                     <!-- no hr -->
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-                        
-                            
-                            <a href="/tags/#hexo" title="hexo" rel="3">hexo</a>
-                            
-                        
-                            
-                        
-                            
-                            <a href="/tags/#Python" title="Python" rel="2">Python</a>
-                            
-                        
-                            
-                            <a href="/tags/#Python进阶" title="Python进阶" rel="2">Python进阶</a>
-                            
-                        
-                            
-                        
-                            
-                            <a href="/tags/#算法(Algorithm)" title="算法(Algorithm)" rel="5">算法(Algorithm)</a>
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
+                       
+                          <a class="tag" href="/tags/#算法(Algorithm)" title="算法(Algorithm)">算法(Algorithm)</a>
                         
                     </div>
                 </section>
                 
 
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
-                    <div class="short-about">
-
-                        
-                            <img src="/img/picture.jpg" />
-                        
-
-                        
-                            <p>尽吾志而无悔！</p>
-                        
-
-                        <!-- SNS Link -->
-                        <ul class="list-inline">
-                            
-                            
-                            
-                                <li>
-                                    <a target="_blank" href="https://www.zhihu.com/people/surflyan">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa  fa-stack-1x fa-inverse">知</i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-
-                            
-                                <li>
-                                    <a target="_blank" href="http://weibo.com/Surflyan">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-
-                            
-                                <li>
-                                    <a target="_blank" href="https://www.facebook.com/Surflyan">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-
-                            
-                                <li>
-                                    <a target="_blank"  href="https://github.com/Surflyan">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-                            
-                            
-                            
-                        </ul>
-                    </div>
-                </section>
-                
                 <!-- Friends Blog -->
                 
                 <hr>
@@ -464,10 +284,18 @@ Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多�
                     
                 </ul>
                 
-            </div>
-        
+
+ 
+ 
+           </div>
+
+        </div>
     </div>
-</div>
+</article>
+
+
+
+
 
 
     <!-- Footer -->
@@ -652,6 +480,50 @@ Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多�
 
 
 <!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Surflyan to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
 
 
 
