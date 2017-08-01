@@ -14,11 +14,11 @@
 
     <title>
         
-          树的搜索策略 - 代码殿堂 | Code Palace
+          Tesseract For OCR - 代码殿堂 | Code Palace
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/2017/07/25/树的搜索策略/">
+    <link rel="canonical" href="http://codepalace.org/2017/08/01/Tesseract-For-OCR/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -101,14 +101,14 @@
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
@@ -169,14 +169,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#算法(Algorithm)" title="算法(Algorithm)">算法(Algorithm)</a>
+                          <a class="tag" href="/tags/#机器视觉" title="机器视觉">机器视觉</a>
                         
                     </div>
-                    <h1>树的搜索策略</h1>
+                    <h1>Tesseract For OCR</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by Surflyan on
-                        2017-07-25
+                        2017-08-01
                     </span>
                 </div>
             </div>
@@ -195,58 +195,39 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>许多实际问题的解空间可以组织成一棵树，那么问题的优化解变成了搜索解空间对应的搜索树。这里介绍五种典型搜索策略。</p>
+                <p>OCR (Optical Character Recognition) 是将文本资料的图像文件进行分析识别，转换机器编码文本的过程。运用OCR处理，就可以获取图像文件中的字符，从而对字符串变量进行访问和操作。</p>
+<p>本篇博文着重介绍如何在windows操作系统中安装和配置Tesseract，之后利用<code>tesseract</code> 命令测试输入图像。<br>下篇博文介绍如何运用python 脚本调用<code>Tesseract</code>。<br>了解更多关于Tesseract 的信息，请访问<a href="https://github.com/tesseract-ocr/tesseract#tesseract-ocr" target="_blank" rel="external">项目介绍</a>.</p>
 <hr>
-<h1 id="1-广度优先搜索"><a href="#1-广度优先搜索" class="headerlink" title="1. 广度优先搜索"></a>1. 广度优先搜索</h1><h4 id="1-1-算法思想"><a href="#1-1-算法思想" class="headerlink" title="1.1 算法思想"></a>1.1 算法思想</h4><p>广度优先搜索从树根开始，逐层访问树中的结点。在第k层处理完之后，再处理第k+1层的节点。由此，广度优先搜索使用队列来扩展节点，在处理完该结点之后就将该节点的孩子节点添加到队列中，使得第k+1层节点按序分布；</p>
-<h4 id="1-2-算法步骤"><a href="#1-2-算法步骤" class="headerlink" title="1.2 算法步骤"></a>1.2 算法步骤</h4><ol>
-<li>构造由根组成的队列Q； </li>
-<li>If Q的第一个元素x是目标节点 Then 停止; </li>
-<li>从Q中删除x，把x的所有子节点加入Q的末尾; </li>
-<li>If Q空 Then 失败 Else goto 2.</li>
-</ol>
+<h1 id="1-安装Tesseract"><a href="#1-安装Tesseract" class="headerlink" title="1. 安装Tesseract"></a>1. 安装Tesseract</h1><p>对于windows用户，可以参考下文。<br>其他系统用户，参见<a href="https://github.com/tesseract-ocr/tesseract/wiki" target="_blank" rel="external">官方文档</a>.<br>由于官方不提供最新的 v3.05安装包，博主选择了由 Mannheim University 维护提供的<a href="https://github.com/UB-Mannheim/tesseract/wiki" target="_blank" rel="external">installer</a>.<br>安装默认为英文语言包，如有其他语言需要可在安装过程中，在<code>Additional language data</code>中选择相应语言。<br>安装完成之后，将其添加到path环境变量中，以便后续使用。</p>
 <hr>
-<h1 id="2-深度优先搜索"><a href="#2-深度优先搜索" class="headerlink" title="2. 深度优先搜索"></a>2. 深度优先搜索</h1><h4 id="2-1-算法思想"><a href="#2-1-算法思想" class="headerlink" title="2.1 算法思想"></a>2.1 算法思想</h4><p>深度优先搜索从根节点开始，总是首先扩展其子节点，往更深的方向搜索，直到不能访问为止；若最近访问的节点的所有孩子都已访问过，则回溯到其兄弟节点继续深度优先搜索；由此，深度优先搜索采用栈结构扩展结构。</p>
-<h4 id="2-2-算法步骤"><a href="#2-2-算法步骤" class="headerlink" title="2.2 算法步骤"></a>2.2 算法步骤</h4><ol>
-<li>构造一个由根构成的单元素栈S; </li>
-<li>If  Top(S)是目标节点 Then  停止; </li>
-<li>Pop(S),  把Top(S)的所有子节点压入栈顶; </li>
-<li>If  S空 Then  失败 Else  goto 2.</li>
-</ol>
+<h1 id="2-测试Tesseract-OCR"><a href="#2-测试Tesseract-OCR" class="headerlink" title="2. 测试Tesseract OCR"></a>2. 测试Tesseract OCR</h1><h3 id="2-1-检测安装"><a href="#2-1-检测安装" class="headerlink" title="2.1 检测安装"></a>2.1 检测安装</h3><p>首先验证 Tesseract 是否成功安装</p>
+<pre><code>$ tesseract -v
+</code></pre><p>返回如下，成功安装</p>
+<pre><code>C:\Users\Surflyan\Desktop&gt;tesseract -v
+tesseract 3.05.01
+ leptonica-1.74.1
+  libgif 4.1.6(?) : libjpeg 8d (libjpeg-turbo 1.5.0) : libpng 1.6.20 : libtiff 4.0.6 : zlib 1.2.8 : libwebp 0.4.3 : libopenjp2 2.1.0
+</code></pre><h3 id="2-2-测试应用"><a href="#2-2-测试应用" class="headerlink" title="2.2 测试应用"></a>2.2 测试应用</h3><p>在终端直接输入 <code>tesseract</code> 获取 tesseract 详细语法。<br>提供预处理过的图像，Tesseract OCR 获得准确的结果<br>我们使用如下图片作为测试样例：<br><img src="test.png" alt="test.png"><br>在终端输入：</p>
+<pre><code>tesseract test.png stdout
+Warning. Invalid resolution 0 dpi. Using 70 instead.
+Testing Tesseract OCR
+</code></pre><p>可以看到，准确识别。<br>可是这样总能得到完美的结果吗？继续测试如下图片：</p>
+<p><img src="test_2.png" alt="test_2.png"></p>
+<pre><code>C:\Users\Surflyan\Desktop&gt;tesseract test_2.png stdout digits
+Warning. Invalid resolution 0 dpi. Using 70 instead.
+5513
+</code></pre><p>可以发现， tesseract 识别错误。</p>
 <hr>
-<h1 id="3-爬山法"><a href="#3-爬山法" class="headerlink" title="3. 爬山法"></a>3. 爬山法</h1><h4 id="3-1-算法思想"><a href="#3-1-算法思想" class="headerlink" title="3.1 算法思想"></a>3.1 算法思想</h4><p>在深度优先搜索过程中, 经常遇到多个节点可以扩展的情况, 爬山策略使用贪心方法确定搜索的方向,使用启发式测度来排序节点扩展的顺序。对于每一个节点有一个隐式约束P(X)，不仅可以判断x是否为目标节点，还可以判断距离目标节点的距离。爬山法在深度优先搜索时每次先扩展距离目标节点近的节点，使得目标节点能尽早被发现。</p>
-<h4 id="3-2-算法步骤"><a href="#3-2-算法步骤" class="headerlink" title="3.2 算法步骤"></a>3.2 算法步骤</h4><ol>
-<li>构造由根组成的单元素栈S; </li>
-<li>If  Top(S)是目标节点 Then  停止; </li>
-<li>Pop(S); </li>
-<li>S的子节点按照其启发测度由大到小的顺序压入S;  </li>
-<li>If  S空 Then  失败，Else  goto 2.</li>
-</ol>
-<p>爬山法发现的解为可行解；</p>
-<hr>
-<h1 id="4-最佳优先搜索"><a href="#4-最佳优先搜索" class="headerlink" title="4. 最佳优先搜索"></a>4. 最佳优先搜索</h1><h4 id="4-1-算法思想"><a href="#4-1-算法思想" class="headerlink" title="4.1 算法思想"></a>4.1 算法思想</h4><p>最佳优先搜索同爬山法不同的是，它每次从全局范围内选取扩展方向。即从当前所有的可扩展节点中选取隐式约束P(X)最小的节点作为扩展方向。最佳优先搜索使用堆结构扩展节点。</p>
-<h4 id="4-2-算法步骤"><a href="#4-2-算法步骤" class="headerlink" title="4.2 算法步骤"></a>4.2 算法步骤</h4><ol>
-<li>使用评价函数构造一个堆H, 首先构造由根组成的单元素堆; </li>
-<li>If   H的根r是目标节点 Then  停止; </li>
-<li>从H中删除r, 把r的子节点插入H; </li>
-<li>If   H空 Then  失败 Else   goto 2. </li>
-</ol>
-<p>最佳优先搜索找到的是可行解；</p>
-<hr>
-<h1 id="5-分支限界法"><a href="#5-分支限界法" class="headerlink" title="5. 分支限界法"></a>5. 分支限界法</h1><h4 id="5-1-算法思想"><a href="#5-1-算法思想" class="headerlink" title="5.1 算法思想"></a>5.1 算法思想</h4><p>分支限界法要点为： 利用已发现的可行解的代价剪除不能取得优化解的分支，从而避免对不能产生优化解的分支进行搜索。</p>
-<p>分支限界法具有两个要素： </p>
+<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h1><p>可以知道，Tesseract 并不是 OCR 现成的解决方案，它适合构建图片处理管道，在经过预处理之后,再进行OCR识别。</p>
+<p>使用Tesseract时，应该：</p>
 <ol>
-<li>产生可行解的策略。可以选择爬上法、DFS、BestFS策略，值得注意的是不能采用BFS，自行体会。</li>
-<li>剪除分支的策略。如何判定节点为根的子树任意可行解的代价大于已知可行解的代价。这需根据具体问题建立绑定函数。</li>
+<li>使用尽可能高分辨率和DPI的输入图像。</li>
+<li>应用阈值来从背景分割文本。</li>
+<li>确保前景尽可能地  从背景分割（即，没有像素或字符变形）。</li>
+<li>将文本偏移校正  应用于输入图像，以确保文本正确对齐。</li>
 </ol>
-<h4 id="5-2-算法步骤"><a href="#5-2-算法步骤" class="headerlink" title="5.2 算法步骤"></a>5.2 算法步骤</h4><ol>
-<li>建立根节点, 其权值为解代价下界; </li>
-<li>使用爬山法, 类似于拓朴排序序列树生成算法求解问题, 每产生一个节点, 其权值为加工后的代价矩阵对应元素加其父节点权值; </li>
-<li>一旦发现一个可能解, 将其代价作为界限, 循环地进行分支界限搜索: 剪掉不能导致优化解的子解, 使用爬山法继续扩展新增节点, 直至发现优化解.</li>
-</ol>
-<p>分支界限法要想取得比较好的效果，可从两个方面考虑：</p>
-<ol>
-<li>如何尽快找到一个相对较优的可行解。 以便剪除较多的分支。</li>
-<li>如何尽早的剪除分支，也就是越在靠近根节点的地方剪除，越能产生良好的效果。可考虑一开始就对代价矩阵进行变换，给根节点一个代价下界。</li>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="http://www.pyimagesearch.com/2017/07/03/installing-tesseract-for-ocr/" target="_blank" rel="external">http://www.pyimagesearch.com/2017/07/03/installing-tesseract-for-ocr/</a></li>
 </ol>
 
 
@@ -256,7 +237,7 @@
                     
                     
                         <li class="next">
-                            <a href="/2017/07/10/算法分析之贪心算法/" data-toggle="tooltip" data-placement="top" title="Next Post">算法分析之贪心算法 &rarr;</a>
+                            <a href="/2017/07/13/树的搜索策略/" data-toggle="tooltip" data-placement="top" title="Next Post">树的搜索策略 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -302,7 +283,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#算法(Algorithm)" title="算法(Algorithm)">算法(Algorithm)</a>
+                          <a class="tag" href="/tags/#机器视觉" title="机器视觉">机器视觉</a>
                         
                     </div>
                 </section>

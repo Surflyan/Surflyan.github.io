@@ -14,11 +14,11 @@
 
     <title>
         
-          Hexo搭建个人博客--优化 - 代码殿堂 | Code Palace
+          树的搜索策略 - 代码殿堂 | Code Palace
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/2017/01/28/Hexo搭建个人博客-优化/">
+    <link rel="canonical" href="http://codepalace.org/2017/07/13/树的搜索策略/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -159,7 +159,7 @@
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('hexo-optimize.jpg')
+        background-image: url('/img/header.jpeg')
     }
 </style>
 <header class="intro-header" >
@@ -169,14 +169,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
+                          <a class="tag" href="/tags/#算法(Algorithm)" title="算法(Algorithm)">算法(Algorithm)</a>
                         
                     </div>
-                    <h1>Hexo搭建个人博客--优化</h1>
-                    <h2 class="subheading">博客的后期处理、提交 sitemap</h2>
+                    <h1>树的搜索策略</h1>
+                    <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by Surflyan on
-                        2017-01-28
+                        2017-07-13
                     </span>
                 </div>
             </div>
@@ -195,78 +195,59 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>相信你已经可以通过域名来访问到你的博客了，但还有一些事情是必须要做的，现在我们就来讲讲后续的处理吧。</p>
-<h1 id="评论功能"><a href="#评论功能" class="headerlink" title="评论功能"></a>评论功能</h1><p>一篇博文，分享思想。读者有发表想法的权利，所以我们必须提供评论功能。<br>由于我们搭建的是静态网站，网站本身并不能存放评论，必须使用第三方提供的服务。国内一般使用较多的就是 <a href="http://duoshuo.com/" target="_blank" rel="external">多说</a>了。</p>
-<p>首先注册一个多说账号，之后官网会给出详细的引导，你可以获取到通用代码，你可以将这段通用代码插入 <code>page.ejs</code> 中， 也可以新建存放其他集成功能的代码文件。<br>在通用代码中,有这样的代码：</p>
-<pre><code>var duoshuoQuery = {short_name:&quot;surflyan&quot;};
-</code></pre><p>这样不利于程序的可复用性,可以改为：</p>
-<pre><code class="lang-js"> &lt;% if(config[&#39;duoshuo_username&#39;]) 
- { %&gt;
-  &lt;!-- 多说评论框 start --&gt;
-     &lt;div class=&quot;comment&quot;&gt;
-       &lt;div class=&quot;ds-thread&quot;
-          data-thread-key=&quot;&lt;%= page.path %&gt;&quot;
-          data-title=&quot;&lt;%= page.title %&gt;&quot;
-          data-url=&quot;&lt;%= page.permalink %&gt;&quot; &gt;
-       &lt;/div&gt;
-     &lt;/div&gt;
-
-&lt;!-- 多说评论框 end --&gt;
-&lt;!-- 多说公共JS代码 start (一个网页只需插入一次) --&gt;
- &lt;script type=&quot;text/javascript&quot;&gt;
-                        // dynamic User by Hux
-     var _user = &#39;&lt;%= config[&#39;duoshuo_username&#39;] %&gt;&#39;;
-
-     // duoshuo comment query.
-     var duoshuoQuery = {short_name: _user };
-
-     (function() {
-       var ds = document.createElement(&#39;script&#39;);
-       ds.type = &#39;text/javascript&#39;;ds.async = true;
-       ds.src = (document.location.protocol == &#39;https:&#39; ? &#39;https:&#39; : &#39;http:&#39;) + &#39;//static.duoshuo.com/embed.js&#39;;
-       ds.charset = &#39;UTF-8&#39;;
-         (document.getElementsByTagName(&#39;head&#39;)[0]
-                   || document.getElementsByTagName(&#39;body&#39;)[0]).appendChild(ds);
-                    })();
-&lt;/script&gt;       
-
- &lt;% } %&gt;
-&lt;!-- 多说公共JS代码 end --&gt;
-</code></pre>
-<p>然后在配置文件中，加入:</p>
-<pre><code>duoshuo_username:          //你的多说short_name
-</code></pre><p>这样多说评论就添加完成了。</p>
-<h1 id="主题优化"><a href="#主题优化" class="headerlink" title="主题优化"></a>主题优化</h1><p>关于主题优化，我不想讲太多，有的博客教程很轻松的讲了在主题配置文件中添加就好，修改标签什么的，然而，这一切取决于你的主题支持与否，比如，博主的博客主题配置文件里什么都没有，并没有在里面留有什么接口的。 至于其他的样式什么要修改，你需要有一些前端的知识。在主题的 layout 文件里找到相应的代码文件，在对应部分，可做修改。 </p>
-<h1 id="SEO优化"><a href="#SEO优化" class="headerlink" title="SEO优化"></a>SEO优化</h1><p>现在使用搜索引擎来直接搜索你的网站，不能搜到吧。 为什么？因为 google、百度还没有收录你的网站，如果不被收录，那你的博客就只能是写给自己的。连搜索引擎都不知道我们博客的诞生，还有谁能知道它的存在呢？</p>
-<h2 id="sitemap"><a href="#sitemap" class="headerlink" title="sitemap"></a>sitemap</h2><blockquote>
-<p>站点地图是一种文件, 包含了网站上的网页信息，google 等搜索引擎网页抓取工具会读取此文件，以便抓取我们的网站。</p>
-</blockquote>
-<h4 id="生成-sitemap"><a href="#生成-sitemap" class="headerlink" title="生成 sitemap"></a>生成 sitemap</h4><p>首先安装针对 google 和百度的插件,使用 Node.js command 打开，选择博客目录下执行：</p>
-<pre><code>npm install hexo-generater-sitemap --save
-npm install hexo-generater-baidu-sitemap --save
-</code></pre><p>在站点 _config.yml 添加如下代码：</p>
-<pre><code># 自动生成sitemap
-sitemap:
-path: sitemap.xml
-baidusitemap:
-path: baidusitemap.xml
-</code></pre><p>执行：</p>
-<pre><code>hexo clean
-hexo g
-</code></pre><p>在你的博客目录下 <code>public</code> 下面生成了<code>sitemap.xml</code>和<code>baidusitemap.xml</code>文件，打开可以发现就，里面包含我们网站的网页信息。</p>
-<h4 id="提交sitemap"><a href="#提交sitemap" class="headerlink" title="提交sitemap"></a>提交sitemap</h4><p>现在我们就可以把 sitemap.xml 提交给 google了，使用 google 账号登陆 <a href="https://www.google.com/webmasters/tools/home?hl=zh-CN" target="_blank" rel="external">Search Console</a>官方给出了详细引导，添加了站点验证通过后。就可以手动将站点地图提交了。<br>按照谷歌的效率，第二天，应该就可以搜索到你的网站了。</p>
-<p>至于百度收录，我现在也没有方便的解决的办法。 即使你提交了 baidusitemap 给百度站长或者在网页内嵌了js代码，百度也抓取不到你的网页，因为 Github 屏蔽了 BaiduSpider. 我也很无语啊。<br>不少人的做法是在 Coding pages 在生成一份 ,然后国内访问 coding pages ，将这个生成的 baidusitemap 提交给百度站长，这样做还能弥补国内访问 github 较慢的缺陷。选择使用 Gitcafe 也是一种方法。</p>
-<p>这里有关于此问题的<a href="https://www.zhihu.com/question/30898326" target="_blank" rel="external">知乎讨论</a>.</p>
-<h2 id="添加蜘蛛协议"><a href="#添加蜘蛛协议" class="headerlink" title="添加蜘蛛协议"></a>添加蜘蛛协议</h2><blockquote>
-<p><strong>robots.txt</strong> 是一个纯文本文件，在这个文件中网站管理者可以声明该网站中不想被搜索引擎访问的部分，或者指定搜索引擎只收录指定的内容。当一个搜索引擎访问一个站点时，它会首先检查该站点根目录下是否存在 robots.txt，如果存在，搜索爬虫就会按照该文件中的内容来确定访问的范围；如果该文件不存在，那么搜索爬虫就沿着链接抓取。</p>
-</blockquote>
-<p>将robots.txt 放在你的 \source 目录下，这里有 <a href="http://www.admin10000.com/document/189.html" target="_blank" rel="external">robots.txt的说明</a>;</p>
-<h1 id="站点分析"><a href="#站点分析" class="headerlink" title="站点分析"></a>站点分析</h1><p>应用站点分析工具，我们就能知道有多少人访问了我们的博客，哪些内容受欢迎。我推荐 <a href="">google Analytics</a>,官网给出了详细引导教程，建议将 js代码插入到footerd.ejs 中。</p>
-<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p> Github Pages 提供了 1 GB 的空间，每月 100 GB 的流量，所以并没有选择使用图床。</p>
-<p> hexo 告一段落，希望你有一个轻松、快乐的博客生活。</p>
-<blockquote>
-<p>请多多指教！</p>
-</blockquote>
+                <p>许多实际问题的解空间可以组织成一棵树，那么问题的优化解变成了搜索解空间对应的搜索树。这里介绍五种典型搜索策略。</p>
+<hr>
+<h1 id="1-广度优先搜索"><a href="#1-广度优先搜索" class="headerlink" title="1. 广度优先搜索"></a>1. 广度优先搜索</h1><h4 id="1-1-算法思想"><a href="#1-1-算法思想" class="headerlink" title="1.1 算法思想"></a>1.1 算法思想</h4><p>广度优先搜索从树根开始，逐层访问树中的结点。在第k层处理完之后，再处理第k+1层的节点。由此，广度优先搜索使用队列来扩展节点，在处理完该结点之后就将该节点的孩子节点添加到队列中，使得第k+1层节点按序分布；</p>
+<h4 id="1-2-算法步骤"><a href="#1-2-算法步骤" class="headerlink" title="1.2 算法步骤"></a>1.2 算法步骤</h4><ol>
+<li>构造由根组成的队列Q； </li>
+<li>If Q的第一个元素x是目标节点 Then 停止; </li>
+<li>从Q中删除x，把x的所有子节点加入Q的末尾; </li>
+<li>If Q空 Then 失败 Else goto 2.</li>
+</ol>
+<hr>
+<h1 id="2-深度优先搜索"><a href="#2-深度优先搜索" class="headerlink" title="2. 深度优先搜索"></a>2. 深度优先搜索</h1><h4 id="2-1-算法思想"><a href="#2-1-算法思想" class="headerlink" title="2.1 算法思想"></a>2.1 算法思想</h4><p>深度优先搜索从根节点开始，总是首先扩展其子节点，往更深的方向搜索，直到不能访问为止；若最近访问的节点的所有孩子都已访问过，则回溯到其兄弟节点继续深度优先搜索；由此，深度优先搜索采用栈结构扩展结构。</p>
+<h4 id="2-2-算法步骤"><a href="#2-2-算法步骤" class="headerlink" title="2.2 算法步骤"></a>2.2 算法步骤</h4><ol>
+<li>构造一个由根构成的单元素栈S; </li>
+<li>If  Top(S)是目标节点 Then  停止; </li>
+<li>Pop(S),  把Top(S)的所有子节点压入栈顶; </li>
+<li>If  S空 Then  失败 Else  goto 2.</li>
+</ol>
+<hr>
+<h1 id="3-爬山法"><a href="#3-爬山法" class="headerlink" title="3. 爬山法"></a>3. 爬山法</h1><h4 id="3-1-算法思想"><a href="#3-1-算法思想" class="headerlink" title="3.1 算法思想"></a>3.1 算法思想</h4><p>在深度优先搜索过程中, 经常遇到多个节点可以扩展的情况, 爬山策略使用贪心方法确定搜索的方向,使用启发式测度来排序节点扩展的顺序。对于每一个节点有一个隐式约束P(X)，不仅可以判断x是否为目标节点，还可以判断距离目标节点的距离。爬山法在深度优先搜索时每次先扩展距离目标节点近的节点，使得目标节点能尽早被发现。</p>
+<h4 id="3-2-算法步骤"><a href="#3-2-算法步骤" class="headerlink" title="3.2 算法步骤"></a>3.2 算法步骤</h4><ol>
+<li>构造由根组成的单元素栈S; </li>
+<li>If  Top(S)是目标节点 Then  停止; </li>
+<li>Pop(S); </li>
+<li>S的子节点按照其启发测度由大到小的顺序压入S;  </li>
+<li>If  S空 Then  失败，Else  goto 2.</li>
+</ol>
+<p>爬山法发现的解为可行解；</p>
+<hr>
+<h1 id="4-最佳优先搜索"><a href="#4-最佳优先搜索" class="headerlink" title="4. 最佳优先搜索"></a>4. 最佳优先搜索</h1><h4 id="4-1-算法思想"><a href="#4-1-算法思想" class="headerlink" title="4.1 算法思想"></a>4.1 算法思想</h4><p>最佳优先搜索同爬山法不同的是，它每次从全局范围内选取扩展方向。即从当前所有的可扩展节点中选取隐式约束P(X)最小的节点作为扩展方向。最佳优先搜索使用堆结构扩展节点。</p>
+<h4 id="4-2-算法步骤"><a href="#4-2-算法步骤" class="headerlink" title="4.2 算法步骤"></a>4.2 算法步骤</h4><ol>
+<li>使用评价函数构造一个堆H, 首先构造由根组成的单元素堆; </li>
+<li>If   H的根r是目标节点 Then  停止; </li>
+<li>从H中删除r, 把r的子节点插入H; </li>
+<li>If   H空 Then  失败 Else   goto 2. </li>
+</ol>
+<p>最佳优先搜索找到的是可行解；</p>
+<hr>
+<h1 id="5-分支限界法"><a href="#5-分支限界法" class="headerlink" title="5. 分支限界法"></a>5. 分支限界法</h1><h4 id="5-1-算法思想"><a href="#5-1-算法思想" class="headerlink" title="5.1 算法思想"></a>5.1 算法思想</h4><p>分支限界法要点为： 利用已发现的可行解的代价剪除不能取得优化解的分支，从而避免对不能产生优化解的分支进行搜索。</p>
+<p>分支限界法具有两个要素： </p>
+<ol>
+<li>产生可行解的策略。可以选择爬上法、DFS、BestFS策略，值得注意的是不能采用BFS，自行体会。</li>
+<li>剪除分支的策略。如何判定节点为根的子树任意可行解的代价大于已知可行解的代价。这需根据具体问题建立绑定函数。</li>
+</ol>
+<h4 id="5-2-算法步骤"><a href="#5-2-算法步骤" class="headerlink" title="5.2 算法步骤"></a>5.2 算法步骤</h4><ol>
+<li>建立根节点, 其权值为解代价下界; </li>
+<li>使用爬山法, 类似于拓朴排序序列树生成算法求解问题, 每产生一个节点, 其权值为加工后的代价矩阵对应元素加其父节点权值; </li>
+<li>一旦发现一个可能解, 将其代价作为界限, 循环地进行分支界限搜索: 剪掉不能导致优化解的子解, 使用爬山法继续扩展新增节点, 直至发现优化解.</li>
+</ol>
+<p>分支界限法要想取得比较好的效果，可从两个方面考虑：</p>
+<ol>
+<li>如何尽快找到一个相对较优的可行解。 以便剪除较多的分支。</li>
+<li>如何尽早的剪除分支，也就是越在靠近根节点的地方剪除，越能产生良好的效果。可考虑一开始就对代价矩阵进行变换，给根节点一个代价下界。</li>
+</ol>
 
 
                 <hr>
@@ -274,12 +255,12 @@ hexo g
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/2017/03/05/Python进阶之迭代器/" data-toggle="tooltip" data-placement="top" title="Previous Post">&larr; Python进阶之迭代器</a>
+                            <a href="/2017/08/01/Tesseract-For-OCR/" data-toggle="tooltip" data-placement="top" title="Previous Post">&larr; Tesseract For OCR</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/2017/01/26/Hexo搭建个人博客--进阶/" data-toggle="tooltip" data-placement="top" title="Next Post">Hexo搭建个人博客--进阶 &rarr;</a>
+                            <a href="/2017/07/10/算法分析之贪心算法/" data-toggle="tooltip" data-placement="top" title="Next Post">算法分析之贪心算法 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -325,7 +306,7 @@ hexo g
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
+                          <a class="tag" href="/tags/#算法(Algorithm)" title="算法(Algorithm)">算法(Algorithm)</a>
                         
                     </div>
                 </section>
