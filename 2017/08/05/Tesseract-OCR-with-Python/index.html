@@ -14,11 +14,11 @@
 
     <title>
         
-          代码殿堂 | Code Palace
+          Tesseract OCR with Python - 代码殿堂 | Code Palace
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/i_dont_wanna_use_default_archives/2017/08/">
+    <link rel="canonical" href="http://codepalace.org/2017/08/05/Tesseract-OCR-with-Python/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -151,7 +151,236 @@
 
 
     <!-- Main Content -->
-    <!-- Default Archive layout, we use archives instead. -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/header.jpeg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#机器视觉 OCR" title="机器视觉 OCR">机器视觉 OCR</a>
+                        
+                    </div>
+                    <h1>Tesseract OCR with Python</h1>
+                    <h2 class="subheading">pytesseract openCV</h2>
+                    <span class="meta">
+                        Posted by Surflyan on
+                        2017-08-05
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>本博客介绍了python 语言下<code>tesseract</code>的使用以及使用<code>openCV</code>对图片进行简单的预处理。</p>
+<hr>
+<h1 id="1-安装pytesseract"><a href="#1-安装pytesseract" class="headerlink" title="1. 安装pytesseract"></a>1. 安装pytesseract</h1><p>首先安装<code>Pillow</code>，一个对python更加友好的PIL端口，pytesseract对其有依赖。</p>
+<pre><code>$ pip install pillow
+$ pip install pytesseract
+</code></pre><p><strong> 注意 </strong>: 在pytesseract的<a href="https://github.com/madmaze/pytesseract/blob/master/src/pytesseract.py" target="_blank" rel="external">github项目</a>, 可以发现 pytesseract 并不是一个真正的 python 绑定，只是一个tesseract.exe 的简单调用。</p>
+<hr>
+<h1 id="2-使用openCV-预处理"><a href="#2-使用openCV-预处理" class="headerlink" title="2. 使用openCV 预处理"></a>2. 使用openCV 预处理</h1><p>以如下数字验证码为例：<br><img src="test1.png" alt="test1.png"><br>首先直接使用 tesseract 识别</p>
+<pre><code>&gt;tesseract test2.png stdout
+Warning. Invalid resolution 0 dpi. Using 70 instead.
+Detected 32 diacritics
+&quot; Tess茅ra鈥榗&#39;t Will
+Fail With Noisy
+Backgrounds
+</code></pre><p>可以发现，识别效果并不理想。</p>
+<p>观察验证码，彩色图像，噪点很多，采用如下措施预先处理：</p>
+<pre><code class="lang-python">from PIL import Image
+import pytesseract
+import cv2
+
+img=cv2.imread(&#39;test1.png&#39;)
+img_gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+img_blur=cv2.medianBlur(img_gray,3)
+ret,img_thresh=cv2.threshold(img_blur,100,255,cv2.THRESH_BINARY)
+cv2.imshow(&#39;img_thresh&#39;,img_thresh)
+cv2.waitKey()
+cv2.destroyAllWindows()
+</code></pre>
+<p>预处理过后：<br> <img src="img_thresh.png" alt="test1_img_thresh"></p>
+<p>此时测试</p>
+<pre><code>&gt;tesseract img_thresh.png stdout
+Warning. Invalid resolution 0 dpi. Using 70 instead.
+Tesseract Will
+Fail With Noisy
+Backgrounds
+</code></pre><p>预处理效果显著，准确识别。</p>
+<hr>
+<h1 id="3-使用pytesseract"><a href="#3-使用pytesseract" class="headerlink" title="3. 使用pytesseract"></a>3. 使用pytesseract</h1><p>pytesseract 主要通过<code>image_to_string</code> 函数进行识别，函数原型为：</p>
+<pre><code class="lang-python"> image_to_string(image, lang=none, boxes=false, config=none):
+ # image,lang=&quot;language&quot;，config=&quot;-psm PageMode&quot;
+</code></pre>
+<p><strong> 注意 </strong>:参数image需要传入RGB协议打开的图片，<code>Image.open()</code>是以RGB协议打开的，而<code>cv2.imread()</code>是以BGR协议打开的。<br>这里一般有两种处理方法：</p>
+<ol>
+<li>使用如下语句转换：<pre><code class="lang-python">#o convert the color.
+img = cv2.imread(&quot;path/to/img.png&quot;)
+img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+im_pil = Image.fromarray(img)
+</code></pre>
+</li>
+<li>使用opencv打开并处理之后再保存图片后，以Image.open()打开。<pre><code class="lang-python">img=cv2.imread(&quot;path/to/img.png&quot;)
+# After processed
+cv2.imwrite(filename,pic)
+img=Image.open(&quot;path/to/finename&quot;)
+</code></pre>
+</li>
+</ol>
+<hr>
+<h1 id="4-一点经验"><a href="#4-一点经验" class="headerlink" title="4. 一点经验"></a>4. 一点经验</h1><ol>
+<li><p>若要识别特定数字或者字母，可建立对应的字符白名单。</p>
+<p>若待识别字母只有 “123abc”，我们可建立相应的白名单 letters</p>
+</li>
+</ol>
+<ul>
+<li>选择目录 <code>/usr/share/tesseract-ocr/tessdata/configs</code>，</li>
+<li>建立空白文件 letters，添加 <code>tessedit_char_whitelist 123abc</code></li>
+<li><p>执行：<code>&gt; tesseract input_file_name stdout letters</code></p>
+<p>此时会以letters里的字符去识别，大大提高识别准确率。<br>如果还要以pytesseract处理，可在<code>pytesseract.py</code>原码里的<code>run_tesseract</code>函数中语句做如下替换：</p>
+<pre><code class="lang-python">  if lang is not None:
+      command += (&#39;-l&#39;, lang)
+  #替换为
+    if lang is not None:
+      command += (lang)
+
+# 稍作观察原码，就能知道这么做的原因。
+</code></pre>
+<p> 在python代码中，做如下调用即可：<br> <code>text=pytesseract.image_to_string(img,lang=&quot;letters&quot;)</code></p>
+</li>
+</ul>
+<ol>
+<li><p>建立替换表，在实际应用中能发挥很大的作用。</p>
+<p>如在应用中常常将“2”识别为”Z”,而原材料中又不会出现”Z”时，可将”Z”替换为”2”。</p>
+<pre><code class="lang-python">def text2string(img):
+ rep={&#39;Z&#39;:&#39;2&#39;,
+        &#39;A&#39;:&#39;8&#39;}
+text=image_to_string(img)
+for c in rep:
+    text=text.replace(c,rep[c])
+return text
+</code></pre>
+</li>
+</ol>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><p><a href="http://www.pyimagesearch.com/2017/07/10/using-tesseract-ocr-python/" target="_blank" rel="external">http://www.pyimagesearch.com/2017/07/10/using-tesseract-ocr-python/</a></p>
+</li>
+<li><p><a href="http://wrfly.kfd.me/%E6%95%B0%E5%AD%97%E9%AA%8C%E8%AF%81%E7%A0%81%E8%AF%86%E5%88%AB/" target="_blank" rel="external">http://wrfly.kfd.me/%E6%95%B0%E5%AD%97%E9%AA%8C%E8%AF%81%E7%A0%81%E8%AF%86%E5%88%AB/</a></p>
+</li>
+</ol>
+<blockquote>
+<p>请多多指教！</p>
+</blockquote>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/08/01/Tesseract-For-OCR/" data-toggle="tooltip" data-placement="top" title="Next Post">Tesseract For OCR &rarr;</a>
+                        </li>
+                    
+                </ul>
+               
+          <!--Add by Surflyan -->
+           <!-- Share-->
+           <section>
+           <hr>
+             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>   
+          </section>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
+
+               
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#机器视觉 OCR" title="机器视觉 OCR">机器视觉 OCR</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="http://codebelief.com" target="_blank">代码信条</a></li>
+                    
+                        <li><a href="http://blog.csdn.net/js1568" target="_blank">ksboys</a></li>
+                    
+                </ul>
+                
+
+ 
+ 
+           </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
 
     <!-- Footer -->
     <!-- Footer -->
@@ -335,6 +564,50 @@
 
 
 <!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Surflyan to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
 
 
 

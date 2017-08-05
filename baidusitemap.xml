@@ -5,13 +5,30 @@
     
   <url>
     <loc>http://codepalace.org/2017/08/01/Tesseract-For-OCR/</loc>
-    <lastmod>2017-08-01T11:23:33.984Z</lastmod>
+    <lastmod>2017-08-05T14:06:04.835Z</lastmod>
     <data>
         <display>
         <title>Tesseract For OCR</title>
         <pubTime>2017-08-01T11:09:30.000Z</pubTime>
         
-        <tag>机器视觉</tag>
+        <tag>机器视觉 OCR</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://codepalace.org/2017/08/05/Tesseract-OCR-with-Python/</loc>
+    <lastmod>2017-08-05T14:05:49.415Z</lastmod>
+    <data>
+        <display>
+        <title>Tesseract OCR with Python</title>
+        <pubTime>2017-08-05T13:49:33.000Z</pubTime>
+        
+        <tag>机器视觉 OCR</tag>
          
          
            

@@ -101,14 +101,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -169,7 +169,7 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#机器视觉" title="机器视觉">机器视觉</a>
+                          <a class="tag" href="/tags/#机器视觉 OCR" title="机器视觉 OCR">机器视觉 OCR</a>
                         
                     </div>
                     <h1>Tesseract For OCR</h1>
@@ -207,7 +207,9 @@
 tesseract 3.05.01
  leptonica-1.74.1
   libgif 4.1.6(?) : libjpeg 8d (libjpeg-turbo 1.5.0) : libpng 1.6.20 : libtiff 4.0.6 : zlib 1.2.8 : libwebp 0.4.3 : libopenjp2 2.1.0
-</code></pre><h3 id="2-2-测试应用"><a href="#2-2-测试应用" class="headerlink" title="2.2 测试应用"></a>2.2 测试应用</h3><p>在终端直接输入 <code>tesseract</code> 获取 tesseract 详细语法。<br>提供预处理过的图像，Tesseract OCR 获得准确的结果<br>我们使用如下图片作为测试样例：<br><img src="test.png" alt="test.png"><br>在终端输入：</p>
+</code></pre><h3 id="2-2-测试应用"><a href="#2-2-测试应用" class="headerlink" title="2.2 测试应用"></a>2.2 测试应用</h3><p>在终端直接输入 <code>tesseract</code> 获取 tesseract 详细语法。一般使用如下：</p>
+<pre><code>&gt;tesseract input_file_name out_file/stdout -l lang -psm PageModes
+</code></pre><p>提供预处理过的图像，Tesseract OCR 获得准确的结果<br>我们使用如下图片作为测试样例：<br><img src="test.png" alt="test.png"><br>在终端输入：</p>
 <pre><code>tesseract test.png stdout
 Warning. Invalid resolution 0 dpi. Using 70 instead.
 Testing Tesseract OCR
@@ -229,11 +231,18 @@ Warning. Invalid resolution 0 dpi. Using 70 instead.
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
 <li><a href="http://www.pyimagesearch.com/2017/07/03/installing-tesseract-for-ocr/" target="_blank" rel="external">http://www.pyimagesearch.com/2017/07/03/installing-tesseract-for-ocr/</a></li>
 </ol>
+<blockquote>
+<p>请多多指教！</p>
+</blockquote>
 
 
                 <hr>
 
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/08/05/Tesseract-OCR-with-Python/" data-toggle="tooltip" data-placement="top" title="Previous Post">&larr; Tesseract OCR with Python</a>
+                        </li>
                     
                     
                         <li class="next">
@@ -283,7 +292,7 @@ Warning. Invalid resolution 0 dpi. Using 70 instead.
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#机器视觉" title="机器视觉">机器视觉</a>
+                          <a class="tag" href="/tags/#机器视觉 OCR" title="机器视觉 OCR">机器视觉 OCR</a>
                         
                     </div>
                 </section>
