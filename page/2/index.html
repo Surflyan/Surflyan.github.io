@@ -188,6 +188,176 @@
 
 <div class="post-preview">
 
+    <a href="/2017/07/13/树的搜索策略/">
+        <h2 class="post-title">
+            树的搜索策略
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            许多实际问题的解空间可以组织成一棵树，那么问题的优化解变成了搜索解空间对应的搜索树。这里介绍五种典型搜索策略。
+
+1. 广度优先搜索1.1 算法思想广度优先搜索从树根开始，逐层访问树中的结点。在第k层处理完之后，再处理第k+1层的节点。由此，广度优先搜索使用队列来扩展节点，在处理完该结点之后就将该节点的孩子节点添加到队列中，使得第k+1层节点按序分布；
+1.2 算法步骤
+构造由根组成的队列Q......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Surflyan on
+        2017-07-13
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/07/10/算法分析之贪心算法/">
+        <h2 class="post-title">
+            算法分析之贪心算法
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            1. 算法思想求解优化问题通常可以一步一步来选择求解，贪心算法处理优化问题时，在每一步都选择当前最佳策略，希望通过局部优化来达到全局优化的效果。一般情况下，贪心算法仅会得到一个可行解，并非最优解。如 0-1背包问题 （这里不包括分数背包问题）。
+
+2. 前提条件任何问题只要其具备了贪心选择性和优化子结构就可通过贪心算法获得该问题的最优解。
+ 贪心选择性  ： 如果一个优化问题的贪心选择必然出......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Surflyan on
+        2017-07-10
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/07/07/算法分析之动态规划/">
+        <h2 class="post-title">
+            算法分析之动态规划
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            1. 算法思想动态规划建立在分治思想的基础上，在利用分治算法求解问题时，可能遇到子问题之间互相关联，会造成重复求解，从而影响算法效率。那么对于这类具有优化子结构和子问题重叠性的优化问题时，可以根据优化子问题设计数据结构和i问题的求解次序，从规模最小的子问题开始自底向上地计算每个子问题的解，保证每个子问题被求解一次；将求得的子问题的解和构造最优解所需要的信息存储在数据结构中；再根据最优解的构造......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Surflyan on
+        2017-07-07
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/07/04/算法分析之分治算法/">
+        <h2 class="post-title">
+            算法分析之分治算法
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            1. 基本原理经验告诉我们，小规模问题的解通常比大规模问题的解更容易得到，所以，在面对一个大规模问题时，可以考虑转换为几个具有相同形式的子问题来求解。实践证明，这种分而治之的策略简单而实用。
+
+2. 适用前提
+问题的规模缩小到一定程度可以轻易解决
+问题可以分解为若干个规模较小的相同问题，即该问题具有最优子结构性质
+利用该问题分解出的子问题的解可以合并为该问题的解
+该问题所分解出的各个子问题是......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Surflyan on
+        2017-07-04
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/06/02/高级数据结构之Patricia-Tree/">
+        <h2 class="post-title">
+            高级数据结构之Patricia Tree
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            1. Patricia Tree的提出PATRICIA （Practical Algorithm to Retrieve Information Coded In Alphanumeric）由D.Morrisonrz 于1968年首次提出，Gonnet 在90年代将PATRICIA 应用到全文检索领域，发展成为PAT tree 并获得巨大成功。它也是TRIE树的一种，
+2. 题外由于在课程学......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Surflyan on
+        2017-06-02
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/05/26/使用-LATEX排版-数学公式/">
+        <h2 class="post-title">
+            使用 LATEX排版 数学公式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            1. 常见数学符号的实现1.1 指数及下标的实现$x_{1}$
+$x_{1}$
+x_{1}$$x_{1}$$双$$为居中
+$x^{2}\qquad a_{ij}^{-\alpha t}$
+$x^{2}\qquad a_{ij}^{-\alpha t}$
+1.2 平方根的实现$\sqrt{ x^{2}+\sqrt{y} }$
+$\sqrt{ x^{2}+\sqrt{y} }$
+1.3 在表达式......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Surflyan on
+        2017-05-26
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/05/16/KNN实战之改进约会网站的配对效果/">
+        <h2 class="post-title">
+            KNN实战之改进约会网站的配对效果
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            1. 说明此文案例来自于《机器学习实战》，适合初学机器学习的入门者，要运行本文的实例代码需要安装 numpy、 scikit-learn、matplotlib 以及jupyter，博主使用的是 python2, 所有代码建议在jupyter 下按序运行。
+2. 案列背景有一个舍友A在约会网站上寻找对象，约会网站会推荐不同的人选，但并不是很准确。通过总结，可以发现A他曾经交往过三种类型的人：
+......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Surflyan on
+        2017-05-16
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2017/05/13/深夜有感/">
         <h2 class="post-title">
             深夜有感
@@ -253,136 +423,6 @@
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2017/03/06/Python进阶之生成器/">
-        <h2 class="post-title">
-            Python进阶之生成器
-        </h2>
-        <h3 class="post-subtitle">
-            较详细地介绍了生成器的两种生成方式、特性以及方法
-        </h3>
-        <div class="post-content-preview">
-            1. 生成器(generator)什么是生成器呢，要理解生成器你就必须先理解什么是迭代器，因为生成器也是一种迭代器，是一种更高级、更优雅的迭代器。关于迭代器，如果你不明白的话，本博文的 前一篇有讲解，这里不再赘述。首先，明白下面两点：
-
-任意生成器都是迭代器 (反之不成立）。
-任意生成器，都是一个延迟产生值的工厂。
-
-2. yieldPython 有两种不同的方式提供生成器：现在介绍第一种：......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-03-06
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/03/05/Python进阶之迭代器/">
-        <h2 class="post-title">
-            Python进阶之迭代器
-        </h2>
-        <h3 class="post-subtitle">
-            Python 可迭代对象、迭代器的介绍
-        </h3>
-        <div class="post-content-preview">
-            1.容器(container)容器是存储元素的一种数据结构，可进行成员测试，在python中典型的容器有：
-
-list
-set
-dict
-tuple 
-str
-…
-
-容器较容易理解，可参照生活中容器的理解。
-2. 可迭代对象(interable) 迭代(interate)  是指按照某种顺序逐个访问序列中的每一项。大部分容器都是可迭代的，但还有其他对象也可迭代，如文件对象、管道对象，可迭代对......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-03-05
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/01/28/Hexo搭建个人博客-优化/">
-        <h2 class="post-title">
-            Hexo搭建个人博客--优化
-        </h2>
-        <h3 class="post-subtitle">
-            博客的后期处理、提交 sitemap
-        </h3>
-        <div class="post-content-preview">
-            相信你已经可以通过域名来访问到你的博客了，但还有一些事情是必须要做的，现在我们就来讲讲后续的处理吧。
-评论功能一篇博文，分享思想。读者有发表想法的权利，所以我们必须提供评论功能。由于我们搭建的是静态网站，网站本身并不能存放评论，必须使用第三方提供的服务。国内一般使用较多的就是 多说了。
-首先注册一个多说账号，之后官网会给出详细的引导，你可以获取到通用代码，你可以将这段通用代码插入 page.......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-01-28
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/01/26/Hexo搭建个人博客--进阶/">
-        <h2 class="post-title">
-            Hexo搭建个人博客--进阶
-        </h2>
-        <h3 class="post-subtitle">
-            hexo 搭建博客完整实现
-        </h3>
-        <div class="post-content-preview">
-            前一篇博文已经交代了准备工作，完成以后，就可以开始搭建自己的博客了，本博文按照博主建站顺序来引导，从本地预览到上传 github ，再到绑定域名浏览。 希望可以帮助你快速完成搭建。开始吧。
-安装 hexo.打开 Git bash ,执行：
-$ npm install -g hexo
-执行：
-hexo -v
-查看 hexo 是否安装完成，及hexo版本号
-hexo 安装完之后，就可使用hexo......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-01-26
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/01/25/hexo-搭建个人博客-准备/">
-        <h2 class="post-title">
-            Hexo搭建个人博客--准备
-        </h2>
-        <h3 class="post-subtitle">
-            所需技能及环境配置
-        </h3>
-        <div class="post-content-preview">
-            独立个人博客，有兴趣吗？如果你只是想要有一个写东西的地方，对互联网不甚了解，那么众多门户网站是很好的选择。如果你爱折腾，有时间，那么搭建个人定制、独立博客也是蛮有趣味。
-Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多的项目都托管在其上。Github Pages 本用于作为 Github 项目的介绍文档站，对项目做出说明。
-为什么选择 Github......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-01-25
-    </p>
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -393,6 +433,10 @@ Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多�
             <a href="/">&larr; Newer Posts</a>
         </li>
     
+    
+        <li class="next">
+            <a href="/page/3/">Older Posts &rarr;</a>
+        </li>
     
 </ul>
 
@@ -424,6 +468,24 @@ Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多�
                             
                         
                             
+                            <a href="/tags/#Java Web" title="Java Web" rel="5">Java Web</a>
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                            <a href="/tags/#数据库" title="数据库" rel="2">数据库</a>
+                            
+                        
+                            
+                            <a href="/tags/#Struts" title="Struts" rel="3">Struts</a>
+                            
+                        
+                            
                             <a href="/tags/#Python" title="Python" rel="2">Python</a>
                             
                         
@@ -440,9 +502,19 @@ Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多�
                             
                         
                             
-                            <a href="/tags/#算法(Algorithm)" title="算法(Algorithm)" rel="5">算法(Algorithm)</a>
+                        
                             
                         
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                        
+                            
+                            <a href="/tags/#算法(Algorithm)" title="算法(Algorithm)" rel="5">算法(Algorithm)</a>
                             
                         
                             

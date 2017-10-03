@@ -14,11 +14,11 @@
 
     <title>
         
-          About - 代码殿堂 | Code Palace
+          从MVC构成解析Struts框架 - 代码殿堂 | Code Palace
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/about/">
+    <link rel="canonical" href="http://codepalace.org/2017/09/20/从MVC构成解析Struts框架/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -151,229 +151,196 @@
 
 
     <!-- Main Content -->
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/tun.jpg')">
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/header.jpeg')
+    }
+</style>
+<header class="intro-header" >
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>About</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">Hello, this is Surflyan.</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Java Web" title="Java Web">Java Web</a>
+                        
+                          <a class="tag" href="/tags/#Struts" title="Struts">Struts</a>
+                        
+                          <a class="tag" href="/tags/#MVC" title="MVC">MVC</a>
+                        
+                    </div>
+                    <h1>从MVC构成解析Struts框架</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by Surflyan on
+                        2017-09-20
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
 
-
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        
-
-<!-- USE SIDEBAR -->
     <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-            
-                <h1 id="Personal-Introduction"><a href="#Personal-Introduction" class="headerlink" title="Personal Introduction"></a>Personal Introduction</h1><p>  I am Yan Jiliang, borned in Shaanxi Province, China, and now I am living in Harbin, Heilongjiang Province of China.<br>  Now I am a sophomore of Harbin Institute of Technology, recently I am focusing on machine learning and some computer course in university.<br>  I was a programmer, can code in C/C++, Python, now I am trying to master some libraries of python,like Numpy,SciPy,Matplotlib. I prefer Python, because it has great power.<br>  In my daily life, I prefer to play basketball.Swimming is also an enjoyable sport for me. I alse like football, Real Madrid is my home team,I dream that I can see a game at Bernabeu on day. I usually pay attention to body-building. Traveling is also my hobby, going to different and interesting places and catching wonderful scenery and interesting person use phone bring me greaty joy!<br>And I have a lot of interest in reading. I have read many famous literary works, most of them were chinese works. I will read some foreign works later.<br>  Just enjoy your reading here, hope there is something that can help you.</p>
-<h1 id="Books-In-Reading…"><a href="#Books-In-Reading…" class="headerlink" title="Books In Reading…"></a>Books In Reading…</h1><ul>
-<li>&lt;&lt;人类简史&gt;&gt;</li>
-<li>&lt;&lt;数学之美&gt;&gt;</li>
-<li>&lt;&lt;机器学习&gt;&gt;</li>
-<li>&lt;&lt;算法导论&gt;&gt;</li>
-</ul>
-<p>thanks!!!</p>
-<p><img src="about_page.jpg" alt=""></p>
-<p style="text-align:right;">
-    —— Surflyan
-</p>
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h2 id="1-Struts-是什么"><a href="#1-Struts-是什么" class="headerlink" title="1. Struts 是什么"></a>1. Struts 是什么</h2><p>Struts2 是一个<strong> 开源的，基于MVC 的优秀的 Web 开发框架 </strong>。Struts 框架是在 JSP Model2 基础上实现的 MVC 框架。由于MVC 内部原理较为复杂，需要精心设计，运用到程序中会增加应用的复杂性。但是，从大的方面看，会大大提高软件开发的效率。<br>Struts 把 Servlet 、JSP 和自定义标签等元素整合到统一的框架中，使得开发人员不用设计和编写整套的 MVC 框架代码，大大节省了应用开发的时间。</p>
+<hr>
+<h2 id="2-从-MVC-介绍-Struts-框架"><a href="#2-从-MVC-介绍-Struts-框架" class="headerlink" title="2. 从 MVC 介绍 Struts 框架"></a>2. 从 MVC 介绍 Struts 框架</h2><ol>
+<li><p><strong> 视图 </strong>： Struts2 一般采用JSP作为视图，当然还可以采用其他的模板技术。Struts2 通过控制器返回一个字符串作为逻辑视图的名字，在相应的配置文件 struts.xml 中指定使用何种视图技术和具体的物理视图。</p>
+</li>
+<li><p><strong> 模型 </strong>： Struts 2 框架在模型中没有涉及。在MVC 框架中控制器会调用模型组件的方法处理用户的请求。</p>
+</li>
+<li><p><strong> 控制 </strong>： Struts 2 框架为应用实现了控制功能，其整个控制部分的核心控制器 FilterDispatcher 和业务控制器 Action 类来实现。 FilterDispatcher 是 Struts 2 框架的核心控制器，该控制器作为一个 Filter（过滤流）运行在 Web 应用中，他负责拦截所有用户的请求，并将以 Action 结尾的请求转入到 Struts 2框架中由具体的Action 来处理，在 Action 中决定有调用那个业务逻辑组件。</p>
+</li>
+<li><p><strong> struts.xml </strong>文件： struts 2 应用中的核心配置文件，主要作用于配置和管理开发人员编写的 Action。在此配置文件中，开发人员可以配置作用于 Action 的拦截器、Action 和逻辑视图映射等。</p>
+</li>
+</ol>
+<hr>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li>Java Web 开发技术教程</li>
+</ol>
+<blockquote>
+<p>请多多指教！</p>
+</blockquote>
 
 
-                <!-- 如果开启评论功能 -->
-                
-                
-                   
+                <hr>
 
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/09/23/Struts框架的处理过程/" data-toggle="tooltip" data-placement="top" title="Previous Post">&larr; Struts框架的处理过程</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/09/16/基于JDBC连接数据库的JavaBean的实现/" data-toggle="tooltip" data-placement="top" title="Next Post">基于JDBC连接数据库的JavaBean的实现 &rarr;</a>
+                        </li>
+                    
+                </ul>
+               
+          <!--Add by Surflyan -->
+           <!-- Share-->
+           <section>
+           <hr>
+             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>   
+          </section>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
+
+               
             </div>
-    <!-- Sidebar Container -->
+    <!-- Side Catalog Container -->
+        
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
                 sidebar-container
-            ">
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
                 <section>
                     <!-- no hr -->
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Java Web" title="Java Web">Java Web</a>
                         
-                            
-                            <a href="/tags/#hexo" title="hexo" rel="3">hexo</a>
-                            
+                          <a class="tag" href="/tags/#Struts" title="Struts">Struts</a>
                         
-                            
-                        
-                            
-                            <a href="/tags/#Java Web" title="Java Web" rel="5">Java Web</a>
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                            <a href="/tags/#数据库" title="数据库" rel="2">数据库</a>
-                            
-                        
-                            
-                            <a href="/tags/#Struts" title="Struts" rel="3">Struts</a>
-                            
-                        
-                            
-                            <a href="/tags/#Python" title="Python" rel="2">Python</a>
-                            
-                        
-                            
-                            <a href="/tags/#Python进阶" title="Python进阶" rel="2">Python进阶</a>
-                            
-                        
-                            
-                            <a href="/tags/#机器视觉" title="机器视觉" rel="2">机器视觉</a>
-                            
-                        
-                            
-                            <a href="/tags/#OCR" title="OCR" rel="2">OCR</a>
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                            <a href="/tags/#算法(Algorithm)" title="算法(Algorithm)" rel="5">算法(Algorithm)</a>
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                        
-                            
+                          <a class="tag" href="/tags/#MVC" title="MVC">MVC</a>
                         
                     </div>
                 </section>
                 
 
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
-                    <div class="short-about">
+       
+          <hr> 
+          
+            <!-- UY BEGIN -->
+            <div id="uyan_frame"></div>
+             <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2140862"></script>
+             <!-- UY END -->
 
-                        
-                            <img src="/img/picture.jpg" />
-                        
+             
+ 
+ 
+           </div>
 
-                        
-                            <p>尽吾志而无悔！</p>
-                        
-
-                        <!-- SNS Link -->
-                        <ul class="list-inline">
-                            
-                            
-                            
-                                <li>
-                                    <a target="_blank" href="https://www.zhihu.com/people/surflyan">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa  fa-stack-1x fa-inverse">知</i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-
-                            
-                                <li>
-                                    <a target="_blank" href="http://weibo.com/Surflyan">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-
-                            
-                                <li>
-                                    <a target="_blank" href="https://www.facebook.com/Surflyan">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-
-                            
-                                <li>
-                                    <a target="_blank"  href="https://github.com/Surflyan">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </li>
-                            
-                            
-                            
-                            
-                        </ul>
-                    </div>
-                </section>
-                
-                <!-- Friends Blog -->
-                
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-
-                    
-                        <li><a href="http://codebelief.com" target="_blank">代码信条</a></li>
-                    
-                        <li><a href="http://blog.csdn.net/js1568" target="_blank">ksboys</a></li>
-                    
-                </ul>
-                
-            </div>
-        
+        </div>
     </div>
-</div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
 
 
     <!-- Footer -->
@@ -558,6 +525,50 @@
 
 
 <!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;    
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Surflyan to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
 
 
 

@@ -14,11 +14,11 @@
 
     <title>
         
-          读《白夜行》-- 东野圭吾 - 代码殿堂 | Code Palace
+          基于JDBC连接数据库的JavaBean的实现 - 代码殿堂 | Code Palace
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/2017/08/30/读《白夜行》- 东野圭吾/">
+    <link rel="canonical" href="http://codepalace.org/2017/09/16/基于JDBC连接数据库的JavaBean的实现/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -169,14 +169,18 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#读书" title="读书">读书</a>
+                          <a class="tag" href="/tags/#数据库" title="数据库">数据库</a>
+                        
+                          <a class="tag" href="/tags/#JDBC" title="JDBC">JDBC</a>
+                        
+                          <a class="tag" href="/tags/#JavaBean" title="JavaBean">JavaBean</a>
                         
                     </div>
-                    <h1>读《白夜行》-- 东野圭吾</h1>
+                    <h1>基于JDBC连接数据库的JavaBean的实现</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by Surflyan on
-                        2017-08-30
+                        2017-09-16
                     </span>
                 </div>
             </div>
@@ -195,16 +199,153 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>入手一年多的kindle几乎一直在吃灰，在返校的列车上，一部小说，是最好的消遣。<br>早就有人推荐日本作家东野圭吾的推理小说<code>《白夜行》</code>，早先也曾读过其另一篇犯罪推理小说<code>《嫌疑人X的现身》</code>,感觉不错，而这次也没让人失望。<br>既然是推理小说，那么未读之前看任何的介绍，都是不合适的。</p>
+                <h2 id="1-JDBC-介绍"><a href="#1-JDBC-介绍" class="headerlink" title="1. JDBC 介绍"></a>1. JDBC 介绍</h2><p>JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行 SQL 语句的 Java API，可以为多种关系数据库提供统一访问，它由一组由 Java 语言编写的类和接口组成。</p>
 <hr>
-<h1 id="艺术手法"><a href="#艺术手法" class="headerlink" title="艺术手法"></a>艺术手法</h1><p>《白夜行》故事时间跨度达19年之久，人物众多，需要极大的掌控力才可不留漏洞的完成如此长篇巨制。通篇小说，按照时间顺序来写，从男女主人公的成长来安排叙事。而每一段成长，作者都是从旁观者的角度来叙述，一点一滴，一丝一毫的接近主人公，来讲述主人公此阶段的社会面貌。既然是推理小说，少不了大量的伏笔与细节之处，在读的过程中，想起之前的一些伏笔，前后照应，不留突兀。</p>
+<h2 id="2-JavaBean-介绍"><a href="#2-JavaBean-介绍" class="headerlink" title="2. JavaBean 介绍"></a>2. JavaBean 介绍</h2><p>从面向对对象和代码可维护性的角度来考虑，JSP 页面应该尽可能少得使用脚本代码。JSP 可以通过组件实现功能扩充。<br>JavaBean 是 Java 的可重用组件技术，能提供一定的通用功能。 JavaBean 是一种符合某些命名和设计规范的 Java 类，通过封装属性和方法而具有某种功能或者处理某个业务。使用 JavaBean 能使 JSP 页面变的清晰，降低维护的难度。</p>
+<hr>
+<h2 id="3-JavaBean-编码规范"><a href="#3-JavaBean-编码规范" class="headerlink" title="3. JavaBean 编码规范"></a>3. JavaBean 编码规范</h2><ol>
+<li>该类是一个公有类，并用 package 语句声明属于某个包</li>
+<li>该类实现了java.io.Serializable 接口</li>
+<li>该类如果有构造方法，那么这个构造方法是公有且无参的</li>
+<li>该类的属性一般是私有的</li>
+<li>私有属性有公有的访问器方法</li>
+</ol>
+<hr>
+<h2 id="4-基于-JDBC-连接数据库的-JavaBean-的实现"><a href="#4-基于-JDBC-连接数据库的-JavaBean-的实现" class="headerlink" title="4. 基于 JDBC 连接数据库的 JavaBean 的实现"></a>4. 基于 JDBC 连接数据库的 JavaBean 的实现</h2><pre><code class="lang-java">package util;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class DBUtil {
+
+    private String driver;
+    private String username;
+    private String url;
+    private String password;
+    private Connection con;
+    private PreparedStatement pstmt;
+    private ResultSet rs;
+
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public DBUtil() {
+        driver = &quot;com.mysql.jdbc.Driver&quot;;
+        url = &quot;jdbc:mysql://localhost:3306/book?autoReconnect=true&amp;useSSL=false&quot;;
+        username = &quot;root&quot;;
+        password = &quot;password&quot;;    
+    }
+
+    //获取连接对象
+    private Connection getConnection() {
+        try {
+            Class.forName(driver);
+            con = DriverManager.getConnection(url,username,password);
+        }catch(ClassNotFoundException e) {
+            e.printStackTrace();
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return con;
+    }
+
+    //给pstmt 的SQL语句设置参数（参数以数组形式给出）
+    private void setParams(String sql, String[] params) {
+        this.getConnection();
+        try {
+            //创建一个PreparedStatement对象，用于执行预编译的SQL语句
+            pstmt = con.prepareStatement(sql);        
+            for (int i = 0; i&lt;params.length; i++)
+                 pstmt.setString(i+1, params[i]);
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }        
+    }
+
+    //执行数据库查询操作时，将返回的结果封装到List对象中
+    @SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
+    public List getResultList(String sql, String[] params) {
+        List list = new ArrayList();
+        try {
+            this.setParams(sql, params);
+            ResultSet rs = pstmt.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            while(rs.next()) {
+                Map m = new HashMap();
+                for (int i = 1; i&lt;=rsmd.getColumnCount(); i++) {
+                    String colName = rsmd.getColumnName(i);
+                    m.put(colName, rs.getString(colName));
+                }
+                list.add(m);
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }finally {
+            close();
+        }
+        return list;
+    }
+
+
+    @SuppressWarnings(&quot;rawtypes&quot;)
+    public Map getMap(String sql, String[] params) {
+        List list = getResultList(sql, params);
+        if(list.isEmpty()) return null;
+        else  return (Map)list.get(0);
+    }    
+    //更新数据库时调用的update 方法
+    public int update (String sql, String[] params) {
+        int recNo = 0;          //表示受影响的记录行数
+        try {
+            this.setParams(sql, params);         //根据sql 和 params ，设置 pstmt 对象
+            recNo = pstmt.executeUpdate();       // 执行更新操作
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            close();
+        }
+        return recNo;
+    }
+
+    //关闭对象
+    private void close() {
+        try {
+            if(rs!= null)
+                rs.close();
+            if(pstmt != null)
+                pstmt.close();
+            if(con != null)
+                con.close();
+        }catch(SQLException e){
+        e.printStackTrace();
+        }
+    }    
+}
+</code></pre>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li>Java Web 开发技术教程</li>
+</ol>
 <blockquote>
-<p>小说将无望却坚守的凄凉爱情和执着而缜密的冷静推理完美结合。</p>
+<p>请多多指教！</p>
 </blockquote>
-<hr>
-<h1 id="黑夜里的爱情"><a href="#黑夜里的爱情" class="headerlink" title="黑夜里的爱情"></a>黑夜里的爱情</h1><p><strong> 1. 雪穗和亮司之间有爱情吗？ </strong><br>当然，这份爱情存在了19年之久，始于孩童时代。小说中，笹垣在初次造访西本文代家里时，雪穗在看小说《飘》，而之后小说中也出现了亮司在看同一部小说。这是孩童时代的最纯真的爱情，同样不幸的家庭环境，两颗孤独的心灵走到一起，经常相约图书馆，约读相同的小说。在那件事发生之后，二人似乎在阳光下似乎再无交集，只在小说的结束，两人才同时出现。老警察说，他们只是互利共生，枪虾和虾虎鱼的关系，在我看来，本质并非如此。书中还有不少地方表现出了这份爱情，在亮司帮助友彦掩盖花冈夕子的死亡时，酒店服务员口中的女子是谁？没错，就是晚上从家逃出被补习老师碰见的雪穗。雪穗做的绣着RK的拼布袋子送给了亮司，而雪穗的店的名字<code>R&amp;Y</code>代表了两人。小说最后亮司自杀，以护雪穗周全。</p>
-<p><strong> 2. 如何看待这份爱情？ </strong><br>两个幼小而孤独的心灵走到了一起，却经历了那件事，一切罪恶便开始了。两人的爱是伴随着人性的扭曲，越陷越深，这种沉沦来源于幼时家庭的绝望经历。在雪穗和助手的对话中，看到了雪穗深藏的内心。 “有些人一辈子都活在太阳的照耀下，有些人不得不一直活在漆黑的深夜里”，两人都渴望在阳光下手牵手散步，但却是不可企及的奢望。“我的天空里没有太阳，但并不暗，因为有东西代替了太阳”。亮司就是雪穗的太阳，他在黑夜里无怨无悔的用爱照耀着雪穗，为她清除通往光鲜亮丽的障碍。“凭借着这份光，我便能把黑夜当成白天“，在黑暗里，亮司的爱温暖着雪穗，也给雪穗以力量。在没有退路之际，亮司用那把改变人生的剪刀结束了可悲的一生。“只见雪穗正沿着扶梯上楼，他的背影犹如白色的影子”，雪穗的太阳坠落了。”她一次也没有回头“，此刻的雪穗已经是一副躯壳了，没有了灵魂，就连那扭曲的、可怕的、悲哀的灵魂也失去了。两人的爱是悲凉的，无望却坚守，他们互相借助着彼此的光亮在黑夜里前行，艰难的，惹人怜惜的。</p>
-<p><img src="cover_pic.jpg" alt="cover_pic"></p>
 
 
                 <hr>
@@ -212,12 +353,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/2017/09/03/MySQL-基本语句/" data-toggle="tooltip" data-placement="top" title="Previous Post">&larr; MySQL 基本语句</a>
+                            <a href="/2017/09/20/从MVC构成解析Struts框架/" data-toggle="tooltip" data-placement="top" title="Previous Post">&larr; 从MVC构成解析Struts框架</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/2017/08/05/Tesseract-OCR-with-Python/" data-toggle="tooltip" data-placement="top" title="Next Post">Tesseract OCR with Python &rarr;</a>
+                            <a href="/2017/09/09/Java-Web入门介绍/" data-toggle="tooltip" data-placement="top" title="Next Post">Java Web入门介绍 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -264,7 +405,11 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#读书" title="读书">读书</a>
+                          <a class="tag" href="/tags/#数据库" title="数据库">数据库</a>
+                        
+                          <a class="tag" href="/tags/#JDBC" title="JDBC">JDBC</a>
+                        
+                          <a class="tag" href="/tags/#JavaBean" title="JavaBean">JavaBean</a>
                         
                     </div>
                 </section>

@@ -18,7 +18,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/">
+    <link rel="canonical" href="http://codepalace.org/page/3/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -188,21 +188,25 @@
 
 <div class="post-preview">
 
-    <a href="/2017/10/02/七步完成Java-Web部署/">
+    <a href="/2017/03/06/Python进阶之生成器/">
         <h2 class="post-title">
-            七步完成Java Web部署
+            Python进阶之生成器
         </h2>
         <h3 class="post-subtitle">
-            
+            较详细地介绍了生成器的两种生成方式、特性以及方法
         </h3>
         <div class="post-content-preview">
-            第一步： 购买 VPS可以选择国外服务器提供商，相较国内，价格更优,还能做其他国内服务器做不了的事情。
-第二步：安装 SSH 客户端和文件传输工具接下来，安装 SSH 客户端，实现远程远程 Linux 主机。mac 自带终端可以进行远程管理。还需要一个网络文件传输工具。作为本地 windows 系统和远程 Linux 主机文件传输的桥梁。个人选择 Xshell 和 Xftp 来管理远程服务器......
+            1. 生成器(generator)什么是生成器呢，要理解生成器你就必须先理解什么是迭代器，因为生成器也是一种迭代器，是一种更高级、更优雅的迭代器。关于迭代器，如果你不明白的话，本博文的 前一篇有讲解，这里不再赘述。首先，明白下面两点：
+
+任意生成器都是迭代器 (反之不成立）。
+任意生成器，都是一个延迟产生值的工厂。
+
+2. yieldPython 有两种不同的方式提供生成器：现在介绍第一种：......
         </div>
     </a>
     <p class="post-meta">
         Posted by Surflyan on
-        2017-10-02
+        2017-03-06
     </p>
 
 </div>
@@ -210,21 +214,30 @@
 
 <div class="post-preview">
 
-    <a href="/2017/09/27/Struts框架的配置/">
+    <a href="/2017/03/05/Python进阶之迭代器/">
         <h2 class="post-title">
-            Struts框架的配置
+            Python进阶之迭代器
         </h2>
         <h3 class="post-subtitle">
-            
+            Python 可迭代对象、迭代器的介绍
         </h3>
         <div class="post-content-preview">
-            1. Struts.xml 举例Struts.xml 是 Struts2 框架的核心配置文件，主要用于配置核心控制器 Action 类，同时还可以配置作用于 Action 的拦截器、Action 的 result 映射等，在程序运行时 struts.xml 将被 Struts 2 框架自动加载。
-下面是一个完整的 Struts.xml 配置文件，来源于 Struts 官方文档，做了部分修改，......
+            1.容器(container)容器是存储元素的一种数据结构，可进行成员测试，在python中典型的容器有：
+
+list
+set
+dict
+tuple 
+str
+…
+
+容器较容易理解，可参照生活中容器的理解。
+2. 可迭代对象(interable) 迭代(interate)  是指按照某种顺序逐个访问序列中的每一项。大部分容器都是可迭代的，但还有其他对象也可迭代，如文件对象、管道对象，可迭代对......
         </div>
     </a>
     <p class="post-meta">
         Posted by Surflyan on
-        2017-09-27
+        2017-03-05
     </p>
 
 </div>
@@ -232,25 +245,22 @@
 
 <div class="post-preview">
 
-    <a href="/2017/09/23/Struts框架的处理过程/">
+    <a href="/2017/01/28/Hexo搭建个人博客-优化/">
         <h2 class="post-title">
-            Struts框架的处理过程
+            Hexo搭建个人博客--优化
         </h2>
         <h3 class="post-subtitle">
-            
+            博客的后期处理、提交 sitemap
         </h3>
         <div class="post-content-preview">
-             注：  本片博文主要翻译自 Struts 官方文档，附上链接 http://struts.apache.org/docs/big-picture.html\
-
-Struts 对客户端的请求的处理主要经过下面几个过程：
-
-客户端的请求经过 Servlet 容器一系列的过滤器（Filter)
-过滤器 FilterDispatcher  被调用，FilterDispatcher 询问 Acton......
+            相信你已经可以通过域名来访问到你的博客了，但还有一些事情是必须要做的，现在我们就来讲讲后续的处理吧。
+评论功能一篇博文，分享思想。读者有发表想法的权利，所以我们必须提供评论功能。由于我们搭建的是静态网站，网站本身并不能存放评论，必须使用第三方提供的服务。国内一般使用较多的就是 多说了。
+首先注册一个多说账号，之后官网会给出详细的引导，你可以获取到通用代码，你可以将这段通用代码插入 page.......
         </div>
     </a>
     <p class="post-meta">
         Posted by Surflyan on
-        2017-09-23
+        2017-01-28
     </p>
 
 </div>
@@ -258,20 +268,26 @@ Struts 对客户端的请求的处理主要经过下面几个过程：
 
 <div class="post-preview">
 
-    <a href="/2017/09/20/从MVC构成解析Struts框架/">
+    <a href="/2017/01/26/Hexo搭建个人博客--进阶/">
         <h2 class="post-title">
-            从MVC构成解析Struts框架
+            Hexo搭建个人博客--进阶
         </h2>
         <h3 class="post-subtitle">
-            
+            hexo 搭建博客完整实现
         </h3>
         <div class="post-content-preview">
-            1. Struts 是什么Struts2 是一个 开源的，基于MVC 的优秀的 Web 开发框架 。Struts 框架是在 JSP Model2 基础上实现的 MVC 框架。由于MVC 内部原理较为复杂，需要精心设计，运用到程序中会增加应用的复杂性。但是，从大的方面看，会大大提高软件开发的效率。Struts 把 Servlet 、JSP 和自定义标签等元素整合到统一的框架中，使得开发人员不用......
+            前一篇博文已经交代了准备工作，完成以后，就可以开始搭建自己的博客了，本博文按照博主建站顺序来引导，从本地预览到上传 github ，再到绑定域名浏览。 希望可以帮助你快速完成搭建。开始吧。
+安装 hexo.打开 Git bash ,执行：
+$ npm install -g hexo
+执行：
+hexo -v
+查看 hexo 是否安装完成，及hexo版本号
+hexo 安装完之后，就可使用hexo......
         </div>
     </a>
     <p class="post-meta">
         Posted by Surflyan on
-        2017-09-20
+        2017-01-26
     </p>
 
 </div>
@@ -279,159 +295,22 @@ Struts 对客户端的请求的处理主要经过下面几个过程：
 
 <div class="post-preview">
 
-    <a href="/2017/09/16/基于JDBC连接数据库的JavaBean的实现/">
+    <a href="/2017/01/25/hexo-搭建个人博客-准备/">
         <h2 class="post-title">
-            基于JDBC连接数据库的JavaBean的实现
+            Hexo搭建个人博客--准备
         </h2>
         <h3 class="post-subtitle">
-            
+            所需技能及环境配置
         </h3>
         <div class="post-content-preview">
-            1. JDBC 介绍JDBC（Java DataBase Connectivity,java数据库连接）是一种用于执行 SQL 语句的 Java API，可以为多种关系数据库提供统一访问，它由一组由 Java 语言编写的类和接口组成。
-
-2. JavaBean 介绍从面向对对象和代码可维护性的角度来考虑，JSP 页面应该尽可能少得使用脚本代码。JSP 可以通过组件实现功能扩充。JavaBea......
+            独立个人博客，有兴趣吗？如果你只是想要有一个写东西的地方，对互联网不甚了解，那么众多门户网站是很好的选择。如果你爱折腾，有时间，那么搭建个人定制、独立博客也是蛮有趣味。
+Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多的项目都托管在其上。Github Pages 本用于作为 Github 项目的介绍文档站，对项目做出说明。
+为什么选择 Github......
         </div>
     </a>
     <p class="post-meta">
         Posted by Surflyan on
-        2017-09-16
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/09/09/Java-Web入门介绍/">
-        <h2 class="post-title">
-            Java Web入门介绍
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            1. 什么是 WebWeb 是一种基于超文本方式工作的信息系统。常具有以下三个特征。
-
-Web 使用超文本技术的 HTML 来表示信息资源以及建立资源与资源之间的链接。
-Web 使用统一资源定位器（Uniform Resource Locator，URL）定位 Web 服务器中信息资源的位置。
-Web 使用 HTTP 协议定义客户端与 Web 服务器之间的通信。
-
-
-2. Web 工作原理
-......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-09-09
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/09/03/MySQL-基本语句/">
-        <h2 class="post-title">
-            MySQL 基本语句
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            1. 连接数据库# 启动数据库
-1. net start mysql 
-
-# 连接数据库
-2. mysql -u root -p
-
-# 关闭数据库
-3. net stop mysql
-
-2. 数据库操作# 创建数据库
-1. creat database db_name;
-
-# 删除数据库
-2. mysql -u root -p drop db_name
-
-# 选择数据库
-3. use db_......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-09-03
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/08/30/读《白夜行》- 东野圭吾/">
-        <h2 class="post-title">
-            读《白夜行》-- 东野圭吾
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            入手一年多的kindle几乎一直在吃灰，在返校的列车上，一部小说，是最好的消遣。早就有人推荐日本作家东野圭吾的推理小说《白夜行》，早先也曾读过其另一篇犯罪推理小说《嫌疑人X的现身》,感觉不错，而这次也没让人失望。既然是推理小说，那么未读之前看任何的介绍，都是不合适的。
-
-艺术手法《白夜行》故事时间跨度达19年之久，人物众多，需要极大的掌控力才可不留漏洞的完成如此长篇巨制。通篇小说，按照时间顺......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-08-30
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/08/05/Tesseract-OCR-with-Python/">
-        <h2 class="post-title">
-            Tesseract OCR with Python
-        </h2>
-        <h3 class="post-subtitle">
-            pytesseract openCV
-        </h3>
-        <div class="post-content-preview">
-            本博客介绍了python 语言下tesseract的使用以及使用openCV对图片进行简单的预处理。
-
-1. 安装pytesseract首先安装Pillow，一个对python更加友好的PIL端口，pytesseract对其有依赖。
-$ pip install pillow
-$ pip install pytesseract
- 注意 : 在pytesseract的github项目, 可以发现......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-08-05
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/08/01/Tesseract-For-OCR/">
-        <h2 class="post-title">
-            Tesseract For OCR
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            OCR (Optical Character Recognition) 是将文本资料的图像文件进行分析识别，转换机器编码文本的过程。运用OCR处理，就可以获取图像文件中的字符，从而对字符串变量进行访问和操作。
-本篇博文着重介绍如何在windows操作系统中安装和配置Tesseract，之后利用tesseract 命令测试输入图像。下篇博文介绍如何运用python 脚本调用Tesseract。......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-08-01
+        2017-01-25
     </p>
 
 </div>
@@ -443,10 +322,10 @@ $ pip install pytesseract
 
 <ul class="pager">
     
-    
-        <li class="next">
-            <a href="/page/2/">Older Posts &rarr;</a>
+        <li class="previous">
+            <a href="/page/2/">&larr; Newer Posts</a>
         </li>
+    
     
 </ul>
 
