@@ -94,14 +94,14 @@
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
@@ -200,7 +200,7 @@
                 post-container">
 
                 <h2 id="第一步：-购买-VPS"><a href="#第一步：-购买-VPS" class="headerlink" title="第一步： 购买 VPS"></a>第一步： 购买 VPS</h2><p>可以选择国外服务器提供商，相较国内，价格更优,还能做其他国内服务器做不了的事情。</p>
-<h2 id="第二步：安装-SSH-客户端和文件传输工具"><a href="#第二步：安装-SSH-客户端和文件传输工具" class="headerlink" title="第二步：安装 SSH 客户端和文件传输工具"></a>第二步：安装 SSH 客户端和文件传输工具</h2><p>接下来，安装 SSH 客户端，实现远程远程 Linux 主机。mac 自带终端可以进行远程管理。还需要一个网络文件传输工具。作为本地 windows 系统和远程 Linux 主机文件传输的桥梁。个人选择 Xshell 和 Xftp 来管理远程服务器。</p>
+<h2 id="第二步：安装-SSH-客户端和文件传输工具"><a href="#第二步：安装-SSH-客户端和文件传输工具" class="headerlink" title="第二步：安装 SSH 客户端和文件传输工具"></a>第二步：安装 SSH 客户端和文件传输工具</h2><p>接下来，安装 SSH 客户端，实现远程管理 Linux 主机。mac 自带终端可以进行远程管理。还需要一个网络文件传输工具。作为本地 windows 系统和远程 Linux 主机文件传输的桥梁。个人选择 Xshell 和 Xftp 来管理远程服务器。</p>
 <h2 id="第三步：JDK-配置"><a href="#第三步：JDK-配置" class="headerlink" title="第三步：JDK 配置"></a>第三步：JDK 配置</h2><p>连接上远程服务器之后，就可以开始配置 Java Web 环境了。选择相应 Linux 版本 JDK (最好同本地的版本一致），下载到本地后上传到服务器，使用 tar 命令解压。配置 JAVA 环境变量是非常关键的一步。使用 vi 编辑 <code>~/.bashrc</code> ,博主将 jdk 解压到了 <code>/usr/lib/jvm/</code>下，环境变量配置如下：</p>
 <pre><code>export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_144
 export JRE_HOME=${JAVA_HOME}/jre
