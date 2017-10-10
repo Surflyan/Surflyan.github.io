@@ -14,11 +14,11 @@
 
     <title>
         
-          七步完成Java Web部署 - 代码殿堂 | Code Palace
+          Git基本命令 - 代码殿堂 | Code Palace
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/2017/10/02/七步完成Java-Web部署/">
+    <link rel="canonical" href="http://codepalace.org/2017/10/10/Git基本命令/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -169,18 +169,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#Java Web" title="Java Web">Java Web</a>
-                        
-                          <a class="tag" href="/tags/#服务器" title="服务器">服务器</a>
-                        
-                          <a class="tag" href="/tags/#MySQL" title="MySQL">MySQL</a>
+                          <a class="tag" href="/tags/#Git Linux" title="Git Linux">Git Linux</a>
                         
                     </div>
-                    <h1>七步完成Java Web部署</h1>
+                    <h1>Git基本命令</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by Surflyan on
-                        2017-10-02
+                        2017-10-10
                     </span>
                 </div>
             </div>
@@ -199,50 +195,230 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="第一步：-购买-VPS"><a href="#第一步：-购买-VPS" class="headerlink" title="第一步： 购买 VPS"></a>第一步： 购买 VPS</h2><p>可以选择国外服务器提供商，相较国内，价格更优,还能做其他国内服务器做不了的事情。</p>
-<h2 id="第二步：安装-SSH-客户端和文件传输工具"><a href="#第二步：安装-SSH-客户端和文件传输工具" class="headerlink" title="第二步：安装 SSH 客户端和文件传输工具"></a>第二步：安装 SSH 客户端和文件传输工具</h2><p>接下来，安装 SSH 客户端，实现远程管理 Linux 主机。mac 自带终端可以进行远程管理。还需要一个网络文件传输工具。作为本地 windows 系统和远程 Linux 主机文件传输的桥梁。个人选择 Xshell 和 Xftp 来管理远程服务器。</p>
-<h2 id="第三步：JDK-配置"><a href="#第三步：JDK-配置" class="headerlink" title="第三步：JDK 配置"></a>第三步：JDK 配置</h2><p>连接上远程服务器之后，就可以开始配置 Java Web 环境了。选择相应 Linux 版本 JDK (最好同本地的版本一致），下载到本地后上传到服务器，使用 tar 命令解压。配置 JAVA 环境变量是非常关键的一步。使用 vi 编辑 <code>~/.bashrc</code> ,博主将 jdk 解压到了 <code>/usr/lib/jvm/</code>下，环境变量配置如下：</p>
-<pre><code>export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_144
-export JRE_HOME=${JAVA_HOME}/jre
-export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
-export PATH=${JAVA_HOME}/bin:$PATH
-</code></pre><p>退出保存后，执行<code>java -version</code>查看是否配置成功。</p>
-<h2 id="第四步：Tomcat-配置"><a href="#第四步：Tomcat-配置" class="headerlink" title="第四步：Tomcat 配置"></a>第四步：Tomcat 配置</h2><p>同 JDK 类似，下载相应版本上传服务器，解压，配置环境变量。博主同样 tomcat 解压到 <code>/usr/lib/jvm/</code>下，编辑 <code>apache-tomcat-9.0.0.M26/bin</code>下，startup.sh 脚本。配置如下：</p>
-<pre><code>JAVA_HOME=/usr/lib/jvm/jdk1.8.0_144
-JRE_HOME=${JAVA_HOME}/jre
-PATH=$PATH:${JAVA_HOME}/bin:${JRE_HOME}
-CLASSPATH=.:${JRE_HOME}/lib/rt.jar:${JAVA_HOME}/lib/dt.jar:${JAVA_HOME}/lib/tools.jar
-TOMCAT_PATH=/usr/lib/jvm/apache-tomcat-9.0.0.M26
-</code></pre><p>保存退出后，启动 tomcat, 在 tomcat 目录下，执行 <code>./bin/startup.sh</code>。登陆 IP 地址+端口号，查看 tomcat 是否已成功启动。</p>
-<h2 id="第五步：安装-MySQL"><a href="#第五步：安装-MySQL" class="headerlink" title="第五步：安装 MySQL"></a>第五步：安装 MySQL</h2><p>使用 apt-get 安装 MySQL，执行如下命令：</p>
-<pre><code>#更新源
-：~# apt-get update --fix-missing 
-# 安装
-：~# apt-get install mysql-server mysql-client
-</code></pre><p>Linux 下通过 service 启动/停止数据库：</p>
-<pre><code>#mysql 5.5 版如下执行，5.0 版 mysql 替换为 mysqld 执行
-~# service mysql start 
-~# service mysql stop
-~# serviec mysql restart
-</code></pre><h2 id="第六步：-上传本地-sql-文件"><a href="#第六步：-上传本地-sql-文件" class="headerlink" title="第六步： 上传本地 .sql 文件"></a>第六步： 上传本地 .sql 文件</h2><p>对于一般 Web 项目都有数据库支持，在我们部署 web 之前，需要先把数据库部分上传到服务器。在本地执行<code>mysqldump -h localhost -u root -p databasename&gt;databasename.sql</code> 生成.sql 文件。上传服务器到，在服务器上创建同名数据库 databasename , 选中此数据库后执行<code>mysql&gt;source path/databasename.sql</code>导入 sql 文件。</p>
-<p>若数据库存在中文，注意修改编码方式。</p>
-<pre><code># 查看编码(两种方式）
-mysql&gt;status
-mysql&gt;show variables like &#39;character_set_%&#39;
+                <h2 id="git-的“三”"><a href="#git-的“三”" class="headerlink" title="git 的“三”"></a>git 的“三”</h2><p>三种状态</p>
+<ul>
+<li>已提交(committed)：表示该文件已经被安全地保存在本地数据库中了；</li>
+<li>已修改(modified)：表示修改了某个文件，但还没有提交保存；</li>
+<li>已暂存(staged)：表示把已修改的文件放在下次提交时要保存的清单中。</li>
+</ul>
+<p>三个工作区域:</p>
+<ul>
+<li>工作目录</li>
+<li>暂存区域</li>
+<li>版本库</li>
+</ul>
+<hr>
+<h2 id="git-撤销操作"><a href="#git-撤销操作" class="headerlink" title="git 撤销操作"></a>git 撤销操作</h2><pre><code class="lang-python">#撤回暂存区文件
+git reset HEAD &lt;file&gt; 
 
-#修改MySQL 配置文件/etc/my.cnf （不同安装方式，my.cnf 具体位置不一致）
-# 在[client]下追加：
-default-character-set=utf8
-# 在[mysqld]下追加：
-character-set-server=utf8
-# 在[mysql]下追加：
-default-character-set=utf-8
-</code></pre><p>修改完成后重启数据库。查看数据库中中文乱码问题已解决。</p>
-<blockquote>
-<p>博主在此遇到了一个坑，修改编码之后，mysql 再也连接不上， 提示<code>ERROR 2002 (HY000): Can&#39;t connect to local MySQL server through socket &#39;/tmp/mysql.sock&#39; (2)</code>，根据 StackOverflow 上的大牛提供的方法没有解决我的问题，几经折腾，最后最没技术的方法，重启远程服务器，问题解决。</p>
-</blockquote>
-<h2 id="第七步：上传项目文件"><a href="#第七步：上传项目文件" class="headerlink" title="第七步：上传项目文件"></a>第七步：上传项目文件</h2><p>在本地将项目文件导出为<code>.war</code>文件，上传到<code>tomcat/Webapps/</code>下，重启tomcat ,此时就可以访问项目了。</p>
-<p><img src="lib.png" alt="BookManageSystem"></p>
+#重置当前分支HEAD为指定提交，暂存区回退到指定提交，工作区不变
+git reset  [commit-id]
+
+#重置HEAD为指定提交,保持暂存区和工作区不变
+git reset --keep [commit-id]
+
+#重置当前分支HEAD为指定提交，暂存区和工作区回退到指定提交
+git reset --hard [commit-id]
+
+# 修改上次提交内容(add to stage)/修改上次提交说明
+git commint --amend
+
+# 恢复暂存区到工作区(危险！会丢失工作区修改，推荐使用stash）
+git checkout . 
+git checkout &lt;file&gt;
+
+# 恢复指定提交到暂存区和工作区（危险！会丢失未提交暂存区和工作区）
+git checkout HEAD .
+git checkout HEAD &lt;file&gt;
+
+#保存工作目录
+git stash 
+git stash list
+#恢复现场，弹出并删除
+git stash pop
+#恢复现场，弹出不删除
+git stash apply 
+#删除 stash
+git stash drop
+</code></pre>
+<hr>
+<h2 id="git-差异比较"><a href="#git-差异比较" class="headerlink" title="git 差异比较"></a>git 差异比较</h2><pre><code class="lang-python"># 暂存区和工作区差异（暂存区无提交，与HEAD比较）
+git diff
+
+# 暂存区和上次提交差异
+git diff --cached 
+
+# 暂存区以及工作区和HEAD指向提交差异
+git diff  HEAD
+
+# 任意两次提交差异
+git diff [commit-id]  [commit-id2]
+
+# 变化清单
+git diff --stat
+</code></pre>
+<hr>
+<h2 id="git-分支指令"><a href="#git-分支指令" class="headerlink" title="git 分支指令"></a>git 分支指令</h2><pre><code class="lang-python"># 创建分支
+git branch [branch-name]
+
+# 切换分支(提交/stash 之后)
+git checkout [branch-name]
+
+# 创建并切换分支
+git checkout -b [branch-name]
+
+# 切换到上一个分支
+git checkout -
+
+# 列出本地分支
+git branch
+
+# 列出所有本地及远程分支
+git branch -a
+
+# 删除分支
+git branch -d [branch-name]
+
+# 强制删除分支（该分支没有合并）
+git branch -D [branch-name]
+
+# 合并分支到当前分支，若出现冲突，解决冲突，再 add 到暂存区， commit，后删除分支
+git merge [branch-name]
+
+# 线性合并分支
+git rebase
+</code></pre>
+<hr>
+<h2 id="git-远程操作"><a href="#git-远程操作" class="headerlink" title="git 远程操作"></a>git 远程操作</h2><pre><code class="lang-python"># 使用 origin 代替一切远程仓库名
+
+# 从远程仓库克隆
+git clone [url] [rename]
+
+# 添加远程仓库
+git remote add [shortname/origin] [url]
+
+# 移除远程仓库
+git remote rm origin
+
+# 远程仓库重命名
+git remote rename [init-name] [new-name]
+
+# 当前配置的所有远程仓库，
+git remote 
+
+# 远程仓库网址
+git remote -v
+
+# 远程仓库的详细信息、
+git remote show origin
+
+# 抓取数据到本地
+git fetch origin
+git fetch origin [branch-name]
+
+# 新建分支 track 远程分支(clone 默认只看到master分支)
+git checkout -b [new-branch] origin/[branch-name]
+# 或者合并直接合并远程分支
+git merge origin/[branch-name]
+
+# 抓取并合并
+git pull origin master : master
+
+# 推送本地分支到远程分支
+# 完整写法
+git push origin [local-branch-name]: [remote-branch-name]
+# 本地分支推送与之存在追踪关系的远程分支（通常为同名分支），若不存在，则会创建新分支
+git push origin [branch-name]
+# 当前分支与远程存在追踪关系(simple 模式)
+git push origin
+# -u 指定默认主机 (以后直接使用git push推送当前分支到存在追踪关系的远程分支)
+git push -u origin master
+# 推送所有本地分支（不管有无对应关系）
+git push origin --all
+# 如果本地版本落后远程版本，强制推送（危险！ 远程版本会被覆盖）
+git push  origin --force
+
+# 手动建立本地分支与远程分支链接关系
+git branch --set-upstream branch-name origin/branch-name
+
+# 删除远程分支
+git push origin --delete [branch-name]
+</code></pre>
+<hr>
+<h2 id="git-文件操作"><a href="#git-文件操作" class="headerlink" title="git 文件操作"></a>git 文件操作</h2><pre><code class="lang-python"># 删除已提交文件，将删除操作放入暂存区
+git rm &lt;file&gt;
+
+# 取消对文件的追踪，文件还保留在工作区
+git rm -- cached &lt;file&gt;
+
+# 强制删除文件(工作区)
+git rm -f &lt;file&gt;
+
+# 忽略文件，建立.gitignore ,写入正则匹配
+vim .gitignore 
+
+# 添加例外文件（忽略文件）
+！exception.pyc
+
+# 文件重命名
+git mv &lt;file-name-from&gt; &lt;file-name-to&gt;
+</code></pre>
+<hr>
+<h2 id="git-查看操作"><a href="#git-查看操作" class="headerlink" title="git 查看操作"></a>git 查看操作</h2><pre><code class="lang-python"># 提交历史查看
+git log
+# 图形分支显示
+git log --graph
+# 提交历史，以及每次变更的文件
+git log --stat
+# 显示一定数目的提交
+git log -2
+# 指定作者、提交者
+git log --author= “name&quot;
+git log --commiter=&quot;commiter&quot;
+# 根据关键词，搜索提交历史
+git log -S [keyword]
+# 显示格式(format自定义)
+git log --pretty = [oneline short full format:&quot;%Cred%h%Creset %s %Cred%cn%Creset %Cblue%cd%Creset&quot; ]
+# 反向显示
+git log --reverse
+# 当前各个分支所指提交对象
+git log --decorate
+# 某个文件的版本历史
+git log --follow &lt;file&gt;
+
+#查看所有操作记录
+git reflog
+
+# 查看历史提交库中某一文件内容
+git show commit-id:./filename
+
+# 查看指定提交的数据和变化的内容
+git show [commid-id]
+
+# 按行查看某一文件提交历史
+git blame &lt;file&gt;
+
+# 缓冲区文件列表
+git ls-files
+</code></pre>
+<hr>
+<h2 id="git-配置"><a href="#git-配置" class="headerlink" title="git 配置"></a>git 配置</h2><pre><code class="lang-python"># 当前仓库配置
+git config --local -l
+# 当前用户配置
+git config --global -l
+# 当前系统配置
+git config --system -l
+# 当前生效配置
+git config -l
+# 编辑 git 配置文件
+git config -e [--global]
+# 配置信息修改
+git config [--global] alias.st status
+
+# 获取帮助
+git help &lt;command&gt;
+git &lt;command&gt; -h
+</code></pre>
 <blockquote>
 <p>请多多指教！</p>
 </blockquote>
@@ -252,13 +428,9 @@ default-character-set=utf-8
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2017/10/10/Git基本命令/" data-toggle="tooltip" data-placement="top" title="Previous Post">&larr; Git基本命令</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2017/09/27/Struts框架的配置/" data-toggle="tooltip" data-placement="top" title="Next Post">Struts框架的配置 &rarr;</a>
+                            <a href="/2017/10/02/七步完成Java-Web部署/" data-toggle="tooltip" data-placement="top" title="Next Post">七步完成Java Web部署 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -305,11 +477,7 @@ default-character-set=utf-8
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#Java Web" title="Java Web">Java Web</a>
-                        
-                          <a class="tag" href="/tags/#服务器" title="服务器">服务器</a>
-                        
-                          <a class="tag" href="/tags/#MySQL" title="MySQL">MySQL</a>
+                          <a class="tag" href="/tags/#Git Linux" title="Git Linux">Git Linux</a>
                         
                     </div>
                 </section>
