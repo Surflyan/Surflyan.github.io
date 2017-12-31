@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="C_eEXCRkzztEJGJcIUrKnVlTpQ76fgidG6Wp04m0Js0" />
+    <meta name="baidu-site-verification" content="sdTqGlKswq" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          逻辑斯蒂回归分析及Python实现 - Soft Margin
+        
+    </title>
+
+    <link rel="canonical" href="http://softmargin.com/2017/12/07/逻辑斯蒂回归分析及Python实现/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <!--<link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- add by Surflyan-->
+    <link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="/js/google-code-prettify/tomorrow-night-eighties.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Soft Margin</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/header.jpeg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Machine Learning" title="Machine Learning">Machine Learning</a>
+                        
+                    </div>
+                    <h1>逻辑斯蒂回归分析及Python实现</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by Surflyan on
+                        2017-12-07
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="1-核心思想"><a href="#1-核心思想" class="headerlink" title="1. 核心思想"></a>1. 核心思想</h1><p>上一篇讲到了线性回归，本篇要讲的是分类问题。于是我们想到了能否使用线性回归来处理分类问题，事实上并不可行，由于在线性模型中，预测模型会出现任意值，而二分类模型中，y 的取值有只有 0 或者 1， 因此线性回归模型不适用于分类问题。但是如果能将线性回归的结果映射到（0，1）区间，那么就可以帮助我们进行分类了。问题的关键就变成了寻找一个具有良好数学性质的映射函数的选择。</p>
+<hr>
+<h1 id="2-逻辑斯蒂分布"><a href="#2-逻辑斯蒂分布" class="headerlink" title="2. 逻辑斯蒂分布"></a>2. 逻辑斯蒂分布</h1><p>随机变量 X 服从逻辑斯蒂分布，是指 X 具有如下的分布函数和密度函数：</p>
+<script type="math/tex; mode=display">F(x) = P(X \leqslant x) = \frac{1}{1+e^{-(x-\mu)/\gamma}}</script><script type="math/tex; mode=display">f(x) = F’(x) = \frac{e^{-(x-\mu)/\gamma}} { \gamma (1+e^{-(x-\mu)/\gamma})^2 }</script><p><img src="LogisticPro.png" width="300"></p>
+<font size="2"><center>图1 不同参数下logistic概率密度图形 [图片来源：维基百科]</center></font>
+
+<p><img src="LogisticDist.png" width="300"></p>
+<font size="2"><center>图2 不同参数下logistic分布图形 [图片来源：维基百科]</center></font>
+
+<p>可以看到，逻辑斯蒂分布函数以点（μ，1/2）为中心对称，而著名的sigmoid函数就是当 γ= 1，μ= 0时的逻辑斯蒂分布函数。</p>
+<hr>
+<h1 id="3-逻辑斯蒂模型"><a href="#3-逻辑斯蒂模型" class="headerlink" title="3. 逻辑斯蒂模型"></a>3. 逻辑斯蒂模型</h1><p>逻辑斯蒂回归模型是一种分类模型，用条件概率分布P（X|Y）表示，形式为参数化的逻辑斯蒂分布。对于二项逻辑斯蒂回归而言，模型为：</p>
+<script type="math/tex; mode=display">P(Y=1|x) = \frac{e^{w\cdot x+b}}{1+e^{w\cdot x+b}}\,\,\, (1)</script><script type="math/tex; mode=display">P(Y=0|x) = \frac{1}{1+e^{w\cdot x+b}}\,\,\,   (2)</script><p>其中 $w\cdot x + b$ 可看作是x 的线性函数。<em>线性函数的值越接近正无穷，概率值就越接近1；线性值越接近负无穷，概率值越接近0，这样的模型是逻辑斯蒂回归模型(《统计机器学习》李航)</em></p>
+<p>逻辑斯蒂回归目的是为了解决分类，那么就需要有一个决策边界，所有可选择一个阈值作为分类的边界。如没有特别的情况对于二分类可设为0.5，即：</p>
+<script type="math/tex; mode=display">y^* = 1, \, \textrm{if} \, P(y=1|x)\geqslant 0.5</script><hr>
+<h1 id="4-模型建立"><a href="#4-模型建立" class="headerlink" title="4. 模型建立"></a>4. 模型建立</h1><ol>
+<li><p>从似然函数理解<br>对于给定的训练数据集，可通过进行极大似然估计模型参数，从而建立逻辑斯蒂回归模型。</p>
+<script type="math/tex; mode=display">L(\theta) = P(D|\theta) = \prod P(y|x;\theta) = \prod g(\theta^T x) ^ y (1-g(\theta^T x))^{1-y}</script><p>对数似然函数为：</p>
+<script type="math/tex; mode=display">l(\theta) = \sum {y\log{g(\theta^T x)} + (1-y)\log{(1-g(\theta^T x))}}</script></li>
+<li><p>从损失函数理解<br>对于线性回归，是从损失函数来介绍的。对于log损失在单个数据点上的定义为：</p>
+<script type="math/tex; mode=display">-y\log{p(y|x)}-(1-y)\log{1-p(y|x)}</script><p>可以看到，最大化似然函数和最小化损失函数是等价的。</p>
+</li>
+</ol>
+<hr>
+<h1 id="5-参数估计"><a href="#5-参数估计" class="headerlink" title="5. 参数估计"></a>5. 参数估计</h1><h3 id="5-1-梯度下降法："><a href="#5-1-梯度下降法：" class="headerlink" title="5.1 梯度下降法："></a>5.1 梯度下降法：</h3><p>根据梯度下降算法向量形式进行coding：</p>
+<script type="math/tex; mode=display">\theta = \theta - \alpha(X^T(X \cdot \theta - Y))</script><pre><code class="lang-python">def sigmoid(x):
+    g = 1.0 / (1 + np.exp(-x))
+    return g
+
+def gradientAscendMatrix(theta,X,Y,maxIteration,alpha,lamd = 0) :
+    &quot;&quot;&quot;
+    梯度下降法
+    :param theta矩阵
+    :param X特征矩阵
+    :param Y矩阵
+    :param 最大迭代次数
+    :param 下降步长
+    :return 优化解theta
+    &quot;&quot;&quot;
+    m = X.shape[0]
+    while(maxIteration):
+        thetaTX = np.dot(X,theta)
+        hypothesis = sigmoid(thetaTX)
+        error = hypothesis - Y
+        grad = np.dot(X.T,error/m)
+        theta = theta - alpha * (grad + lamd * theta)
+
+        # 计算|| Wk+1 - Wk||，根据阈值判断是否停止迭代
+        updateW = np.dot(grad.T, grad)
+        if (updateW &lt; 0.0005):
+            break
+        maxIteration -= 1
+    return theta
+</code></pre>
+<h3 id="5-2-牛顿法"><a href="#5-2-牛顿法" class="headerlink" title="5.2 牛顿法"></a>5.2 牛顿法</h3><p>梯度下降法，主要利用目标函数的局部性质，而牛顿法则利用局部的一阶和二阶偏导信息，去估计整个目标的趋势。相比梯度下降法，牛顿法有一定的对全局的预测性，收敛性质更加优秀。由于牛顿法是二阶收敛的，比梯度下降法收敛速度更快。<br>根据如下的迭代公式进行coding，具体推导可浏览文尾所附链接。</p>
+<script type="math/tex; mode=display">\theta = \theta^k - \frac{J’(\theta^k)}{J’’(\theta^k)} = \theta^k - H_k^{-1}\cdot g_k</script><pre><code class="lang-python">def newtonMethod(theta,X, Y, maxIteration,lamd = 0) :
+    &quot;&quot;&quot;
+    牛顿法进行参数估计
+    :param theta矩阵
+    :param X特征矩阵
+    :param Y矩阵
+    :param 最大迭代次数
+    :lamd 惩罚系数
+    :return theta优化解
+    &quot;&quot;&quot;
+    m = X.shape[0]
+    while(maxIteration) :
+        grad = np.matrix(np.zeros(3)).T
+        Hessian = np.matrix(np.zeros((3,3)))
+        for i in range(m):
+            thetaTX = np.dot(theta.T,X[i].T)
+            thetaTX = thetaTX[0,0]
+            hypothesis = sigmoid(thetaTX)
+            error = hypothesis - int(Y[i])
+            grad += error/m * X[i].T
+            Hessian += 1.0/m * hypothesis * (1 - hypothesis) * np.dot(X[i].T, X[i])
+
+        # 通过阈值停止迭代
+        updateW = np.dot(grad.T, grad)
+        if (updateW &lt; 0.0005):
+            break
+
+        try:
+            # 不加正则项
+            if(lamd == 0) :
+                theta = theta - (np.linalg.inv(Hessian) * grad )
+            # 加正则项
+            else:
+                regHessian = Hessian + lamd * np.eye(len(theta))
+                regGrad = grad + lamd * theta
+                theta = theta - (np.linalg.inv(regHessian) * regGrad)
+        except:
+                maxIteration -=1
+                continue
+        maxIteration -= 1
+    return theta
+</code></pre>
+<hr>
+<h1 id="6-实际数据测试"><a href="#6-实际数据测试" class="headerlink" title="6. 实际数据测试"></a>6. 实际数据测试</h1><p>使用 Andrew Ng斯坦福课程 Machine Learning 中的成绩数据进行测试。共80组样本数据，</p>
+<ol>
+<li><p>使用梯度下降法进行参数估计，结果如下：<br><img src="gradient-descend.png" width="500"><br>梯度法在迭代终止条件为梯度小于0.0005时，迭代到约160000次时才停止。</p>
+</li>
+<li><p>使用牛顿法进行参数估计，结果如下：<br><img src="newton-method.png" width="500"><br>相比梯度法，newdon法收敛速度快很多。同样的迭代终止条件为梯度小于0.0005，迭代4次就收敛到优化解。</p>
+</li>
+</ol>
+<p>使用留一法进行交叉验证，可计算出分类的准确率达0.775。增加惩罚项，惩罚系数设为0.0005时，准确率最高可达到0.8</p>
+<hr>
+<h1 id="7-一点体会"><a href="#7-一点体会" class="headerlink" title="7. 一点体会"></a>7. 一点体会</h1><p>逻辑回归和线性回归有许多相似，也有许多不同之处。首先，二者目标不同，逻辑回归和线性回归都是学习一个线性函数，线性回归是在拟合输入向量 x 的分布，而逻辑回归中的线性函数是要拟合出决策边界。线性回归是为了解决回归问题，而逻辑回归是为了解决分类问题，根据已知的训练集训练出模型，再对新的数据的所属类别进行预测。如果直接按照线性回归来处理的话，也会根据样本x拟合一条直线，这时候若直接通过设定一个阈值来判断属于哪一类的话，是非常不准确的。如果出现离群点，则会大大改变拟合直线，导致判断出现错误，而且有时候无法知道线性函数的取值范围，阈值很难确定。因此此时需要变换，将其映射到某一个确定的区间。sigmoid 函数很好的满足了这个条件，且其具有很好的数学性质，将函数结果映射到了（0，1），同时也减少了离群点的影响。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li>李航，统计学习方法</li>
+<li>Andrew Ng, Machine Learning</li>
+<li><a href="http://openclassroom.stanford.edu/MainFolder/DocumentPage.php?course=DeepLearning&amp;doc=exercises/ex4/ex4.html" target="_blank" rel="external">openclassroom.stanford</a></li>
+<li><a href="http://blog.csdn.net/han_xiaoyang/article/details/49332321" target="_blank" rel="external">从数学角度分析的Logistic</a></li>
+<li><a href="https://chenrudan.github.io/blog/2016/01/09/logisticregression.html" target="_blank" rel="external">浅析Logistic Regression</a></li>
+</ol>
+<blockquote>
+<p>在博主学习过程中，参考了许多他人作品，并整理到笔记，后根据笔记作此篇文章，如文中有引用他人作品部分，还请指出，以添加说明。<br>请多多指教！</p>
+</blockquote>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/12/18/PCA原理分析及Python实现/" data-toggle="tooltip" data-placement="top" title="Previous Post">&larr; PCA原理分析及Python实现</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/11/25/自动生成白盒测试基本路径程序的实现/" data-toggle="tooltip" data-placement="top" title="Next Post">自动生成白盒测试基本路径程序的实现 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+        <!--Add by Surflyan -->
+        <!-- Share-->
+          <section>
+           <hr>
+             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>
+           </section>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Machine Learning" title="Machine Learning">Machine Learning</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!--DISQUES COMMENTS-->
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+            
+            <
+
+
+          <hr>
+           </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "softmargin";
+    var disqus_identifier = "http://softmargin.com/2017/12/07/逻辑斯蒂回归分析及Python实现/";
+    var disqus_url = "http://softmargin.com/2017/12/07/逻辑斯蒂回归分析及Python实现/";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Soft Margin 2017
+                    <br>
+                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a>
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span>
+                    Posted by <a href="https://github.com/Surflyan/Surflyan.github.io">Surflyan</a>
+
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://softmargin.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Surflyan
+    var _gaId = 'UA-90996514-2';
+    var _gaDomain = 'www.softmargin.org';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Surflyan
+    var _baId = '3747566a81b32444a5bb7052b11946c3';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Surflyan to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+
+<!-- Add By Surflayn -->
+<!--添加google-prettify 代码解析2017.6.2 -->
+
+<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+<script type="text/javascript">
+$(window).load(function(){
+   $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   prettyPrint();
+ })
+
+
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+
+</html>

@@ -14,11 +14,11 @@
 
     <title>
         
-          KNN实战之改进约会网站的配对效果 - 代码殿堂 | Code Palace
+          KNN实战之改进约会网站的配对效果 - Soft Margin
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/2017/05/16/KNN实战之改进约会网站的配对效果/">
+    <link rel="canonical" href="http://softmargin.com/2017/05/16/KNN实战之改进约会网站的配对效果/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="/css/hux-blog.min.css">
 
     <!-- Pygments Highlight CSS -->
-    <link rel="stylesheet" href="/css/highlight.css">
+    <!--<link rel="stylesheet" href="/css/highlight.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -71,7 +71,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">代码殿堂-Code Palace</a>
+            <a class="navbar-brand" href="/">Soft Margin</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -153,7 +153,7 @@
     <!-- Main Content -->
     
 <!-- Image to hack wechat -->
-<!-- <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0"> -->
 <!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
 
 <!-- Post Header -->
@@ -169,7 +169,7 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#ML(机器学习)" title="ML(机器学习)">ML(机器学习)</a>
+                          <a class="tag" href="/tags/#Machine Learning" title="Machine Learning">Machine Learning</a>
                         
                     </div>
                     <h1>KNN实战之改进约会网站的配对效果</h1>
@@ -196,6 +196,7 @@
                 post-container">
 
                 <h1 id="1-说明"><a href="#1-说明" class="headerlink" title="1. 说明"></a>1. 说明</h1><p>此文案例来自于《机器学习实战》，适合初学机器学习的入门者，要运行本文的实例代码需要安装 <code>numpy</code>、 <code>scikit-learn</code>、<code>matplotlib</code> 以及<code>jupyter</code>，博主使用的是 <code>python2</code>, 所有代码建议在jupyter 下按序运行。</p>
+<hr>
 <h1 id="2-案列背景"><a href="#2-案列背景" class="headerlink" title="2. 案列背景"></a>2. 案列背景</h1><p>有一个舍友A在约会网站上寻找对象，约会网站会推荐不同的人选，但并不是很准确。<br>通过总结，可以发现A他曾经交往过三种类型的人：</p>
 <ul>
 <li>不喜欢的人</li>
@@ -209,6 +210,7 @@
 <li>每周消费的冰激凌公升数</li>
 </ul>
 <p>于是可以通过这些特征来预测A是否对某一个人感兴趣。</p>
+<hr>
 <h1 id="3-数据集介绍"><a href="#3-数据集介绍" class="headerlink" title="3. 数据集介绍"></a>3. 数据集介绍</h1><p>数据集包含以上三种特征以及评价，共有1000个样本。可以在<a href="http://pan.baidu.com/s/1c0NeKCg" target="_blank" rel="external">此处下载</a>。</p>
 <h1 id="3-1-读取数据集"><a href="#3-1-读取数据集" class="headerlink" title="3.1 读取数据集"></a>3.1 读取数据集</h1><pre><code class="lang-python">import numpy as np
 def get_data_from_file(file_path):
@@ -218,19 +220,20 @@ def get_data_from_file(file_path):
         line = f.readline()
         while line != &#39;&#39;:
             line = line.strip()
-            data = line.split(&#39;\t&#39;) 
+            data = line.split(&#39;\t&#39;)
             #get data with list
             dataset.append(map(float, data[:3]))
-            labels.append(int(data[-1]))          
-            line = f.readline()         
+            labels.append(int(data[-1]))
+            line = f.readline()
     # tran to np.array()
     return np.array(dataset), labels
 dataset, labels = get_data_from_file(&#39;datingTestSet2.txt&#39;)
 </code></pre>
+<hr>
 <h1 id="4-样本分布"><a href="#4-样本分布" class="headerlink" title="4. 样本分布"></a>4. 样本分布</h1><pre><code class="lang-python">#coding:utf-8
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-plt.rcParams[&#39;font.sans-serif&#39;]=[&#39;SimHei&#39;] 
+plt.rcParams[&#39;font.sans-serif&#39;]=[&#39;SimHei&#39;]
 plt.rcParams[&#39;axes.unicode_minus&#39;]=False #中文显示
 
 def  chart(dataset,labels):
@@ -244,39 +247,45 @@ def  chart(dataset,labels):
     plt.show(chart(dataset,labels)
 chart(dataset,labels)
 </code></pre>
-<p><img src="sample.png" alt="">￼<br>我们可以从样本分布中发现，不同的标签值的样本分布存在着一些规律。这就说明，这三个特征值确实和分类关系密切。</p>
+<p><img src="sample.png" width="400"></p>
+<p>我们可以从样本分布中发现，不同的标签值的样本分布存在着一些规律。这就说明，这三个特征值确实和分类关系密切。</p>
+<hr>
 <h1 id="5-归一化数据"><a href="#5-归一化数据" class="headerlink" title="5. 归一化数据"></a>5. 归一化数据</h1><p>可以发现，飞行里程数相差较大，这时候这一特征对计算结果的影响最大，远远大于其他两个特征。 而这三个特征是同等重要的，因此需要将数值归一化，使其范围转化到0-1区间。<br>这里采用如下的归一化方法：</p>
-<p><code>x=(x-min)/(max-min)</code></p>
-<pre><code class="lang-python">def autoNorm(dataset):
+<pre><code class="lang-x=(x-min)/(max-min)">```
+
+```python
+def autoNorm(dataset):
     minVal=dataset.min(axis=0)
     maxVal=dataset.max(axis=0)
     rngVal=maxVal-minVal
     m=dataset.shape[0]
     norm=dataset-np.tile(minVal,(m,1))
     norm=norm/np.tile(rngVal,(m,1))
-    return norm 
+    return norm
 dataset=autoNorm(dataset)
 print dataset
 </code></pre>
 <h3 id="5-1-归一化后的数据"><a href="#5-1-归一化后的数据" class="headerlink" title="5.1 归一化后的数据"></a>5.1 归一化后的数据</h3><pre><code class="lang-python">[[ 0.44832535  0.39805139  0.56233353]
  [ 0.15873259  0.34195467  0.98724416]
  [ 0.28542943  0.06892523  0.47449629]
- ..., 
+ ...,
  [ 0.29115949  0.50910294  0.51079493]
  [ 0.52711097  0.43665451  0.4290048 ]
  [ 0.47940793  0.3768091   0.78571804]]
 </code></pre>
+<hr>
 <h1 id="6-划分数据集"><a href="#6-划分数据集" class="headerlink" title="6. 划分数据集"></a>6. 划分数据集</h1><p>此处选择将数据的50%作为训练集，剩下的50%作为测试集</p>
 <pre><code class="lang-python">div=0.5
 
 train_num=int(len(dataset)*div)
 
 dataset_x_train=dataset[:-train_num]
-dataset_y_train=labels[:-train_num] 
+dataset_y_train=labels[:-train_num]
 
 dataset_x_test=dataset[-train_num:]
 dataset_y_test=labels[-train_num:]
 </code></pre>
+<hr>
 <h1 id="7-构建KNN分类器"><a href="#7-构建KNN分类器" class="headerlink" title="7. 构建KNN分类器"></a>7. 构建KNN分类器</h1><p>调用 <code>scikit-learn</code>里的 k近邻分类器来实现</p>
 <pre><code class="lang-python">from sklearn.neighbors import KNeighborsClassifier
 #定义一个knn分类器对象
@@ -287,6 +296,7 @@ KNN.fit(dataset_x_train,dataset_y_train)
 dataset_y_predict=KNN.predict(dataset_x_test)
 #对测试集做出预测
 </code></pre>
+<hr>
 <h1 id="8-测试数据"><a href="#8-测试数据" class="headerlink" title="8. 测试数据"></a>8. 测试数据</h1><p>打印出测试集最后的是个数据进行查看：</p>
 <pre><code>dataset_y_predict=KNN.predict(dataset_x_test)
 
@@ -306,9 +316,10 @@ dataset_y_test=
 accuracy=0.958000
 </code></pre>
 <p>可以看到，只有第四个预测数据预测错误。<br>accuracy 为整个测试集的预测准确度。</p>
+<hr>
 <h1 id="9-其他测试"><a href="#9-其他测试" class="headerlink" title="9. 其他测试"></a>9. 其他测试</h1><h3 id="9-1-数据集的划分"><a href="#9-1-数据集的划分" class="headerlink" title="9.1 数据集的划分"></a>9.1 数据集的划分</h3><p>调整训练集和测试集的划分，训练集从20%到90%</p>
 <pre><code class="lang-python">from scipy import interpolate
-plt.rcParams[&#39;font.sans-serif&#39;]=[&#39;SimHei&#39;] 
+plt.rcParams[&#39;font.sans-serif&#39;]=[&#39;SimHei&#39;]
 plt.rcParams[&#39;axes.unicode_minus&#39;]=False
 
 div=[0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9]
@@ -327,10 +338,10 @@ plt.xlabel(u&quot;训练集所占百分比&quot;)
 plt.ylabel(u&quot;预测精度&quot;)
 plt.show()
 </code></pre>
-<p><img src="div.png" alt=""></p>
+<p><img src="div.png" width="400"></p>
 <h3 id="9-2-k值的选取"><a href="#9-2-k值的选取" class="headerlink" title="9.2 k值的选取"></a>9.2 k值的选取</h3><p>k值从1到10</p>
 <pre><code class="lang-python">from scipy import interpolate
-plt.rcParams[&#39;font.sans-serif&#39;]=[&#39;SimHei&#39;] 
+plt.rcParams[&#39;font.sans-serif&#39;]=[&#39;SimHei&#39;]
 plt.rcParams[&#39;axes.unicode_minus&#39;]=False
 
 k=[1,2,3,4,5,6,7,8,9,10]
@@ -350,7 +361,7 @@ plt.ylabel(u&quot;预测精度&quot;)
 plt.savefig(&quot;k.png&quot;,dpi=100)
 plt.show()
 </code></pre>
-<p><img src="k.png" alt=""></p>
+<p><img src="k.png" width="400"></p>
 
 
                 <hr>
@@ -363,20 +374,20 @@ plt.show()
                     
                     
                         <li class="next">
-                            <a href="/2017/05/13/深夜有感/" data-toggle="tooltip" data-placement="top" title="Next Post">深夜有感 &rarr;</a>
+                            <a href="/2017/03/23/深入理解C-指针、引用及指针的指针/" data-toggle="tooltip" data-placement="top" title="Next Post">深入理解C++指针、引用及指针的指针 &rarr;</a>
                         </li>
                     
                 </ul>
-               
-          <!--Add by Surflyan -->
-           <!-- Share-->
-           <section>
-           <hr>
-             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>   
-          </section>
-            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
 
-               
+        <!--Add by Surflyan -->
+        <!-- Share-->
+          <section>
+           <hr>
+             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>
+           </section>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
             </div>
     <!-- Side Catalog Container -->
         
@@ -410,28 +421,48 @@ plt.show()
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#ML(机器学习)" title="ML(机器学习)">ML(机器学习)</a>
+                          <a class="tag" href="/tags/#Machine Learning" title="Machine Learning">Machine Learning</a>
                         
                     </div>
                 </section>
                 
 
-       
-          <hr> 
-          
-            <!-- UY BEGIN -->
-            <div id="uyan_frame"></div>
-             <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2140862"></script>
-             <!-- UY END -->
+                <!--DISQUES COMMENTS-->
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+            
+            <
 
-             
- 
- 
+
+          <hr>
            </div>
 
         </div>
     </div>
 </article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "softmargin";
+    var disqus_identifier = "http://softmargin.com/2017/05/16/KNN实战之改进约会网站的配对效果/";
+    var disqus_url = "http://softmargin.com/2017/05/16/KNN实战之改进约会网站的配对效果/";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
 
 
 
@@ -483,7 +514,7 @@ plt.show()
                 
                 
                     <li>
-                        <a target="_blank" href="https://www.zhihu.com/people/surflyan">
+                        <a target="_blank" href="https://www.zhihu.com/people/Surflyan">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa  fa-stack-1x fa-inverse">知</i>
@@ -529,14 +560,14 @@ plt.show()
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; 代码殿堂-Code Palace 2017 
+                    Copyright &copy; Soft Margin 2017
                     <br>
-                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a> 
+                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a>
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
-                    </span> 
+                    </span>
                     Posted by <a href="https://github.com/Surflyan/Surflyan.github.io">Surflyan</a>
-                    
+
                 </p>
             </div>
         </div>
@@ -565,14 +596,14 @@ plt.show()
     }
 </script>
 
-<!-- 
-     Because of the native support for backtick-style fenced code blocks 
-     right within the Markdown is landed in Github Pages, 
-     From V1.6, There is no need for Highlight.js, 
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
      so Huxblog drops it officially.
 
-     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
-     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
 -->
 <!--
     <script>
@@ -590,7 +621,7 @@ plt.show()
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("http://codepalace.org/js/jquery.tagcloud.js",function(){
+        async("http://softmargin.com/js/jquery.tagcloud.js",function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},
@@ -620,8 +651,8 @@ plt.show()
 
 <script>
     // dynamic User by Surflyan
-    var _gaId = 'UA-90996514-1';
-    var _gaDomain = 'www.codepalace.org';
+    var _gaId = 'UA-90996514-2';
+    var _gaDomain = 'www.softmargin.org';
 
     // Originial
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -640,7 +671,7 @@ plt.show()
 
 <script>
     // dynamic User by Surflyan
-    var _baId = '5580aadc4c87d87d2202096d9e278ef3';
+    var _baId = '3747566a81b32444a5bb7052b11946c3';
 
     // Originial
     var _hmt = _hmt || [];
@@ -667,7 +698,7 @@ plt.show()
             l = $('<li class="'+n+'_nav"></li>').append(c);
             $(selector).append(l);
         });
-        return true;    
+        return true;
     }
 
     generateCatalog(".catalog-body");
@@ -704,7 +735,7 @@ plt.show()
 
 
 <!-- Image to hack wechat -->
-<img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0" />
+<img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
 
 
@@ -716,7 +747,7 @@ plt.show()
 $(window).load(function(){
    $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
    prettyPrint();
- })    
+ })
 
 
 </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->

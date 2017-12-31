@@ -14,11 +14,11 @@
 
     <title>
         
-          高级数据结构之Patricia Tree - 代码殿堂 | Code Palace
+          高级数据结构之Patricia Tree - Soft Margin
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/2017/06/02/高级数据结构之Patricia-Tree/">
+    <link rel="canonical" href="http://softmargin.com/2017/06/02/高级数据结构之Patricia-Tree/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="/css/hux-blog.min.css">
 
     <!-- Pygments Highlight CSS -->
-    <link rel="stylesheet" href="/css/highlight.css">
+    <!--<link rel="stylesheet" href="/css/highlight.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -71,7 +71,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">代码殿堂-Code Palace</a>
+            <a class="navbar-brand" href="/">Soft Margin</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -153,7 +153,7 @@
     <!-- Main Content -->
     
 <!-- Image to hack wechat -->
-<!-- <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0"> -->
 <!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
 
 <!-- Post Header -->
@@ -169,7 +169,7 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#高级数据结构" title="高级数据结构">高级数据结构</a>
+                          <a class="tag" href="/tags/#Data Structure" title="Data Structure">Data Structure</a>
                         
                           <a class="tag" href="/tags/#Patricia" title="Patricia">Patricia</a>
                         
@@ -198,9 +198,11 @@
                 post-container">
 
                 <h2 id="1-Patricia-Tree的提出"><a href="#1-Patricia-Tree的提出" class="headerlink" title="1. Patricia Tree的提出"></a>1. Patricia Tree的提出</h2><p><code>PATRICIA</code> （Practical Algorithm to Retrieve Information Coded In Alphanumeric）由D.Morrisonrz 于1968年首次提出，Gonnet 在90年代将PATRICIA 应用到全文检索领域，发展成为PAT tree 并获得巨大成功。它也是TRIE树的一种，</p>
+<hr>
 <h2 id="2-题外"><a href="#2-题外" class="headerlink" title="2. 题外"></a>2. 题外</h2><p>由于在课程学习中需要做一个基于Patricia树的简单应用，故尝试去理解Patricia的本质。惊讶的是，在google 几乎找不到关于Patricia结构和基本算法的略详尽的讲解。只能零碎的收集到相关内容，加上自己的理解，作此篇说明。有关 Patricia 树的基本原理是一致的，但<code>Patricia tree</code>、<code>Patricia Tire</code>、<code>PAT Tree</code> 还是有区别的，弄清这些不同，有助于对Patricia 以及其应用的理解。如果有错误的地方，欢迎指正，或者有相关内容的讲解，欢迎分享。</p>
+<hr>
 <h2 id="3-Patricia-tree"><a href="#3-Patricia-tree" class="headerlink" title="3. Patricia tree"></a>3. Patricia tree</h2><h4 id="3-1-Patricia-Tree结点结构，"><a href="#3-1-Patricia-Tree结点结构，" class="headerlink" title="3.1 Patricia Tree结点结构，"></a>3.1 Patricia Tree结点结构，</h4><p><strong> Patricia tree </strong> 主要用于检索，那么目的就是能更快的定位到要找的信息。Patricia tree 是将字符串转换为二进制，再通过bit 位来比较的，因此只需要记录两个字符最早开始的不同的位即可，若数据在这一位为‘0’，则将该数据放入左子树，在这一位为‘1’，则将该数据放入右子树。因此这些比较位就构成了路径记录表。patricia tree 为完全二叉树。<br>例如：<br><img src="09-46-25.jpg" alt=""></p>
-<p>主要存在两种结点结构：<br><strong> 内部节点 </strong>：用来记录关键词的路径，主要有三项：</p>
+<p>主要存在两种结点结构：<br><strong>内部节点</strong>：用来记录关键词的路径，主要有三项：</p>
 <ol>
 <li>左指针： 指向该结点的左子树；</li>
 <li>右指针： 指向该结点的右子树；</li>
@@ -214,18 +216,19 @@
 <p><img src="00-27-53.jpg" alt=""></p>
 <h4 id="3-3-Patricia-Tree-的插入"><a href="#3-3-Patricia-Tree-的插入" class="headerlink" title="3.3 Patricia Tree 的插入"></a>3.3 Patricia Tree 的插入</h4><p>首先进行一次查询，找到待插入数据与树中所有数据的的第一个不同位作为比较位，形成相应的外部结点，在进行一次查询，找到待插入的内部结点位置，将其分裂为两个内部结点，同时插入到Patricia 树中。</p>
 <h4 id="3-4-Patricia-Tree-的删除"><a href="#3-4-Patricia-Tree-的删除" class="headerlink" title="3.4 Patricia Tree 的删除"></a>3.4 Patricia Tree 的删除</h4><p>首先根据待删除数据进行一次查询，找到待删除数据所在的叶子结点，将此叶子结点以及叶子结点的父结点删除，然后将父结点的另一个孩子直接连接在父结点的父结点（即祖父结点）上。当树中，只存在一个根结点或者两个叶子结点时，只删除待删除数据所在的叶子结点。</p>
+<hr>
 <h2 id="4-Patricia-Trie"><a href="#4-Patricia-Trie" class="headerlink" title="4. Patricia Trie"></a>4. Patricia Trie</h2><blockquote>
 <p>Starting with the standard trie data structure, we avoid one-way branching via a simple device: we put into each node the index of the bit to be tested to decide which path to take out of that node.<br>Thus, we jump directly to the bit where a significant decision is to be made, bypassing the bit comparisons at nodes where all the keys in the subtree have the same bit value.<br>Moreover, we avoid external nodes via another simple device: we store data in internal nodes and replace links to external nodes with links that point back upwards to the correct internal node in the trie.<br>These two changes allow us to represent tries with binary trees comprising nodes with a key and two links (and an additional field for the index), which we call patricia tries. With patricia tries, we store keys in nodes as with tries, and we traverse the tree according to the bits of the search key, but we do not use the keys in the nodes on the way down the tree to control the search; we merely store them there for possible later reference, when the bottom of the tree is reached.</p>
 </blockquote>
 <p>另外一种 Patricia 树的结点结构。不设外部结点，直接将数据存储在内部结点中，将指向外部结点的指针指回到树中正确的结点。这种树叫做 <code>Patricia Trie</code>; 当搜索时，不需要存储在结点中数据，只是根据搜索数据在比较位上是‘0’或‘1’来控制搜索路径。</p>
-<p>如下图：</p>
-<p><img src="12-40-54.jpg" alt=""><br>这是加州大学2012年的一份编程作业，原任务要求<a href="http://www.ecst.csuchico.edu/~mjstapleton/courses/Fall2007CSCI311/Patricia_tree.htm" target="_blank" rel="external">在这儿</a>.里面有较为详细的插入算法和删除算法讲解。</p>
+<p>如下图：<br><a href="./12-40-54.jpg"><img src="12-40-54.jpg" width="500"></a><br>这是加州大学2012年的一份编程作业，原任务要求<a href="http://www.ecst.csuchico.edu/~mjstapleton/courses/Fall2007CSCI311/Patricia_tree.htm" target="_blank" rel="external">在这儿</a>.里面有较为详细的插入算法和删除算法讲解。</p>
+<hr>
 <h2 id="5-PAT-Tree"><a href="#5-PAT-Tree" class="headerlink" title="5. PAT Tree"></a>5. PAT Tree</h2><blockquote>
 <p>A PAT tree is a patrica tree over all sistring of  a text .</p>
 </blockquote>
 <p>PAT tree 是用于全文搜索领域的，它将整个文本的 sistring 都插入到树中：<br>如下面这个例子：</p>
 <ul>
-<li>注  : 这里外部节点存储的是sistring 在原文本的起始下标；<br><img src="12-47-13.jpg" alt=""></li>
+<li>注  : 这里外部节点存储的是sistring 在原文本的起始下标；<br><a href="./12-47-13.jpg"><img src="12-47-13.jpg" width="500"></a></li>
 </ul>
 <h4 id="5-1-PAT-tree-应用"><a href="#5-1-PAT-tree-应用" class="headerlink" title="5.1 PAT tree 应用"></a>5.1 PAT tree 应用</h4><ul>
 <li>前缀搜索（prefix searching）</li>
@@ -236,6 +239,7 @@
 <li>（regular expression searching）</li>
 <li>（the longest palindrome searching）<br>这里有篇关于<a href="http://blog.csdn.net/shaoyunzhe/article/details/24712967" target="_blank" rel="external">运用PAT tree解决子串匹配</a>的详细讲解 ;</li>
 </ul>
+<hr>
 <h2 id="6-Reference"><a href="#6-Reference" class="headerlink" title="6. Reference"></a>6. Reference</h2><ol>
 <li><a href="http://www.ecst.csuchico.edu/~mjstapleton/courses/Fall2007CSCI311/Patricia_tree.htm" target="_blank" rel="external">http://www.ecst.csuchico.edu/~mjstapleton/courses/Fall2007CSCI311/Patricia_tree.htm</a></li>
 <li><p><a href="https://cw.fel.cvut.cz/wiki/_media/courses/a4m33pal/paska13trie.pdf" target="_blank" rel="external">https://cw.fel.cvut.cz/wiki/_media/courses/a4m33pal/paska13trie.pdf</a></p>
@@ -260,16 +264,16 @@
                         </li>
                     
                 </ul>
-               
-          <!--Add by Surflyan -->
-           <!-- Share-->
-           <section>
-           <hr>
-             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>   
-          </section>
-            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
 
-               
+        <!--Add by Surflyan -->
+        <!-- Share-->
+          <section>
+           <hr>
+             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>
+           </section>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
             </div>
     <!-- Side Catalog Container -->
         
@@ -303,7 +307,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#高级数据结构" title="高级数据结构">高级数据结构</a>
+                          <a class="tag" href="/tags/#Data Structure" title="Data Structure">Data Structure</a>
                         
                           <a class="tag" href="/tags/#Patricia" title="Patricia">Patricia</a>
                         
@@ -311,22 +315,42 @@
                 </section>
                 
 
-       
-          <hr> 
-          
-            <!-- UY BEGIN -->
-            <div id="uyan_frame"></div>
-             <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2140862"></script>
-             <!-- UY END -->
+                <!--DISQUES COMMENTS-->
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+            
+            <
 
-             
- 
- 
+
+          <hr>
            </div>
 
         </div>
     </div>
 </article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "softmargin";
+    var disqus_identifier = "http://softmargin.com/2017/06/02/高级数据结构之Patricia-Tree/";
+    var disqus_url = "http://softmargin.com/2017/06/02/高级数据结构之Patricia-Tree/";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
 
 
 
@@ -378,7 +402,7 @@
                 
                 
                     <li>
-                        <a target="_blank" href="https://www.zhihu.com/people/surflyan">
+                        <a target="_blank" href="https://www.zhihu.com/people/Surflyan">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa  fa-stack-1x fa-inverse">知</i>
@@ -424,14 +448,14 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; 代码殿堂-Code Palace 2017 
+                    Copyright &copy; Soft Margin 2017
                     <br>
-                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a> 
+                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a>
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
-                    </span> 
+                    </span>
                     Posted by <a href="https://github.com/Surflyan/Surflyan.github.io">Surflyan</a>
-                    
+
                 </p>
             </div>
         </div>
@@ -460,14 +484,14 @@
     }
 </script>
 
-<!-- 
-     Because of the native support for backtick-style fenced code blocks 
-     right within the Markdown is landed in Github Pages, 
-     From V1.6, There is no need for Highlight.js, 
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
      so Huxblog drops it officially.
 
-     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
-     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
 -->
 <!--
     <script>
@@ -485,7 +509,7 @@
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("http://codepalace.org/js/jquery.tagcloud.js",function(){
+        async("http://softmargin.com/js/jquery.tagcloud.js",function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},
@@ -515,8 +539,8 @@
 
 <script>
     // dynamic User by Surflyan
-    var _gaId = 'UA-90996514-1';
-    var _gaDomain = 'www.codepalace.org';
+    var _gaId = 'UA-90996514-2';
+    var _gaDomain = 'www.softmargin.org';
 
     // Originial
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -535,7 +559,7 @@
 
 <script>
     // dynamic User by Surflyan
-    var _baId = '5580aadc4c87d87d2202096d9e278ef3';
+    var _baId = '3747566a81b32444a5bb7052b11946c3';
 
     // Originial
     var _hmt = _hmt || [];
@@ -562,7 +586,7 @@
             l = $('<li class="'+n+'_nav"></li>').append(c);
             $(selector).append(l);
         });
-        return true;    
+        return true;
     }
 
     generateCatalog(".catalog-body");
@@ -599,7 +623,7 @@
 
 
 <!-- Image to hack wechat -->
-<img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0" />
+<img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
 
 
@@ -611,7 +635,7 @@
 $(window).load(function(){
    $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
    prettyPrint();
- })    
+ })
 
 
 </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->

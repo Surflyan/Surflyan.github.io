@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="C_eEXCRkzztEJGJcIUrKnVlTpQ76fgidG6Wp04m0Js0" />
+    <meta name="baidu-site-verification" content="sdTqGlKswq" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          PCA原理分析及Python实现 - Soft Margin
+        
+    </title>
+
+    <link rel="canonical" href="http://softmargin.com/2017/12/18/PCA原理分析及Python实现/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <!--<link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- add by Surflyan-->
+    <link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="/js/google-code-prettify/tomorrow-night-eighties.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Soft Margin</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/header.jpeg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Machine Learning" title="Machine Learning">Machine Learning</a>
+                        
+                    </div>
+                    <h1>PCA原理分析及Python实现</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by Surflyan on
+                        2017-12-18
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="1-降维的意义"><a href="#1-降维的意义" class="headerlink" title="1. 降维的意义"></a>1. 降维的意义</h1><p>绝大多数机器学习方法在满足密采样的情况下，都能取得出色的分类效果。但是，在现实应用中，属性维度经常成千上万，要满足密采样条件所需的样本数目是不可能达到的。而且，很多机器学习方法都需要进行距离计算，而高维空间下的距离计算往往并不是那么容易。这被称为维数灾难。缓解维数灾难的一个重要途径是降维。</p>
+<p><strong>降维的好处</strong>：</p>
+<ul>
+<li>增加样本密度。舍弃部分信息之后，能使样本的采样密度变大，这是降维的重要动机。</li>
+<li>去噪。当数据受到噪声影响时，最小的特征值所对应的特征向量往往与噪声有关，将他们舍弃，在一定程度上能起到去噪的效果。</li>
+<li>数据可视化</li>
+<li>加速计算（减少内存占用）</li>
+</ul>
+<hr>
+<h1 id="2-PCA降维"><a href="#2-PCA降维" class="headerlink" title="2. PCA降维"></a>2. PCA降维</h1><p>PCA（Principal Component Analysis) 是一种广泛使用的降维、特征提取技术。PCA主要做的就是寻找一个低维空间—主子平面(principal subspace), 将数据映射到低维空间，并且最大限度的保留数据的信息。<br><img src="pca.png" width="400"></p>
+<font size="2"><center>图片来源: PRML.Bishop</center></font>
+
+<p>PCA通常可以从两个角度来分析：</p>
+<ol>
+<li><p>最大化方差<br>最大化方差就是使得数据点在低维空间上的投影点之间方差最大化，图中绿色点之间的方差，也就是使得投影到低维空间的点尽可能分开。</p>
+</li>
+<li><p>最小化误差<br>最小化误差就是使得数据到投影点之间的平均平方距离（称为平均投影代价）最小，图中蓝色线表示，也就是使得样本点到低维空间的距离都尽可能近。</p>
+</li>
+</ol>
+<hr>
+<h1 id="3-最大方差形式的推导"><a href="#3-最大方差形式的推导" class="headerlink" title="3. 最大方差形式的推导"></a>3. 最大方差形式的推导</h1><p>对于一组样本数据<script type="math/tex">\{x_{n}\}</script> ,其中 <script type="math/tex">n = \{1,2,\ldots,N\}</script>。设<script type="math/tex">x_{n}</script>是一个 D 维向量的变量，首先考虑将其投影到一维空间，使用 D 维向量<script type="math/tex">\mu_1</script>定义这个一维空间的方向。由于只考虑方向，可以假定<script type="math/tex">\mu_{1}^{T}\mu = 1</script> 。</p>
+<p>首先，原空间的中心点为：</p>
+<script type="math/tex; mode=display">\overline{x} = \frac{1}{N} \sum_{n=1}^{N} x_{n}</script><p>投影到一维空间的后方差为：</p>
+<script type="math/tex; mode=display">\frac{1}{N}\sum_{n=1}^{N} \{\mu_{1}^{T}x_{n}-\mu_{1}^{T}\overline{x}\}^{2} = \mu_{1}^{T}S\mu_{1}</script><p>S为协方差矩阵，定义为：</p>
+<script type="math/tex; mode=display">S = \frac{1}{N}\sum_{n=1}^{N}(x_{n} - \overline{x})(x_n - \overline{x})^{T}</script><p>接下来的目标是最大化方差，可是得避免$||\mu_{1}|| \rightarrow{\infty}$,因此需要加上约束条件，用拉格朗日乘子法：</p>
+<script type="math/tex; mode=display">\mu_{1}^{T}S\mu_{1} + \lambda_{1}(1-\mu_{1}^{T}\mu_1)</script><p>最大化上式，对<script type="math/tex">\mu_{1}</script>求导，令其为零，得到：</p>
+<script type="math/tex; mode=display">S\mu_{1}=\lambda_{1}\mu_{1}</script><p>左乘<script type="math/tex">\mu_{1}^{T}</script>, 同时<script type="math/tex">\mu_{1}^{T}\mu_{1}</script>,方差为：</p>
+<script type="math/tex; mode=display">\mu_{1}^{T}S\mu_{1} = \lambda_{1}</script><p>所以，<script type="math/tex">\mu_{1}</script>是与最大特征值<script type="math/tex">\lambda_{1}</script>对应的特征向量。此特征向量为第一主成分。因此，现在考虑降维到M维，只需计算出对应M个最大特征值对应的特征向量就可以取得M个正交的方向向量，组成低维空间。</p>
+<hr>
+<h1 id="4-PCA算法流程"><a href="#4-PCA算法流程" class="headerlink" title="4. PCA算法流程"></a>4. PCA算法流程</h1><p><a href="./PCA-Algorithm.png"><img src="PCA-Algorithm.png" width="500"></a></p>
+<font size="2"><center>来源于周志华《机器学习》</center></font>
+
+<h1 id="5-Python-代码实现"><a href="#5-Python-代码实现" class="headerlink" title="5. Python 代码实现"></a>5. Python 代码实现</h1><pre><code class="lang-python">def procHomogenization(data):
+    &quot;&quot;&quot;
+    数据中心化和方差归一化
+    :param 样本数据，以维度为列，样本为行
+    &quot;&quot;&quot;
+    dimension ,  = data[0].shape;
+    meanData = np.zeros(data.shape)
+    for i in range (dimension):
+        mean = np.mean(data[:,i])
+        std = np.std(data[:,i])
+        meanData[:,i] = (data[:,i] - mean) / std
+
+    return meanData
+
+
+def calCovarianceMatrix(data):
+    m = data.shape[0];
+    sigma = np.dot(A.transpose(), data)
+
+    return sigma
+
+
+def getEigenVector(sigma):
+    &quot;&quot;&quot;
+    计算特征向量阵
+    :return 按特征值降序排列的特征向量矩阵
+    &quot;&quot;&quot;
+    dimeFeatures = sigma.shape[0]
+    eigVal, eigVec = np.linalg.eig(sigma)
+    eigPairs = [(np.abs(eigVal[i]), eigVec[:,i]) for i in range(dimeFeatures)]
+    eigPairs.sort(reverse=True)
+    eigenVector =np.array([eigItem[1] for eigItem in eigPairs])
+
+    return eigenVector
+
+
+def MyPCA(data, k) :
+    &quot;&quot;&quot;
+    定义自己PCA
+    :param data: 样本数据集，（n*m) n 个样本，m 维特征
+    :param k:  降维后的维度
+    :return res: 降维后的矩阵
+    &quot;&quot;&quot;
+
+    meanSample = procHomogenization(data)
+    sigma = calCovarianceMatrix(meanSample)
+    eigenVector = getEigenVector(sigma)
+    UReduce = getUReduce(eigenVector, k)
+    res = np.dot(meanSample, UReduce)
+
+    return res, UReduce
+</code></pre>
+<hr>
+<h1 id="6-数据测试"><a href="#6-数据测试" class="headerlink" title="6. 数据测试"></a>6. 数据测试</h1><ol>
+<li><p>二维数据旋转<br>生成2维数据共100组，分布如下：<br><a href="./origin-data-2d.png"><img src="origin-data-2d.png" width="400"></a><br>对数据进行中心化和方差归一化处理后，并进行旋转<br><a href="./rotate-2d.png"><img src="rotate-2d.png" width="400"></a><br>提取一维主成分部分数据如下：</p>
+<pre><code class="lang-python">array([[ 0.13579288],
+    [-0.09891702],
+    [ 0.75763766],
+    [ 0.97635069],
+    [ 0.02776545],
+    [-0.75645382],
+    [-1.02380704],
+    [-0.46413714],
+    [ 3.13828174],
+    [ 0.50013366],
+    [-1.48368739],
+    [ 0.38566847],
+    [ 0.58097642],
+    [-0.13145981],
+    [-1.74202934],
+    [-1.7404379 ],
+</code></pre>
+</li>
+<li><p>人脸数据测试<br>选择常见的ORL人脸数据库，由剑桥大学AT&amp;T实验室创建,包含40人共400张面部图像。<br>展示部分原始图像如下：<br><a href="./origin-face.png"><img src="origin-face.png" width="500"></a></p>
+</li>
+</ol>
+<p>对这四百张人脸图像进行主成分提取，将每一幅图像拉成一列，组成数据集合（112*92，400），进行主成分提取。各方差所占比例分布如下：<br><a href="./feature-dist.png"><img src="feature-dist.png" width="500"></a></p>
+<p>选择30个成分进行提取后，计算出峰值信噪比，还原图像如下：<br><a href="./face-30.png"><img src="face-30.png" width="500"></a></p>
+<p>可以看到，30个维度就已经保留了图像的大部分信息。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li>Christopher M. Bishop etc., Pattern Recognition and Machine Learning, Springer, 2006</li>
+<li>周志华, 机器学习</li>
+<li><a href="http://ufldl.stanford.edu/wiki/index.php/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90" target="_blank" rel="external">斯坦福，主成分分析</a></li>
+<li><a href="http://www.cnblogs.com/LeftNotEasy/archive/2011/01/08/lda-and-pca-machine-learning.html" target="_blank" rel="external">机器学习中的数学(4)-线性判别分析（LDA）, 主成分分析(PCA)</a></li>
+</ol>
+<blockquote>
+<p>在博主学习过程中，参考了许多他人作品，并整理到笔记，后根据笔记作此篇文章，如文中有引用他人作品部分，还请指出，以添加说明。<br>请多多指教！</p>
+</blockquote>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/12/24/高斯混合模型及其EM算法/" data-toggle="tooltip" data-placement="top" title="Previous Post">&larr; 高斯混合模型及其EM算法</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/12/07/逻辑斯蒂回归分析及Python实现/" data-toggle="tooltip" data-placement="top" title="Next Post">逻辑斯蒂回归分析及Python实现 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+        <!--Add by Surflyan -->
+        <!-- Share-->
+          <section>
+           <hr>
+             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>
+           </section>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Machine Learning" title="Machine Learning">Machine Learning</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!--DISQUES COMMENTS-->
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+            
+            <
+
+
+          <hr>
+           </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "softmargin";
+    var disqus_identifier = "http://softmargin.com/2017/12/18/PCA原理分析及Python实现/";
+    var disqus_url = "http://softmargin.com/2017/12/18/PCA原理分析及Python实现/";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Soft Margin 2017
+                    <br>
+                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a>
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span>
+                    Posted by <a href="https://github.com/Surflyan/Surflyan.github.io">Surflyan</a>
+
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://softmargin.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Surflyan
+    var _gaId = 'UA-90996514-2';
+    var _gaDomain = 'www.softmargin.org';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Surflyan
+    var _baId = '3747566a81b32444a5bb7052b11946c3';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Surflyan to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+
+<!-- Add By Surflayn -->
+<!--添加google-prettify 代码解析2017.6.2 -->
+
+<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+<script type="text/javascript">
+$(window).load(function(){
+   $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   prettyPrint();
+ })
+
+
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+
+</html>

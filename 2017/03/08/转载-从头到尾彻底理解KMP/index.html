@@ -14,11 +14,11 @@
 
     <title>
         
-          [转载]:从头到尾彻底理解KMP - 代码殿堂 | Code Palace
+          [转载]:从头到尾彻底理解KMP - Soft Margin
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/2017/03/08/转载-从头到尾彻底理解KMP/">
+    <link rel="canonical" href="http://softmargin.com/2017/03/08/转载-从头到尾彻底理解KMP/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="/css/hux-blog.min.css">
 
     <!-- Pygments Highlight CSS -->
-    <link rel="stylesheet" href="/css/highlight.css">
+    <!--<link rel="stylesheet" href="/css/highlight.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -71,7 +71,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">代码殿堂-Code Palace</a>
+            <a class="navbar-brand" href="/">Soft Margin</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -153,7 +153,7 @@
     <!-- Main Content -->
     
 <!-- Image to hack wechat -->
-<!-- <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0"> -->
 <!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
 
 <!-- Post Header -->
@@ -169,9 +169,9 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#算法(Algorithm)" title="算法(Algorithm)">算法(Algorithm)</a>
+                          <a class="tag" href="/tags/#Algorithm" title="Algorithm">Algorithm</a>
                         
-                          <a class="tag" href="/tags/#转载" title="转载">转载</a>
+                          <a class="tag" href="/tags/#Reprint" title="Reprint">Reprint</a>
                         
                     </div>
                     <h1>[转载]:从头到尾彻底理解KMP</h1>
@@ -210,13 +210,13 @@
     {
         if (s[i] == p[j])
         {
-            //①如果当前字符匹配成功（即S[i] == P[j]），则i++，j++    
+            //①如果当前字符匹配成功（即S[i] == P[j]），则i++，j++
             i++;
             j++;
         }
         else
         {
-            //②如果失配（即S[i]! = P[j]），令i = i - (j - 1)，j = 0    
+            //②如果失配（即S[i]! = P[j]），令i = i - (j - 1)，j = 0
             i = i - j + 1;
             j = 0;
         }
@@ -234,7 +234,7 @@
     int pLen = strlen(p);
     while (i &lt; sLen &amp;&amp; j &lt; pLen)
     {
-        //①如果j = -1，或者当前字符匹配成功（即S[i] == P[j]），都令i++，j++    
+        //①如果j = -1，或者当前字符匹配成功（即S[i] == P[j]），都令i++，j++
         if (j == -1 || s[i] == p[j])
         {
             i++;
@@ -242,8 +242,8 @@
         }
         else
         {
-            //②如果j != -1，且当前字符匹配失败（即S[i] != P[j]），则令 i 不变，j = next[j]    
-            //next[j]即为j所对应的next值      
+            //②如果j != -1，且当前字符匹配失败（即S[i] != P[j]），则令 i 不变，j = next[j]
+            //next[j]即为j所对应的next值
             j = next[j];
         }
     }
@@ -260,13 +260,13 @@
     while (j &lt; pLen - 1)
     {
         //p[k]表示前缀，p[j]表示后缀
-        if (k == -1 || p[j] == p[k]) 
+        if (k == -1 || p[j] == p[k])
         {
             ++k;
             ++j;
             next[j] = k;
         }
-        else 
+        else
         {
             k = next[k];
         }
@@ -280,7 +280,7 @@ void GetNextval(char* p, int next[])
     int j = 0;
     while (j &lt; pLen - 1)
     {
-        //p[k]表示前缀，p[j]表示后缀  
+        //p[k]表示前缀，p[j]表示后缀
         if (k == -1 || p[j] == p[k])
         {
             ++j;
@@ -306,7 +306,7 @@ void GetNextval(char* p, int next[])
     int pLen = strlen(p);
     while (i &lt; sLen &amp;&amp; j &lt; pLen)
     {
-        //①如果j = -1，或者当前字符匹配成功（即S[i] == P[j]），都令i++，j++    
+        //①如果j = -1，或者当前字符匹配成功（即S[i] == P[j]），都令i++，j++
         if (j == -1 || s[i] == p[j])
         {
             i++;
@@ -314,8 +314,8 @@ void GetNextval(char* p, int next[])
         }
         else
         {
-            //②如果j != -1，且当前字符匹配失败（即S[i] != P[j]），则令 i 不变，j = next[j]    
-            //next[j]即为j所对应的next值      
+            //②如果j != -1，且当前字符匹配失败（即S[i] != P[j]），则令 i 不变，j = next[j]
+            //next[j]即为j所对应的next值
             j = next[j];
         }
     }
@@ -323,7 +323,7 @@ void GetNextval(char* p, int next[])
         return i - j;
     else
         return -1;
-}</pre><p></p><p>&nbsp; &nbsp; 接下来，咱们继续拿之前的例子说明，整个匹配过程如下：</p><p>&nbsp; &nbsp; <em><span style="font-family:Comic Sans MS;font-size:14px;">1</span></em>. S[3]与P[3]匹配失败。<br></p><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://hi.csdn.net/attachment/201106/14/8394323_130807585714lW.jpg" alt=""></p></blockquote></blockquote><p>&nbsp; &nbsp;<em><span style="font-family:Courier New;font-size:14px;">&nbsp;2</span></em>. S[3]保持不变，P的下一个匹配位置是P[next[3]]，而next[3]=0，所以P[next[3]]=P[0]与S[3]匹配。<br></p><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://hi.csdn.net/attachment/201106/14/8394323_13080758571390.jpg" alt=""></p></blockquote></blockquote><p>&nbsp; &nbsp; <em><span style="font-family:Comic Sans MS;font-size:14px;">3</span></em>.&nbsp;&nbsp;由于上一步骤中P[0]与S[3]还是不匹配。此时i=3，j=next [0]=-1，由于满足条件j==-1，所以执行“++i, ++j”，即主串指针下移一个位置，P[0]与S[4]开始匹配。最后j==pLen，跳出循环，输出结果i - j = 4（即模式串第一次在文本串中出现的位置），匹配成功，算法结束。</p><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p>&nbsp; &nbsp;<img src="http://hi.csdn.net/attachment/201106/14/8394323_1308075857e40u.jpg" alt=""></p></blockquote></blockquote><h3>3.4 KMP的时间复杂度分析</h3><div>&nbsp; &nbsp; 相信大部分读者读完上文之后，已经发觉其实理解KMP非常容易，无非是循序渐进把握好下面几点：</div><div><ol><li>如果模式串中存在相同前缀和后缀，即pj-k&nbsp;pj-k+1, ..., pj-1 = p0&nbsp;p1, ..., pk-1，那么在pj跟si失配后，让模式串的前缀p0&nbsp;p1...pk-1对应着文本串si-k&nbsp;si-k+1...si-1，而后让pk跟si继续匹配。</li><li>之前本应是pj跟si匹配，结果失配了，失配后，令pk跟si匹配，相当于j 变成了k，模式串向右移动j - k位。</li><li>因为k 的值是可变的，所以我们用next[j]表示j处字符失配后，下一次匹配模式串应该跳到的位置。换言之，失配前是j，pj跟si失配时，用p[ next[j] ]继续跟si匹配，相当于j变成了next[j]，所以，j = next[j]，等价于把模式串向右移动j - next [j] 位。</li><li>而next[j]应该等于多少呢？next[j]的值由j 之前的模式串子串中有多大长度的相同前缀后缀所决定，如果j 之前的模式串子串中（不含j）有最大长度为k的相同前缀后缀，那么next<img src="file:///C:/Users/zhoulei/AppData/Local/Temp/TempPic/CM14]6~T%7BB%7DD9((%7BRTASW~J.tmp" alt="">&nbsp;[j]&nbsp;= k。</li></ol><div>&nbsp; &nbsp; 如之前的图所示：</div></div><div><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><div><img src="http://img.blog.csdn.net/20140812223633281" alt=""><br></div></blockquote></div><div><div>&nbsp; &nbsp; 接下来，咱们来分析下KMP的时间复杂度。分析之前，先来回顾下KMP匹配算法的流程：</div></div><p></p><p><span style="font-size: 18px;"><strong>“</strong></span>KMP的算法流程：</p><div><ul><li>假设现在文本串S匹配到 i 位置，模式串P匹配到 j 位置</li><ul><li>如果j = -1，或者当前字符匹配成功（即S[i] == P[j]），都令i++，j++，继续匹配下一个字符；</li><li>如果j != -1，且当前字符匹配失败（即S[i] != P[j]），则令 i 不变，j = next[j]。此举意味着失配时，模式串P相对于文本串S向右移动了j - next [j] 位。<span style="font-size:18px;">”</span></li></ul></ul></div><p>&nbsp; &nbsp; 我们发现如果某个字符匹配成功，模式串首字符的位置保持不动，仅仅是i++、j++；如果匹配失配，i 不变（即 i 不回溯），模式串会跳过匹配过的next [j]个字符。整个算法最坏的情况是，当模式串首字符位于i&nbsp;- j的位置时才匹配成功，算法结束。<br>&nbsp; &nbsp; 所以，如果文本串的长度为n，模式串的长度为m，那么匹配过程的时间复杂度为O(n)，算上计算next的O(m)时间，KMP的整体时间复杂度为O(m + n)。</p><p><br></p><h2>4. 扩展1：BM算法</h2><p>&nbsp; &nbsp; KMP的匹配是从模式串的开头开始匹配的，而1977年，德克萨斯大学的Robert S. Boyer教授和J Strother Moore教授发明了一种新的字符串匹配算法：Boyer-Moore算法，简称BM算法。该算法从模式串的尾部开始匹配，且拥有在最坏情况下O(N)的时间复杂度。在实践中，比KMP算法的实际效能高。</p><p>&nbsp; &nbsp; BM算法定义了两个规则：</p><ul><li>坏字符规则：当文本串中的某个字符跟模式串的某个字符不匹配时，我们称文本串中的这个失配字符为坏字符，此时模式串需要向右移动，移动的位数 = 坏字符在模式串中的位置 - 坏字符在模式串中最右出现的位置。此外，如果&quot;坏字符&quot;不包含在模式串之中，则最右出现位置为-1。</li><li>好后缀规则：当字符失配时，后移位数 = 好后缀在模式串中的位置 - 好后缀在模式串上一次出现的位置，且如果好后缀在模式串中没有再次出现，则为-1。</li></ul><p>&nbsp; &nbsp; 下面举例说明BM算法。例如，给定文本串“HERE IS A SIMPLE EXAMPLE”，和模式串“EXAMPLE”，现要查找模式串是否在文本串中，如果存在，返回模式串在文本串中的位置。</p><p>&nbsp; &nbsp; <em><span style="font-family:Comic Sans MS;font-size:14px;">1</span></em>.&nbsp;首先，&quot;文本串&quot;与&quot;模式串&quot;头部对齐，从尾部开始比较。&quot;S&quot;与&quot;E&quot;不匹配。这时，&quot;S&quot;就被称为&quot;坏字符&quot;（bad character），即不匹配的字符，它对应着模式串的第6位。且&quot;S&quot;不包含在模式串&quot;EXAMPLE&quot;之中（相当于最右出现位置是-1），这意味着可以把模式串后移6-(-1)=7位，从而直接移到&quot;S&quot;的后一位。</p><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728192101322" alt=""><br></p></blockquote><p>&nbsp; &nbsp; <em><span style="font-family:Courier New;font-size:14px;">2</span></em>.&nbsp;依然从尾部开始比较，发现&quot;P&quot;与&quot;E&quot;不匹配，所以&quot;P&quot;是&quot;坏字符&quot;。但是，&quot;P&quot;包含在模式串&quot;EXAMPLE&quot;之中。因为“P”这个“坏字符”对应着模式串的第6位（从0开始编号），且在模式串中的最右出现位置为4，所以，将模式串后移6-4=2位，两个&quot;P&quot;对齐。</p><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728192109185" alt=""><br></p></blockquote><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728192118623" alt=""></p></blockquote>&nbsp; &nbsp; <em><span style="font-family:Comic Sans MS;font-size:14px;">3</span></em>.&nbsp;依次比较，得到 “MPLE”匹配，称为&quot;好后缀&quot;（good suffix），即所有尾部匹配的字符串。注意，&quot;MPLE&quot;、&quot;PLE&quot;、&quot;LE&quot;、&quot;E&quot;都是好后缀。<p></p><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728193254930" alt=""></p></blockquote>&nbsp; &nbsp; <em><span style="font-family:Comic Sans MS;font-size:14px;">4</span></em>.&nbsp;发现“I”与“A”不匹配：“I”是坏字符。如果是根据坏字符规则，此时模式串应该后移2-(-1)=3位。问题是，有没有更优的移法？<blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728193420403" alt=""></p></blockquote><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728193428671" alt=""></p></blockquote>&nbsp; &nbsp; <em><span style="font-family:Comic Sans MS;font-size:14px;">5</span></em>. 更优的移法是利用好后缀规则：当字符失配时，后移位数 = 好后缀在模式串中的位置 - 好后缀在模式串中上一次出现的位置，且如果好后缀在模式串中没有再次出现，则为-1。<br>&nbsp; &nbsp; 所有的“好后缀”（MPLE、PLE、LE、E）之中，只有“E”在“EXAMPLE”的头部出现，所以后移6-0=6位。<br>&nbsp; &nbsp; 可以看出，“坏字符规则”只能移3位，“好后缀规则”可以移6位。每次后移这两个规则之中的较大值。这两个规则的移动位数，只与模式串有关，与原文本串无关。<blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728194226031" alt=""></p></blockquote><p>&nbsp; &nbsp; <span style="font-family: 'Comic Sans MS';"><em><span style="font-size:14px;">6</span></em></span>.&nbsp;继续从尾部开始比较，“P”与“E”不匹配，因此“P”是“坏字符”，根据“坏字符规则”，后移 6 - 4 = 2位。因为是最后一位就失配，尚未获得好后缀。</p><p></p><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728194006343" alt=""></p></blockquote>&nbsp; &nbsp; 由上可知，BM算法不仅效率高，而且构思巧妙，容易理解。<p><br></p><h2>5. 扩展2：Sunday算法</h2><p>&nbsp; &nbsp; 上文中，我们已经介绍了KMP算法和BM算法，这两个算法在最坏情况下均具有线性的查找时间。但实际上，KMP算法并不比最简单的c库函数strstr()快多少，而BM算法虽然通常比KMP算法快，但BM算法也还不是现有字符串查找算法中最快的算法，本文最后再介绍一种比BM算法更快的查找算法即Sunday算法。</p><p>&nbsp; &nbsp;&nbsp;Sunday算法由Daniel M.Sunday在1990年提出，它的思想跟BM算法很相似：</p><p></p><ul><li>只不过Sunday算法是从前往后匹配，在匹配失败时关注的是文本串中参加匹配的最末位字符的下一位字符。</li><ul><li>如果该字符没有在模式串中出现则直接跳过，即移动位数 = 匹配串长度 + 1；</li><li>否则，其移动位数&nbsp;= 模式串中最右端的该字符到末尾的距离+1。</li></ul></ul><p>&nbsp; &nbsp; 下面举个例子说明下Sunday算法。假定现在要在文本串&quot;substring searching algorithm&quot;中查找模式串&quot;search&quot;。</p><p>&nbsp; &nbsp; <em><span style="font-family: 'Comic Sans MS';"><span style="font-size:14px;">1</span></span></em>. 刚开始时，把模式串与文本串左边对齐：<br><span style="white-space:pre"></span><span style="font-family: Arial; font-size: 13px; line-height: 26px;"><span style="font-family: Calibri;">substr<strong>i</strong>ng&nbsp;searching&nbsp;algorithm</span></span><br style="font-family: Arial; font-size: 13px; line-height: 26px;"><span style="font-family: Arial; font-size: 13px; line-height: 26px;"><span style="font-family: Calibri;">search</span></span><br style="font-family: Arial; font-size: 13px; line-height: 26px;"><span style="font-family: Arial; font-size: 13px; line-height: 26px;"><span style="font-family: Calibri;">^</span></span><br>&nbsp; &nbsp; <span style="font-family: 'Courier New';"><em><span style="font-size:14px;">2</span></em></span>. 结果发现在第2个字符处发现不匹配，不匹配时关注文本串中参加匹配的最末位字符的下一位字符，即标粗的字符 i，因为模式串search中并不存在i，所以模式串直接跳过一大片，向右移动位数 = 匹配串长度 + 1 = 6 + 1 = 7，从 i 之后的那个字符（即字符n）开始下一步的匹配，如下图：</p><p><span style="white-space:pre"></span><span lang="EN-US" style="font-family: Arial; font-size: 14px; line-height: 26px;"><span style="font-size: 13px;"><span style="font-family: Calibri;">substri<u><span style="color:#ff0000;">n</span>g&nbsp;sea</u><strong>r</strong>ching&nbsp;algorithm</span><br></span></span><span style="font-family: Arial; line-height: 26px; font-size: 13px;"><span style="color: black; font-family: 宋体;">　　　</span><span style="color: black; font-family: Calibri;">&nbsp;</span><span style="font-family: Calibri;"><span style="color:#ff0000;">s</span></span><span style="color: black; font-family: Calibri;">earch</span></span><span style="font-family: Arial; font-size: 14px; line-height: 26px;"><br></span><span style="color: rgb(51, 51, 51); font-family: Arial; line-height: 26px; font-size: 13px;"><span style="font-family: 宋体; color: black;">　　　　</span><span style="font-family: Calibri; color: black;">^</span></span><br>&nbsp; &nbsp; <span style="font-family: 'Comic Sans MS';"><em><span style="font-size:14px;">3</span></em></span>. 结果第一个字符就不匹配，再看文本串中参加匹配的最末位字符的下一位字符，是'r'，它出现在模式串中的倒数第3位，于是把模式串向右移动3位（r 到模式串末尾的距离 + 1 = 2 + 1 =3），使两个'r'对齐，如下：<br><span lang="EN-US" style="font-family: Arial; font-size: 14px; line-height: 26px;"><span style="font-size: 13px;"><span style="font-family: Calibri;"></span></span></span><span lang="EN-US" style="font-family: Arial; font-size: 14px; line-height: 26px;"><span style="font-size: 13px;"><span style="font-family: Calibri;">substring&nbsp;searching&nbsp;algorithm</span><br></span></span><span style="color: rgb(51, 51, 51); font-family: Arial; line-height: 26px; font-size: 13px;"><span style="font-family: 宋体; color: black;">　　　　</span><span style="font-family: Calibri; color: black;">&nbsp;&nbsp;search</span></span><span style="font-family: Arial; font-size: 14px; line-height: 26px;"><br></span><span style="color: rgb(51, 51, 51); font-family: Arial; line-height: 26px; font-size: 13px;"><span style="font-family: 宋体; color: black;">　　　　　　　</span><span style="font-family: Calibri; color: black;">^</span></span></p><p>&nbsp; &nbsp; <em><span style="font-family: 'Comic Sans MS';"><span style="font-size:14px;">4</span></span></em>. 匹配成功。</p><p>&nbsp; &nbsp; 回顾整个过程，我们只移动了两次模式串就找到了匹配位置，缘于Sunday算法每一步的移动量都比较大，效率很高。完。<br></p><p><br></p><h2>6. 参考文献</h2><ol><li>《算法导论》的第十二章：字符串匹配；</li><li>本文中模式串“ABCDABD”的部分图来自于此文：<a target="_blank" href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html">http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html</a>；</li><li>本文3.3.7节中有限状态自动机的图由微博网友@龚陆安 绘制：<a target="_blank" href="http://d.pr/i/NEiz">http://d.pr/i/NEiz</a>；</li><li>北京7月暑假班邹博半小时KMP视频：<a target="_blank" href="http://www.julyedu.com/video/play/id/5">http://www.julyedu.com/video/play/id/5</a>；</li><li>北京7月暑假班邹博第二次课的PPT：<a target="_blank" href="http://yun.baidu.com/s/1mgFmw7u">http://yun.baidu.com/s/1mgFmw7u</a>；</li><li>理解KMP 的9张PPT：<a target="_blank" href="http://weibo.com/1580904460/BeCCYrKz3#_rnd1405957424876">http://weibo.com/1580904460/BeCCYrKz3#_rnd1405957424876</a>；</li><li>详解KMP算法（多图）：<a target="_blank" href="http://www.cnblogs.com/yjiyjige/p/3263858.html">http://www.cnblogs.com/yjiyjige/p/3263858.html</a>；</li><li>本文第4部分的BM算法参考自此文：<a target="_blank" href="http://www.ruanyifeng.com/blog/2013/05/boyer-moore_string_search_algorithm.html">http://www.ruanyifeng.com/blog/2013/05/boyer-moore_string_search_algorithm.html</a>；</li><li><a target="_blank" href="http://youlvconglin.blog.163.com/blog/static/5232042010530101020857/">http://youlvconglin.blog.163.com/blog/static/5232042010530101020857</a>；<br></li><li>《数据结构 第二版》，严蔚敏 &amp; 吴伟民编著；</li><li><a target="_blank" href="http://blog.csdn.net/v_JULY_v/article/details/6545192">http://blog.csdn.net/v_JULY_v/article/details/6545192</a>；<br></li><li><a target="_blank" href="http://blog.csdn.net/v_JULY_v/article/details/6111565">http://blog.csdn.net/v_JULY_v/article/details/6111565</a>；<br></li><li>Sunday算法的原理与实现：<a target="_blank" href="http://blog.chinaunix.net/uid-22237530-id-1781825.html">http://blog.chinaunix.net/uid-22237530-id-1781825.html</a>；<br></li><li>模式匹配之Sunday算法：<a target="_blank" href="http://blog.csdn.net/sunnianzhong/article/details/8820123">http://blog.csdn.net/sunnianzhong/article/details/8820123</a>；</li><li>一篇KMP的英文介绍：<a target="_blank" href="http://www.inf.fh-flensburg.de/lang/algorithmen/pattern/kmpen.htm">http://www.inf.fh-flensburg.de/lang/algorithmen/pattern/kmpen.htm</a>；</li><li>我2014年9月3日在西安电子科技大学的面试&amp;算法讲座视频（第36分钟~第94分钟讲KMP）：<a target="_blank" href="http://www.julyedu.com/video/play/id/7">http://www.julyedu.com/video/play/id/7</a>。</li><li>一幅图理解KMP next数组的求法：<a target="_blank" href="http://www.rudy-yuan.net/archives/182/">http://www.rudy-yuan.net/archives/182/</a>。</li></ol><p><br></p><h2>7. 后记 &nbsp; &nbsp;</h2><p>&nbsp; &nbsp; 对之前混乱的文章给广大读者带来的困扰表示致歉，对重新写就后的本文即将给读者带来的清晰表示欣慰。希望大部分的初学者，甚至少部分的非计算机专业读者也能看懂此文。有任何问题，欢迎随时批评指正，thanks。</p><p>&nbsp; &nbsp; July、二零一四年八月二十二日晚九点。</p>   
+}</pre><p></p><p>&nbsp; &nbsp; 接下来，咱们继续拿之前的例子说明，整个匹配过程如下：</p><p>&nbsp; &nbsp; <em><span style="font-family:Comic Sans MS;font-size:14px;">1</span></em>. S[3]与P[3]匹配失败。<br></p><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://hi.csdn.net/attachment/201106/14/8394323_130807585714lW.jpg" alt=""></p></blockquote></blockquote><p>&nbsp; &nbsp;<em><span style="font-family:Courier New;font-size:14px;">&nbsp;2</span></em>. S[3]保持不变，P的下一个匹配位置是P[next[3]]，而next[3]=0，所以P[next[3]]=P[0]与S[3]匹配。<br></p><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://hi.csdn.net/attachment/201106/14/8394323_13080758571390.jpg" alt=""></p></blockquote></blockquote><p>&nbsp; &nbsp; <em><span style="font-family:Comic Sans MS;font-size:14px;">3</span></em>.&nbsp;&nbsp;由于上一步骤中P[0]与S[3]还是不匹配。此时i=3，j=next [0]=-1，由于满足条件j==-1，所以执行“++i, ++j”，即主串指针下移一个位置，P[0]与S[4]开始匹配。最后j==pLen，跳出循环，输出结果i - j = 4（即模式串第一次在文本串中出现的位置），匹配成功，算法结束。</p><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p>&nbsp; &nbsp;<img src="http://hi.csdn.net/attachment/201106/14/8394323_1308075857e40u.jpg" alt=""></p></blockquote></blockquote><h3>3.4 KMP的时间复杂度分析</h3><div>&nbsp; &nbsp; 相信大部分读者读完上文之后，已经发觉其实理解KMP非常容易，无非是循序渐进把握好下面几点：</div><div><ol><li>如果模式串中存在相同前缀和后缀，即pj-k&nbsp;pj-k+1, ..., pj-1 = p0&nbsp;p1, ..., pk-1，那么在pj跟si失配后，让模式串的前缀p0&nbsp;p1...pk-1对应着文本串si-k&nbsp;si-k+1...si-1，而后让pk跟si继续匹配。</li><li>之前本应是pj跟si匹配，结果失配了，失配后，令pk跟si匹配，相当于j 变成了k，模式串向右移动j - k位。</li><li>因为k 的值是可变的，所以我们用next[j]表示j处字符失配后，下一次匹配模式串应该跳到的位置。换言之，失配前是j，pj跟si失配时，用p[ next[j] ]继续跟si匹配，相当于j变成了next[j]，所以，j = next[j]，等价于把模式串向右移动j - next [j] 位。</li><li>而next[j]应该等于多少呢？next[j]的值由j 之前的模式串子串中有多大长度的相同前缀后缀所决定，如果j 之前的模式串子串中（不含j）有最大长度为k的相同前缀后缀，那么next<img src="file:///C:/Users/zhoulei/AppData/Local/Temp/TempPic/CM14]6~T%7BB%7DD9((%7BRTASW~J.tmp" alt="">&nbsp;[j]&nbsp;= k。</li></ol><div>&nbsp; &nbsp; 如之前的图所示：</div></div><div><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><div><img src="http://img.blog.csdn.net/20140812223633281" alt=""><br></div></blockquote></div><div><div>&nbsp; &nbsp; 接下来，咱们来分析下KMP的时间复杂度。分析之前，先来回顾下KMP匹配算法的流程：</div></div><p></p><p><span style="font-size: 18px;"><strong>“</strong></span>KMP的算法流程：</p><div><ul><li>假设现在文本串S匹配到 i 位置，模式串P匹配到 j 位置</li><ul><li>如果j = -1，或者当前字符匹配成功（即S[i] == P[j]），都令i++，j++，继续匹配下一个字符；</li><li>如果j != -1，且当前字符匹配失败（即S[i] != P[j]），则令 i 不变，j = next[j]。此举意味着失配时，模式串P相对于文本串S向右移动了j - next [j] 位。<span style="font-size:18px;">”</span></li></ul></ul></div><p>&nbsp; &nbsp; 我们发现如果某个字符匹配成功，模式串首字符的位置保持不动，仅仅是i++、j++；如果匹配失配，i 不变（即 i 不回溯），模式串会跳过匹配过的next [j]个字符。整个算法最坏的情况是，当模式串首字符位于i&nbsp;- j的位置时才匹配成功，算法结束。<br>&nbsp; &nbsp; 所以，如果文本串的长度为n，模式串的长度为m，那么匹配过程的时间复杂度为O(n)，算上计算next的O(m)时间，KMP的整体时间复杂度为O(m + n)。</p><p><br></p><h2>4. 扩展1：BM算法</h2><p>&nbsp; &nbsp; KMP的匹配是从模式串的开头开始匹配的，而1977年，德克萨斯大学的Robert S. Boyer教授和J Strother Moore教授发明了一种新的字符串匹配算法：Boyer-Moore算法，简称BM算法。该算法从模式串的尾部开始匹配，且拥有在最坏情况下O(N)的时间复杂度。在实践中，比KMP算法的实际效能高。</p><p>&nbsp; &nbsp; BM算法定义了两个规则：</p><ul><li>坏字符规则：当文本串中的某个字符跟模式串的某个字符不匹配时，我们称文本串中的这个失配字符为坏字符，此时模式串需要向右移动，移动的位数 = 坏字符在模式串中的位置 - 坏字符在模式串中最右出现的位置。此外，如果&quot;坏字符&quot;不包含在模式串之中，则最右出现位置为-1。</li><li>好后缀规则：当字符失配时，后移位数 = 好后缀在模式串中的位置 - 好后缀在模式串上一次出现的位置，且如果好后缀在模式串中没有再次出现，则为-1。</li></ul><p>&nbsp; &nbsp; 下面举例说明BM算法。例如，给定文本串“HERE IS A SIMPLE EXAMPLE”，和模式串“EXAMPLE”，现要查找模式串是否在文本串中，如果存在，返回模式串在文本串中的位置。</p><p>&nbsp; &nbsp; <em><span style="font-family:Comic Sans MS;font-size:14px;">1</span></em>.&nbsp;首先，&quot;文本串&quot;与&quot;模式串&quot;头部对齐，从尾部开始比较。&quot;S&quot;与&quot;E&quot;不匹配。这时，&quot;S&quot;就被称为&quot;坏字符&quot;（bad character），即不匹配的字符，它对应着模式串的第6位。且&quot;S&quot;不包含在模式串&quot;EXAMPLE&quot;之中（相当于最右出现位置是-1），这意味着可以把模式串后移6-(-1)=7位，从而直接移到&quot;S&quot;的后一位。</p><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728192101322" alt=""><br></p></blockquote><p>&nbsp; &nbsp; <em><span style="font-family:Courier New;font-size:14px;">2</span></em>.&nbsp;依然从尾部开始比较，发现&quot;P&quot;与&quot;E&quot;不匹配，所以&quot;P&quot;是&quot;坏字符&quot;。但是，&quot;P&quot;包含在模式串&quot;EXAMPLE&quot;之中。因为“P”这个“坏字符”对应着模式串的第6位（从0开始编号），且在模式串中的最右出现位置为4，所以，将模式串后移6-4=2位，两个&quot;P&quot;对齐。</p><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728192109185" alt=""><br></p></blockquote><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728192118623" alt=""></p></blockquote>&nbsp; &nbsp; <em><span style="font-family:Comic Sans MS;font-size:14px;">3</span></em>.&nbsp;依次比较，得到 “MPLE”匹配，称为&quot;好后缀&quot;（good suffix），即所有尾部匹配的字符串。注意，&quot;MPLE&quot;、&quot;PLE&quot;、&quot;LE&quot;、&quot;E&quot;都是好后缀。<p></p><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728193254930" alt=""></p></blockquote>&nbsp; &nbsp; <em><span style="font-family:Comic Sans MS;font-size:14px;">4</span></em>.&nbsp;发现“I”与“A”不匹配：“I”是坏字符。如果是根据坏字符规则，此时模式串应该后移2-(-1)=3位。问题是，有没有更优的移法？<blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728193420403" alt=""></p></blockquote><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728193428671" alt=""></p></blockquote>&nbsp; &nbsp; <em><span style="font-family:Comic Sans MS;font-size:14px;">5</span></em>. 更优的移法是利用好后缀规则：当字符失配时，后移位数 = 好后缀在模式串中的位置 - 好后缀在模式串中上一次出现的位置，且如果好后缀在模式串中没有再次出现，则为-1。<br>&nbsp; &nbsp; 所有的“好后缀”（MPLE、PLE、LE、E）之中，只有“E”在“EXAMPLE”的头部出现，所以后移6-0=6位。<br>&nbsp; &nbsp; 可以看出，“坏字符规则”只能移3位，“好后缀规则”可以移6位。每次后移这两个规则之中的较大值。这两个规则的移动位数，只与模式串有关，与原文本串无关。<blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728194226031" alt=""></p></blockquote><p>&nbsp; &nbsp; <span style="font-family: 'Comic Sans MS';"><em><span style="font-size:14px;">6</span></em></span>.&nbsp;继续从尾部开始比较，“P”与“E”不匹配，因此“P”是“坏字符”，根据“坏字符规则”，后移 6 - 4 = 2位。因为是最后一位就失配，尚未获得好后缀。</p><p></p><blockquote style="margin: 0 0 0 40px; border: none; padding: 0px;"><p><img src="http://img.blog.csdn.net/20140728194006343" alt=""></p></blockquote>&nbsp; &nbsp; 由上可知，BM算法不仅效率高，而且构思巧妙，容易理解。<p><br></p><h2>5. 扩展2：Sunday算法</h2><p>&nbsp; &nbsp; 上文中，我们已经介绍了KMP算法和BM算法，这两个算法在最坏情况下均具有线性的查找时间。但实际上，KMP算法并不比最简单的c库函数strstr()快多少，而BM算法虽然通常比KMP算法快，但BM算法也还不是现有字符串查找算法中最快的算法，本文最后再介绍一种比BM算法更快的查找算法即Sunday算法。</p><p>&nbsp; &nbsp;&nbsp;Sunday算法由Daniel M.Sunday在1990年提出，它的思想跟BM算法很相似：</p><p></p><ul><li>只不过Sunday算法是从前往后匹配，在匹配失败时关注的是文本串中参加匹配的最末位字符的下一位字符。</li><ul><li>如果该字符没有在模式串中出现则直接跳过，即移动位数 = 匹配串长度 + 1；</li><li>否则，其移动位数&nbsp;= 模式串中最右端的该字符到末尾的距离+1。</li></ul></ul><p>&nbsp; &nbsp; 下面举个例子说明下Sunday算法。假定现在要在文本串&quot;substring searching algorithm&quot;中查找模式串&quot;search&quot;。</p><p>&nbsp; &nbsp; <em><span style="font-family: 'Comic Sans MS';"><span style="font-size:14px;">1</span></span></em>. 刚开始时，把模式串与文本串左边对齐：<br><span style="white-space:pre"></span><span style="font-family: Arial; font-size: 13px; line-height: 26px;"><span style="font-family: Calibri;">substr<strong>i</strong>ng&nbsp;searching&nbsp;algorithm</span></span><br style="font-family: Arial; font-size: 13px; line-height: 26px;"><span style="font-family: Arial; font-size: 13px; line-height: 26px;"><span style="font-family: Calibri;">search</span></span><br style="font-family: Arial; font-size: 13px; line-height: 26px;"><span style="font-family: Arial; font-size: 13px; line-height: 26px;"><span style="font-family: Calibri;">^</span></span><br>&nbsp; &nbsp; <span style="font-family: 'Courier New';"><em><span style="font-size:14px;">2</span></em></span>. 结果发现在第2个字符处发现不匹配，不匹配时关注文本串中参加匹配的最末位字符的下一位字符，即标粗的字符 i，因为模式串search中并不存在i，所以模式串直接跳过一大片，向右移动位数 = 匹配串长度 + 1 = 6 + 1 = 7，从 i 之后的那个字符（即字符n）开始下一步的匹配，如下图：</p><p><span style="white-space:pre"></span><span lang="EN-US" style="font-family: Arial; font-size: 14px; line-height: 26px;"><span style="font-size: 13px;"><span style="font-family: Calibri;">substri<u><span style="color:#ff0000;">n</span>g&nbsp;sea</u><strong>r</strong>ching&nbsp;algorithm</span><br></span></span><span style="font-family: Arial; line-height: 26px; font-size: 13px;"><span style="color: black; font-family: 宋体;">　　　</span><span style="color: black; font-family: Calibri;">&nbsp;</span><span style="font-family: Calibri;"><span style="color:#ff0000;">s</span></span><span style="color: black; font-family: Calibri;">earch</span></span><span style="font-family: Arial; font-size: 14px; line-height: 26px;"><br></span><span style="color: rgb(51, 51, 51); font-family: Arial; line-height: 26px; font-size: 13px;"><span style="font-family: 宋体; color: black;">　　　　</span><span style="font-family: Calibri; color: black;">^</span></span><br>&nbsp; &nbsp; <span style="font-family: 'Comic Sans MS';"><em><span style="font-size:14px;">3</span></em></span>. 结果第一个字符就不匹配，再看文本串中参加匹配的最末位字符的下一位字符，是'r'，它出现在模式串中的倒数第3位，于是把模式串向右移动3位（r 到模式串末尾的距离 + 1 = 2 + 1 =3），使两个'r'对齐，如下：<br><span lang="EN-US" style="font-family: Arial; font-size: 14px; line-height: 26px;"><span style="font-size: 13px;"><span style="font-family: Calibri;"></span></span></span><span lang="EN-US" style="font-family: Arial; font-size: 14px; line-height: 26px;"><span style="font-size: 13px;"><span style="font-family: Calibri;">substring&nbsp;searching&nbsp;algorithm</span><br></span></span><span style="color: rgb(51, 51, 51); font-family: Arial; line-height: 26px; font-size: 13px;"><span style="font-family: 宋体; color: black;">　　　　</span><span style="font-family: Calibri; color: black;">&nbsp;&nbsp;search</span></span><span style="font-family: Arial; font-size: 14px; line-height: 26px;"><br></span><span style="color: rgb(51, 51, 51); font-family: Arial; line-height: 26px; font-size: 13px;"><span style="font-family: 宋体; color: black;">　　　　　　　</span><span style="font-family: Calibri; color: black;">^</span></span></p><p>&nbsp; &nbsp; <em><span style="font-family: 'Comic Sans MS';"><span style="font-size:14px;">4</span></span></em>. 匹配成功。</p><p>&nbsp; &nbsp; 回顾整个过程，我们只移动了两次模式串就找到了匹配位置，缘于Sunday算法每一步的移动量都比较大，效率很高。完。<br></p><p><br></p><h2>6. 参考文献</h2><ol><li>《算法导论》的第十二章：字符串匹配；</li><li>本文中模式串“ABCDABD”的部分图来自于此文：<a target="_blank" href="http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html">http://www.ruanyifeng.com/blog/2013/05/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm.html</a>；</li><li>本文3.3.7节中有限状态自动机的图由微博网友@龚陆安 绘制：<a target="_blank" href="http://d.pr/i/NEiz">http://d.pr/i/NEiz</a>；</li><li>北京7月暑假班邹博半小时KMP视频：<a target="_blank" href="http://www.julyedu.com/video/play/id/5">http://www.julyedu.com/video/play/id/5</a>；</li><li>北京7月暑假班邹博第二次课的PPT：<a target="_blank" href="http://yun.baidu.com/s/1mgFmw7u">http://yun.baidu.com/s/1mgFmw7u</a>；</li><li>理解KMP 的9张PPT：<a target="_blank" href="http://weibo.com/1580904460/BeCCYrKz3#_rnd1405957424876">http://weibo.com/1580904460/BeCCYrKz3#_rnd1405957424876</a>；</li><li>详解KMP算法（多图）：<a target="_blank" href="http://www.cnblogs.com/yjiyjige/p/3263858.html">http://www.cnblogs.com/yjiyjige/p/3263858.html</a>；</li><li>本文第4部分的BM算法参考自此文：<a target="_blank" href="http://www.ruanyifeng.com/blog/2013/05/boyer-moore_string_search_algorithm.html">http://www.ruanyifeng.com/blog/2013/05/boyer-moore_string_search_algorithm.html</a>；</li><li><a target="_blank" href="http://youlvconglin.blog.163.com/blog/static/5232042010530101020857/">http://youlvconglin.blog.163.com/blog/static/5232042010530101020857</a>；<br></li><li>《数据结构 第二版》，严蔚敏 &amp; 吴伟民编著；</li><li><a target="_blank" href="http://blog.csdn.net/v_JULY_v/article/details/6545192">http://blog.csdn.net/v_JULY_v/article/details/6545192</a>；<br></li><li><a target="_blank" href="http://blog.csdn.net/v_JULY_v/article/details/6111565">http://blog.csdn.net/v_JULY_v/article/details/6111565</a>；<br></li><li>Sunday算法的原理与实现：<a target="_blank" href="http://blog.chinaunix.net/uid-22237530-id-1781825.html">http://blog.chinaunix.net/uid-22237530-id-1781825.html</a>；<br></li><li>模式匹配之Sunday算法：<a target="_blank" href="http://blog.csdn.net/sunnianzhong/article/details/8820123">http://blog.csdn.net/sunnianzhong/article/details/8820123</a>；</li><li>一篇KMP的英文介绍：<a target="_blank" href="http://www.inf.fh-flensburg.de/lang/algorithmen/pattern/kmpen.htm">http://www.inf.fh-flensburg.de/lang/algorithmen/pattern/kmpen.htm</a>；</li><li>我2014年9月3日在西安电子科技大学的面试&amp;算法讲座视频（第36分钟~第94分钟讲KMP）：<a target="_blank" href="http://www.julyedu.com/video/play/id/7">http://www.julyedu.com/video/play/id/7</a>。</li><li>一幅图理解KMP next数组的求法：<a target="_blank" href="http://www.rudy-yuan.net/archives/182/">http://www.rudy-yuan.net/archives/182/</a>。</li></ol><p><br></p><h2>7. 后记 &nbsp; &nbsp;</h2><p>&nbsp; &nbsp; 对之前混乱的文章给广大读者带来的困扰表示致歉，对重新写就后的本文即将给读者带来的清晰表示欣慰。希望大部分的初学者，甚至少部分的非计算机专业读者也能看懂此文。有任何问题，欢迎随时批评指正，thanks。</p><p>&nbsp; &nbsp; July、二零一四年八月二十二日晚九点。</p>
 </div>
 
 
@@ -342,16 +342,16 @@ void GetNextval(char* p, int next[])
                         </li>
                     
                 </ul>
-               
-          <!--Add by Surflyan -->
-           <!-- Share-->
-           <section>
-           <hr>
-             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>   
-          </section>
-            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
 
-               
+        <!--Add by Surflyan -->
+        <!-- Share-->
+          <section>
+           <hr>
+             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>
+           </section>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
             </div>
     <!-- Side Catalog Container -->
         
@@ -385,30 +385,50 @@ void GetNextval(char* p, int next[])
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#算法(Algorithm)" title="算法(Algorithm)">算法(Algorithm)</a>
+                          <a class="tag" href="/tags/#Algorithm" title="Algorithm">Algorithm</a>
                         
-                          <a class="tag" href="/tags/#转载" title="转载">转载</a>
+                          <a class="tag" href="/tags/#Reprint" title="Reprint">Reprint</a>
                         
                     </div>
                 </section>
                 
 
-       
-          <hr> 
-          
-            <!-- UY BEGIN -->
-            <div id="uyan_frame"></div>
-             <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2140862"></script>
-             <!-- UY END -->
+                <!--DISQUES COMMENTS-->
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+            
+            <
 
-             
- 
- 
+
+          <hr>
            </div>
 
         </div>
     </div>
 </article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "softmargin";
+    var disqus_identifier = "http://softmargin.com/2017/03/08/转载-从头到尾彻底理解KMP/";
+    var disqus_url = "http://softmargin.com/2017/03/08/转载-从头到尾彻底理解KMP/";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
 
 
 
@@ -460,7 +480,7 @@ void GetNextval(char* p, int next[])
                 
                 
                     <li>
-                        <a target="_blank" href="https://www.zhihu.com/people/surflyan">
+                        <a target="_blank" href="https://www.zhihu.com/people/Surflyan">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa  fa-stack-1x fa-inverse">知</i>
@@ -506,14 +526,14 @@ void GetNextval(char* p, int next[])
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; 代码殿堂-Code Palace 2017 
+                    Copyright &copy; Soft Margin 2017
                     <br>
-                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a> 
+                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a>
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
-                    </span> 
+                    </span>
                     Posted by <a href="https://github.com/Surflyan/Surflyan.github.io">Surflyan</a>
-                    
+
                 </p>
             </div>
         </div>
@@ -542,14 +562,14 @@ void GetNextval(char* p, int next[])
     }
 </script>
 
-<!-- 
-     Because of the native support for backtick-style fenced code blocks 
-     right within the Markdown is landed in Github Pages, 
-     From V1.6, There is no need for Highlight.js, 
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
      so Huxblog drops it officially.
 
-     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
-     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
 -->
 <!--
     <script>
@@ -567,7 +587,7 @@ void GetNextval(char* p, int next[])
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("http://codepalace.org/js/jquery.tagcloud.js",function(){
+        async("http://softmargin.com/js/jquery.tagcloud.js",function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},
@@ -597,8 +617,8 @@ void GetNextval(char* p, int next[])
 
 <script>
     // dynamic User by Surflyan
-    var _gaId = 'UA-90996514-1';
-    var _gaDomain = 'www.codepalace.org';
+    var _gaId = 'UA-90996514-2';
+    var _gaDomain = 'www.softmargin.org';
 
     // Originial
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -617,7 +637,7 @@ void GetNextval(char* p, int next[])
 
 <script>
     // dynamic User by Surflyan
-    var _baId = '5580aadc4c87d87d2202096d9e278ef3';
+    var _baId = '3747566a81b32444a5bb7052b11946c3';
 
     // Originial
     var _hmt = _hmt || [];
@@ -644,7 +664,7 @@ void GetNextval(char* p, int next[])
             l = $('<li class="'+n+'_nav"></li>').append(c);
             $(selector).append(l);
         });
-        return true;    
+        return true;
     }
 
     generateCatalog(".catalog-body");
@@ -681,7 +701,7 @@ void GetNextval(char* p, int next[])
 
 
 <!-- Image to hack wechat -->
-<img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0" />
+<img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
 
 
@@ -693,7 +713,7 @@ void GetNextval(char* p, int next[])
 $(window).load(function(){
    $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
    prettyPrint();
- })    
+ })
 
 
 </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->

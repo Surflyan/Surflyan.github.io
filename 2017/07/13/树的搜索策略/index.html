@@ -14,11 +14,11 @@
 
     <title>
         
-          树的搜索策略 - 代码殿堂 | Code Palace
+          树的搜索策略 - Soft Margin
         
     </title>
 
-    <link rel="canonical" href="http://codepalace.org/2017/07/13/树的搜索策略/">
+    <link rel="canonical" href="http://softmargin.com/2017/07/13/树的搜索策略/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="/css/hux-blog.min.css">
 
     <!-- Pygments Highlight CSS -->
-    <link rel="stylesheet" href="/css/highlight.css">
+    <!--<link rel="stylesheet" href="/css/highlight.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -71,7 +71,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">代码殿堂-Code Palace</a>
+            <a class="navbar-brand" href="/">Soft Margin</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -153,7 +153,7 @@
     <!-- Main Content -->
     
 <!-- Image to hack wechat -->
-<!-- <img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0"> -->
 <!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
 
 <!-- Post Header -->
@@ -169,7 +169,7 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#算法(Algorithm)" title="算法(Algorithm)">算法(Algorithm)</a>
+                          <a class="tag" href="/tags/#Algorithm" title="Algorithm">Algorithm</a>
                         
                     </div>
                     <h1>树的搜索策略</h1>
@@ -199,48 +199,48 @@
 <hr>
 <h1 id="1-广度优先搜索"><a href="#1-广度优先搜索" class="headerlink" title="1. 广度优先搜索"></a>1. 广度优先搜索</h1><h4 id="1-1-算法思想"><a href="#1-1-算法思想" class="headerlink" title="1.1 算法思想"></a>1.1 算法思想</h4><p>广度优先搜索从树根开始，逐层访问树中的结点。在第k层处理完之后，再处理第k+1层的节点。由此，广度优先搜索使用队列来扩展节点，在处理完该结点之后就将该节点的孩子节点添加到队列中，使得第k+1层节点按序分布；</p>
 <h4 id="1-2-算法步骤"><a href="#1-2-算法步骤" class="headerlink" title="1.2 算法步骤"></a>1.2 算法步骤</h4><ol>
-<li>构造由根组成的队列Q； </li>
-<li>If Q的第一个元素x是目标节点 Then 停止; </li>
-<li>从Q中删除x，把x的所有子节点加入Q的末尾; </li>
+<li>构造由根组成的队列Q；</li>
+<li>If Q的第一个元素x是目标节点 Then 停止;</li>
+<li>从Q中删除x，把x的所有子节点加入Q的末尾;</li>
 <li>If Q空 Then 失败 Else goto 2.</li>
 </ol>
 <hr>
 <h1 id="2-深度优先搜索"><a href="#2-深度优先搜索" class="headerlink" title="2. 深度优先搜索"></a>2. 深度优先搜索</h1><h4 id="2-1-算法思想"><a href="#2-1-算法思想" class="headerlink" title="2.1 算法思想"></a>2.1 算法思想</h4><p>深度优先搜索从根节点开始，总是首先扩展其子节点，往更深的方向搜索，直到不能访问为止；若最近访问的节点的所有孩子都已访问过，则回溯到其兄弟节点继续深度优先搜索；由此，深度优先搜索采用栈结构扩展结构。</p>
 <h4 id="2-2-算法步骤"><a href="#2-2-算法步骤" class="headerlink" title="2.2 算法步骤"></a>2.2 算法步骤</h4><ol>
-<li>构造一个由根构成的单元素栈S; </li>
-<li>If  Top(S)是目标节点 Then  停止; </li>
-<li>Pop(S),  把Top(S)的所有子节点压入栈顶; </li>
+<li>构造一个由根构成的单元素栈S;</li>
+<li>If  Top(S)是目标节点 Then  停止;</li>
+<li>Pop(S),  把Top(S)的所有子节点压入栈顶;</li>
 <li>If  S空 Then  失败 Else  goto 2.</li>
 </ol>
 <hr>
 <h1 id="3-爬山法"><a href="#3-爬山法" class="headerlink" title="3. 爬山法"></a>3. 爬山法</h1><h4 id="3-1-算法思想"><a href="#3-1-算法思想" class="headerlink" title="3.1 算法思想"></a>3.1 算法思想</h4><p>在深度优先搜索过程中, 经常遇到多个节点可以扩展的情况, 爬山策略使用贪心方法确定搜索的方向,使用启发式测度来排序节点扩展的顺序。对于每一个节点有一个隐式约束P(X)，不仅可以判断x是否为目标节点，还可以判断距离目标节点的距离。爬山法在深度优先搜索时每次先扩展距离目标节点近的节点，使得目标节点能尽早被发现。</p>
 <h4 id="3-2-算法步骤"><a href="#3-2-算法步骤" class="headerlink" title="3.2 算法步骤"></a>3.2 算法步骤</h4><ol>
-<li>构造由根组成的单元素栈S; </li>
-<li>If  Top(S)是目标节点 Then  停止; </li>
-<li>Pop(S); </li>
-<li>S的子节点按照其启发测度由大到小的顺序压入S;  </li>
+<li>构造由根组成的单元素栈S;</li>
+<li>If  Top(S)是目标节点 Then  停止;</li>
+<li>Pop(S);</li>
+<li>S的子节点按照其启发测度由大到小的顺序压入S;</li>
 <li>If  S空 Then  失败，Else  goto 2.</li>
 </ol>
 <p>爬山法发现的解为可行解；</p>
 <hr>
 <h1 id="4-最佳优先搜索"><a href="#4-最佳优先搜索" class="headerlink" title="4. 最佳优先搜索"></a>4. 最佳优先搜索</h1><h4 id="4-1-算法思想"><a href="#4-1-算法思想" class="headerlink" title="4.1 算法思想"></a>4.1 算法思想</h4><p>最佳优先搜索同爬山法不同的是，它每次从全局范围内选取扩展方向。即从当前所有的可扩展节点中选取隐式约束P(X)最小的节点作为扩展方向。最佳优先搜索使用堆结构扩展节点。</p>
 <h4 id="4-2-算法步骤"><a href="#4-2-算法步骤" class="headerlink" title="4.2 算法步骤"></a>4.2 算法步骤</h4><ol>
-<li>使用评价函数构造一个堆H, 首先构造由根组成的单元素堆; </li>
-<li>If   H的根r是目标节点 Then  停止; </li>
-<li>从H中删除r, 把r的子节点插入H; </li>
-<li>If   H空 Then  失败 Else   goto 2. </li>
+<li>使用评价函数构造一个堆H, 首先构造由根组成的单元素堆;</li>
+<li>If   H的根r是目标节点 Then  停止;</li>
+<li>从H中删除r, 把r的子节点插入H;</li>
+<li>If   H空 Then  失败 Else   goto 2.</li>
 </ol>
 <p>最佳优先搜索找到的是可行解；</p>
 <hr>
 <h1 id="5-分支限界法"><a href="#5-分支限界法" class="headerlink" title="5. 分支限界法"></a>5. 分支限界法</h1><h4 id="5-1-算法思想"><a href="#5-1-算法思想" class="headerlink" title="5.1 算法思想"></a>5.1 算法思想</h4><p>分支限界法要点为： 利用已发现的可行解的代价剪除不能取得优化解的分支，从而避免对不能产生优化解的分支进行搜索。</p>
-<p>分支限界法具有两个要素： </p>
+<p>分支限界法具有两个要素：</p>
 <ol>
 <li>产生可行解的策略。可以选择爬上法、DFS、BestFS策略，值得注意的是不能采用BFS，自行体会。</li>
 <li>剪除分支的策略。如何判定节点为根的子树任意可行解的代价大于已知可行解的代价。这需根据具体问题建立绑定函数。</li>
 </ol>
 <h4 id="5-2-算法步骤"><a href="#5-2-算法步骤" class="headerlink" title="5.2 算法步骤"></a>5.2 算法步骤</h4><ol>
-<li>建立根节点, 其权值为解代价下界; </li>
-<li>使用爬山法, 类似于拓朴排序序列树生成算法求解问题, 每产生一个节点, 其权值为加工后的代价矩阵对应元素加其父节点权值; </li>
+<li>建立根节点, 其权值为解代价下界;</li>
+<li>使用爬山法, 类似于拓朴排序序列树生成算法求解问题, 每产生一个节点, 其权值为加工后的代价矩阵对应元素加其父节点权值;</li>
 <li>一旦发现一个可能解, 将其代价作为界限, 循环地进行分支界限搜索: 剪掉不能导致优化解的子解, 使用爬山法继续扩展新增节点, 直至发现优化解.</li>
 </ol>
 <p>分支界限法要想取得比较好的效果，可从两个方面考虑：</p>
@@ -264,16 +264,16 @@
                         </li>
                     
                 </ul>
-               
-          <!--Add by Surflyan -->
-           <!-- Share-->
-           <section>
-           <hr>
-             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>   
-          </section>
-            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script> 
 
-               
+        <!--Add by Surflyan -->
+        <!-- Share-->
+          <section>
+           <hr>
+             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>
+           </section>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
             </div>
     <!-- Side Catalog Container -->
         
@@ -307,28 +307,48 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#算法(Algorithm)" title="算法(Algorithm)">算法(Algorithm)</a>
+                          <a class="tag" href="/tags/#Algorithm" title="Algorithm">Algorithm</a>
                         
                     </div>
                 </section>
                 
 
-       
-          <hr> 
-          
-            <!-- UY BEGIN -->
-            <div id="uyan_frame"></div>
-             <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2140862"></script>
-             <!-- UY END -->
+                <!--DISQUES COMMENTS-->
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+            
+            <
 
-             
- 
- 
+
+          <hr>
            </div>
 
         </div>
     </div>
 </article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "softmargin";
+    var disqus_identifier = "http://softmargin.com/2017/07/13/树的搜索策略/";
+    var disqus_url = "http://softmargin.com/2017/07/13/树的搜索策略/";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
 
 
 
@@ -380,7 +400,7 @@
                 
                 
                     <li>
-                        <a target="_blank" href="https://www.zhihu.com/people/surflyan">
+                        <a target="_blank" href="https://www.zhihu.com/people/Surflyan">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa  fa-stack-1x fa-inverse">知</i>
@@ -426,14 +446,14 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; 代码殿堂-Code Palace 2017 
+                    Copyright &copy; Soft Margin 2017
                     <br>
-                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a> 
+                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a>
                     <span style="display: inline-block; margin: 0 5px;">
                         <i class="fa fa-heart"></i>
-                    </span> 
+                    </span>
                     Posted by <a href="https://github.com/Surflyan/Surflyan.github.io">Surflyan</a>
-                    
+
                 </p>
             </div>
         </div>
@@ -462,14 +482,14 @@
     }
 </script>
 
-<!-- 
-     Because of the native support for backtick-style fenced code blocks 
-     right within the Markdown is landed in Github Pages, 
-     From V1.6, There is no need for Highlight.js, 
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
      so Huxblog drops it officially.
 
-     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
-     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
 -->
 <!--
     <script>
@@ -487,7 +507,7 @@
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("http://codepalace.org/js/jquery.tagcloud.js",function(){
+        async("http://softmargin.com/js/jquery.tagcloud.js",function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},
@@ -517,8 +537,8 @@
 
 <script>
     // dynamic User by Surflyan
-    var _gaId = 'UA-90996514-1';
-    var _gaDomain = 'www.codepalace.org';
+    var _gaId = 'UA-90996514-2';
+    var _gaDomain = 'www.softmargin.org';
 
     // Originial
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -537,7 +557,7 @@
 
 <script>
     // dynamic User by Surflyan
-    var _baId = '5580aadc4c87d87d2202096d9e278ef3';
+    var _baId = '3747566a81b32444a5bb7052b11946c3';
 
     // Originial
     var _hmt = _hmt || [];
@@ -564,7 +584,7 @@
             l = $('<li class="'+n+'_nav"></li>').append(c);
             $(selector).append(l);
         });
-        return true;    
+        return true;
     }
 
     generateCatalog(".catalog-body");
@@ -601,7 +621,7 @@
 
 
 <!-- Image to hack wechat -->
-<img src="http://codepalace.org/img/icon_wechat.png" width="0" height="0" />
+<img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
 
 
@@ -613,7 +633,7 @@
 $(window).load(function(){
    $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
    prettyPrint();
- })    
+ })
 
 
 </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->

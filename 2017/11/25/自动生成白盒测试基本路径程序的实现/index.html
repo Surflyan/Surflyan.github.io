@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="C_eEXCRkzztEJGJcIUrKnVlTpQ76fgidG6Wp04m0Js0" />
+    <meta name="baidu-site-verification" content="sdTqGlKswq" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          自动生成白盒测试基本路径程序的实现 - Soft Margin
+        
+    </title>
+
+    <link rel="canonical" href="http://softmargin.com/2017/11/25/自动生成白盒测试基本路径程序的实现/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <!--<link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- add by Surflyan-->
+    <link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="/js/google-code-prettify/tomorrow-night-eighties.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Soft Margin</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/header.jpeg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#white-box-testing" title="white-box-testing">white-box-testing</a>
+                        
+                          <a class="tag" href="/tags/#Software Engineering" title="Software Engineering">Software Engineering</a>
+                        
+                    </div>
+                    <h1>自动生成白盒测试基本路径程序的实现</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by Surflyan on
+                        2017-11-25
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="1-白盒测试"><a href="#1-白盒测试" class="headerlink" title="1. 白盒测试"></a>1. 白盒测试</h1><p>白盒测试就是把测试对象看作一个透明的盒子，允许测试人员利用程序内部的逻辑及有关信息，设计或选择测试用例，对所有逻辑路径进行测试。<br>白盒测试主要对程序做如下检查：</p>
+<ul>
+<li>对模块的每一个独立执行路径至少测试一次；</li>
+<li>对所有逻辑判定的每一个分支 (真与假 )都至少测试一次；</li>
+<li>在循环的边界和运行界限内执行循环体；</li>
+<li>测试内部数据结构的有效性；</li>
+</ul>
+<h1 id="2-基本路径测试法"><a href="#2-基本路径测试法" class="headerlink" title="2. 基本路径测试法"></a>2. 基本路径测试法</h1><p><strong>路径测试</strong>：设计足够多的用例，使得能覆盖到测试对象的每一条可能路径。</p>
+<p>但是有时候，要实现所有的路径都覆盖到是不太现实的，所有路径可能是一个庞大的数字，例如遇到循环体，循环次数增加一次可能伴随着路径数目的指数级增加。于是就有了基本路径测试，基本路径也叫做独立路径。</p>
+<p><strong>基本路径</strong>：一条程序执行的路径，至少包含一条在定义该路径之前的其他基本路径中所不曾用过的边。</p>
+<h1 id="3-自动生成基本路径程序"><a href="#3-自动生成基本路径程序" class="headerlink" title="3. 自动生成基本路径程序"></a>3. 自动生成基本路径程序</h1><p><strong>题目要求</strong>：</p>
+<p><strong> 输入</strong> ：<br>情况一：包含多行数据。第1行表示控制流图中的入口节点的编号，表示程序由此开始执行。后续每行代表控制流图中的一条边，表示为“1-&gt;2, T/F/N”，意即有一条边从编号为1的节点指向编号为2的节点；T表示节点1为逻辑判断节点且它为真的时候指向2；F表示节点1的条件为假的时候指向2；N表示节点1是基本语句，而不是逻辑判断节点。最后一行为“END”，表示输入结束。</p>
+<p>例如，左侧给出的控制流图，相应的输入数据如右侧所示。<br><img src="input-case1.JPG" width="500"></p>
+<p>情况二：输入数据中除了边信息之外，后续增加若干新行(与原有各行之间通过一行“EXT”分隔)，每一行表示控制流图中的判断节点信息，例如：<code>1, AND</code>, <code>3, OR</code>,分别表示节点1是 if (A &amp;&amp; B) 的形式、节点3是if (A || B)的形式。最后一行为“END”，表示输入结束。</p>
+<p><strong> 输出</strong> ：<br>输出多行数据。第一行为“CC=n”，n为一个整数，表示计算得到的圈复杂度。后续各行，每一行代表一条基本路径，格式为“1,2,3,5”的形式，逗号分隔开的是控制流图中的节点编号。</p>
+<p><strong> 注意</strong> ：</p>
+<ol>
+<li>在查找基本路径时，采用深度优先搜索策略；若遇到判定节点，需遵循“先遍历false分支，再遍历true分支”的原则。</li>
+<li>若某一条路径出现循环，即：该路径的后续部分已经在本路径之前出现过，则在进入循环的第一个节点处停止，后续部分不需要再包含在该路径中（例如1,2,3,9,10,2,3这样的路径，需简化为1,2,3,9,10,2即可）。</li>
+<li>需根据“基本路径”的定义对每一条路径进行检查，看其中是否包含了之前其他路径中不曾出现过的边。若否，则将其去除；</li>
+<li>若程序需要输出多条基本路径，按照路径长度由小到大排序输出；若两个路径的长度相等，则按相对应位置的数字大小由低到高排列（例如1,3,6,5和1,3,4,5两条路径，后者应该先输出；1,10,8,3,4和1,9,10,3,4两条路径，后者应该先输出）。</li>
+<li>若存在出现复合条件表达式的情况，修改控制流图后需要引入新的节点，编号可采用在复合语句标号后增加1和2的方式来表示，例如上面举例的：<code>1, AND</code>, <code>3, OR</code>,可对应修改为11、12，31、32来表示。（注：原有控制流图中不会出同时出现1和11、12这样的节点，因此在对其进行修改之后，不会出现编号冲突的情况。）</li>
+</ol>
+<p>下图分别给出情况一和情况二的示例。<br><img src="output-case1.JPG" width="500"></p>
+<font size="2"><center>图一 情况一</center></font>
+<img src="output-case2.JPG" width="500">
+<font size="2"><center>图二 情况二</center></font>
+
+<h1 id="4-思路分析"><a href="#4-思路分析" class="headerlink" title="4. 思路分析"></a>4. 思路分析</h1><p>依据输入，建立有向图结构。博主在这里使用邻接矩阵的形式建立了图结构，使用数字表示语句类型，-1表示不连通，0 表示false分支，1表示true分支，2表示基本语句。</p>
+<h3 id="4-1-遍历函数分析"><a href="#4-1-遍历函数分析" class="headerlink" title="4.1 遍历函数分析"></a>4.1 遍历函数分析</h3><ol>
+<li>根据深度优先思路进行遍历，终止条件有两个：<ul>
+<li>遍历到返回语句，也就是没有孩子节点的节点,终止此次遍历；</li>
+<li>遇到已经在当前遍历路径上的节点，终止此次遍历；</li>
+</ul>
+</li>
+<li><p>用一个栈结构、一个队列结构来进行遍历，使用一个bool 型数组 trueBranchVisitable[] 记录每个分支节点当前 false 分支是否已遍历过,即当前是否可进行 true 分支的遍历。栈中存放开始节点和遍历过程中遇到的分支节点。队列中存放当前遍历路径上的路径节点。从开始节点进入，将开始节点压入栈中，并插入到队列中：<br> a. 遍历与当前节点i邻接的节点：<br> b. 若不存在邻接顶点，则说明已遍历形成一条基本路径。<br> c. 若存在邻接顶点j，首先判断邻接顶点是否在队列中，即邻接顶点j是否已在此次遍历路径上。若已在队列中，则说明已形成一条基本路径。<br> d. 若存在邻接顶点j，则判断当前节点i与邻接顶点j构成 true 分支 or false 分支 or 基本语句，即判断graph[i][j] = 0/1/2。</p>
+<ol>
+<li><p>若为 false 分支，则判断 false 分支是否还未遍历过，即 trueBranchVisitable[i] 是否等于 false。若为 false，即 false 分支未遍历过，则进行 false 分支的遍历，将j放到路径队列中，并且说明此时节点i为分支节点，将节点i压入栈中，并设置为fasle分支已遍历过。若 trueBranchVisitable[i] 为 true，则说明 false 分支已遍历过，可进行 true 分支的遍历，则跳过此节点j，继续寻找与i节点构成 true 分支的j节点。</p>
+</li>
+<li><p>若为 true 分支，则判断 false 分支是否遍历过，若未遍历，则跳过此节点，继续寻找与i构成 false 分支的j节点。若 false 分支已遍历，则开始遍历 true 分支，将 j 节点加入路径队列中，并且将节点i从栈中弹出，说明节点i的 false 和 true 分支都已遍历完成。将 trueBranchVisitable[i] 重新设置为 false，以便下次遍历时判断。</p>
+</li>
+<li>若为基本语句，则将节点j加入路径队列中。</li>
+</ol>
+</li>
+<li><p>若已形成一条基本路径，则将队列中的所有路径节点存入路径向量中（注意保存过程中需要判断新加入路径是否引入了已遍历得到的基本路径中没有覆盖的新边，若没有引入新边，则此条基本路径需抛弃）。之后将队列元素弹出直到元素等于当前栈顶元素。栈顶元素为还为进行true 分支遍历的分支节点。</p>
+</li>
+<li>从当前队列尾节点即栈顶节点出发，开始遍历。若队列为空，则遍历完成。</li>
+</ol>
+<h1 id="5-代码实现"><a href="#5-代码实现" class="headerlink" title="5. 代码实现"></a>5. 代码实现</h1><ol>
+<li><strong>遍历函数代码实现</strong></li>
+</ol>
+<pre><code class="lang-C/C++">/*
+ * 深度优先遍历，寻找基本路径，先F分支后T分支
+ */
+int DFSTraverse(Graph myGraph, int index ) {
+
+    //初始化数组
+    initBoolArray(visited);
+    initBoolArray(trueBranchVisitable);
+
+    stack&lt;int&gt; S;        //存放当前遍历路径上判定节点
+    deque&lt;int&gt; pathQue;  //存放当前遍历路径所有节点
+
+    visited[index] = true;  //使用visited数组记录节点是否在路径队列中
+    S.push(-1);
+    pathQue.push_back(index);
+
+    while(!S.empty() ) {
+
+        if(!pathQue.empty())
+            index = pathQue.back();
+        else
+            break;
+
+        //判断是否到达出口，即为一条路径
+        bool isEnd = true;
+        for(int n = 0; n&lt;myGraph.numVertex; n++)
+        {
+            if(myGraph.edge[index][n] != -1)
+            {
+                isEnd = false;
+                break;
+            }
+
+        }
+
+        //若到达出口，则保存基本路径，从上一个判定节点再开始遍历
+        if(isEnd) {
+            writeToPathVec(pathQue,S.top(),-1);
+            if(pathQue.empty())
+                break;
+            index = pathQue.back();
+        }
+
+        for (int j = 0; j &lt; myGraph.numVertex; j++)
+        {
+            //判断是否遇到当前路径上的重复节点，则形成基本路径，保存基本路径
+            //（注意此时节点i也可能是分支节点）
+            if(myGraph.edge[index][j]!= -1 &amp;&amp; visited[j] == true) {
+
+                if(myGraph.edge[index][j]==0 &amp;&amp;trueBranchVisitable[index]==false){
+                    trueBranchVisitable[index] = true;
+                    S.push(index);
+                }
+                else if(myGraph.edge[index][j] == 1
+                    &amp;&amp; trueBranchVisitable[index] == true) {
+                        trueBranchVisitable[index] = false;
+                        S.pop();
+                    }
+                else;
+                writeToPathVec(pathQue,S.top(),j);
+                break;
+            }
+
+            // 若i到j为基本语句，则将j加入路径队列中，从j开始遍历
+            if(myGraph.edge[index][j] == 2 ) {
+                pathQue.push_back(j);
+                visited[j]= true;
+                break;
+            }
+
+            // 若i到j为false分支，同时false分支未遍历过，则进入false分支遍历
+            // 设定false分支已遍历，将j加入到路径队列中，将i加入到判定节点栈中
+            // 从j开始false分支遍历
+            else if(myGraph.edge[index][j] == 0 &amp;&amp;
+                    trueBranchVisitable[index] == false) {
+
+                trueBranchVisitable[index] = true;
+                visited[j] = true;
+                pathQue.push_back(j);
+                S.push(index);
+                break;
+            }
+            // 若i到j为true分支，同时false分支已遍历过，则进入true分支遍历
+            // 设定false分支未遍历（下次使用），将j加入到路径队列中，弹出栈顶分支节点
+            // 从j开始true分支遍历
+            else if(myGraph.edge[index][j] == 1
+                    &amp;&amp; trueBranchVisitable[index] == true) {
+                trueBranchVisitable[index] = false;
+                visited[j] = true;
+                pathQue.push_back(j);
+                S.pop();
+                break;
+            }
+        }
+    }
+}
+</code></pre>
+<p><br><br>2.<strong>路径排序函数代码实现</strong></p>
+<p>自定义排序规则，使用Algorithm库文件的 sort函数进行排序。</p>
+<pre><code class="lang-C/C++">/*
+ * 自定义路径排序函数
+ * 满足弱序性
+ * 长度小的排在前，长度相同的按节点小的排在前
+ */
+bool pathSort(vector&lt;int&gt; va, vector&lt;int&gt; vb) {
+    if(va.size()&lt;vb.size()) {
+        return true;
+    }
+    else if(va.size()&gt;vb.size()){
+        return false;
+    }
+    else{
+        for(int i = 0; i &lt; va.size(); i++){
+            if(graph.vertex[va[i]]&lt; graph.vertex[vb[i]]){
+                return true;
+            }
+            else if(graph.vertex[va[i]] &gt; graph.vertex[vb[i]]){
+                return false;
+            }
+            else
+                continue;
+        }
+
+    }
+
+    return true;
+}
+
+vector&lt;vector&lt;int&gt; &gt;::iterator iter,end;
+iter = path.begin();
+end = path.end();
+sort(iter,end,pathSort);
+</code></pre>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li>HIT,软件工程课程讲义</li>
+</ol>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/12/07/逻辑斯蒂回归分析及Python实现/" data-toggle="tooltip" data-placement="top" title="Previous Post">&larr; 逻辑斯蒂回归分析及Python实现</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/11/15/线性回归之多项式拟合曲线/" data-toggle="tooltip" data-placement="top" title="Next Post">线性回归之多项式拟合曲线 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+        <!--Add by Surflyan -->
+        <!-- Share-->
+          <section>
+           <hr>
+             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>
+           </section>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#white-box-testing" title="white-box-testing">white-box-testing</a>
+                        
+                          <a class="tag" href="/tags/#Software Engineering" title="Software Engineering">Software Engineering</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!--DISQUES COMMENTS-->
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+            
+            <
+
+
+          <hr>
+           </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "softmargin";
+    var disqus_identifier = "http://softmargin.com/2017/11/25/自动生成白盒测试基本路径程序的实现/";
+    var disqus_url = "http://softmargin.com/2017/11/25/自动生成白盒测试基本路径程序的实现/";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Soft Margin 2017
+                    <br>
+                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a>
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span>
+                    Posted by <a href="https://github.com/Surflyan/Surflyan.github.io">Surflyan</a>
+
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://softmargin.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Surflyan
+    var _gaId = 'UA-90996514-2';
+    var _gaDomain = 'www.softmargin.org';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Surflyan
+    var _baId = '3747566a81b32444a5bb7052b11946c3';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Surflyan to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+
+<!-- Add By Surflayn -->
+<!--添加google-prettify 代码解析2017.6.2 -->
+
+<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+<script type="text/javascript">
+$(window).load(function(){
+   $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   prettyPrint();
+ })
+
+
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+
+</html>

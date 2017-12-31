@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="C_eEXCRkzztEJGJcIUrKnVlTpQ76fgidG6Wp04m0Js0" />
+    <meta name="baidu-site-verification" content="sdTqGlKswq" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          高斯混合模型及其EM算法 - Soft Margin
+        
+    </title>
+
+    <link rel="canonical" href="http://softmargin.com/2017/12/24/高斯混合模型及其EM算法/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <!--<link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- add by Surflyan-->
+    <link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="/js/google-code-prettify/tomorrow-night-eighties.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Soft Margin</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/header.jpeg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Machine Learning" title="Machine Learning">Machine Learning</a>
+                        
+                    </div>
+                    <h1>高斯混合模型及其EM算法</h1>
+                    <h2 class="subheading">高斯混合模型分析及其EM算法Python实现</h2>
+                    <span class="meta">
+                        Posted by Surflyan on
+                        2017-12-24
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="1-高斯分布"><a href="#1-高斯分布" class="headerlink" title="1. 高斯分布"></a>1. 高斯分布</h1><p>高斯分布（Gaussian Distribution)，又称为正态分布。若随机变量 X 服从一个位置参数为$\mu$ 、尺度参数为$\sigma$的概率分布，记为：</p>
+<script type="math/tex; mode=display">X\sim N(\mu ,\sigma ^{2})</script><p>则其概率密度函数为:</p>
+<script type="math/tex; mode=display">f(x)=\frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^{2}}{2\sigma}}</script><p>正态分布的数学期望值 $\mu$ 等于位置参数，决定了分布的位置；其方差 $\sigma^{2}$ 的开平方或标准差 $\sigma$ 等于尺度参数，决定了分布的幅度。<br><img src="gaussian-pdf.png" width="300"></p>
+<font size="2"><center>单元高斯分布 [来源：维基百科]</center></font>
+
+<hr>
+<h1 id="2-多元高斯模型"><a href="#2-多元高斯模型" class="headerlink" title="2. 多元高斯模型"></a>2. 多元高斯模型</h1><p>多维变量 X 服从高斯分布时，它的概率密度函数为：</p>
+<script type="math/tex; mode=display">p(x;\mu , \Sigma)=\frac{1}{(2\pi)^{n/2}|\Sigma|^{1/2}}\exp(-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu))</script><p>$\mu$为模型期望，$\sum$为模型协方差矩阵。<br><img src="bi-gaussian-dist.png" width="300"></p>
+<font size="2"><center>二元高斯分布</center></font>
+
+<hr>
+<h1 id="3-异常检测"><a href="#3-异常检测" class="headerlink" title="3. 异常检测"></a>3. 异常检测</h1><p>高斯模型通常应用于异常检测。现在我们来看传统高斯模型和多元高斯模型在异常检测方面的区别。<br><img src="density-estimation.png" width="500"></p>
+<font size="2"><center>图片来源：AndrewNg.机器学习</center></font>
+
+<p><br></p>
+<ol>
+<li><p>传统模型对于图中所给数据进行异常检测，会按照图中右侧的给出的方式，在每个维度都建立单元高斯模型，之后做乘积运算，得到模型之后，通过设置阈值，进行异常值检测。</p>
+</li>
+<li><p>多元高斯模型不同与传统模型，后者能在不同维度之间建立相关性。相同的是，多元高斯模型也是通过设置阈值进行异常值检测的。</p>
+</li>
+</ol>
+<p>通常传统模型的计算成本较低，但是要建立不同维度特征之间的相关性就需要通过手动组合建立新特征了。而多元高斯模型能自动捕捉不同特征之间的关系。但是多元高斯模型计算成本较高，而且必须满足样本数 m 大于维度数 n（保证$\sum$可逆），才能应用多元高斯模型，而一般在满足$m \geqslant n$才使用它。</p>
+<p>有时候，或者说几乎总是，不能通过一个高斯分布模型来描述所有数据的分布。通常用几个高斯模型才能更精确的描述所有数据的分布。这时候自然就出现了高斯混合模型。</p>
+<hr>
+<h1 id="4-高斯混合模型"><a href="#4-高斯混合模型" class="headerlink" title="4. 高斯混合模型"></a>4. 高斯混合模型</h1><p>高斯混合模型（Gaussian Mixture Model，GMM），顾名思义，就是多个高斯模型的线性组合。由于高斯分布的普遍性（可由中心极限定理得到），在人类世界中，几乎所有的数据都可近似满足高斯分布，问题只不过是用多少个高斯分布能更精确的描述数据的分布。当然，应用其他分布建立混合模型，理论上也能构成复杂的描述模型的，但是高斯函数还具有良好的数学性质，所以能被广泛的应用。</p>
+<p>假设一个<code>GMM</code>模型由k个高斯分布组成，将每个高斯模型称为一个<code>Component</code>，那么这些Component线性叠加在一起就组成了GMM的概率密度函数：</p>
+<script type="math/tex; mode=display">p( x)=\sum_{k=1}^{K}p(k)p(x|k)=\sum_{k=1}^K{\pi_k N( x|\mu_k, \Sigma_k)}</script><p>其中，<script type="math/tex">\pi_{k}</script> 表示每个 Component 的占比，也就是属于此 Component 的概率，另有约束条件$\sum_{k=1}^K{\pi_k}=1$,根据上式，从满足GMM的分布中选取一个点，可分两步完成：</p>
+<ol>
+<li>随机地在这K个 Component 中选一个，每个 Component 被选中的概率就是它的系数$\pi_k$；</li>
+<li>选中了 Component 之后，再单独地考虑从这个组件的分布中选取一个点。而这个问题已变成了熟悉的Gaussian分布。</li>
+</ol>
+<p>假设已经有了一组数据是由GMM生成的，现在要做的就是如何根据数据推出GMM的概率分布。只需要确定一组参数来使生成这些数据的概率最大就可以了，而这个概率就是每个数据出现的概率乘积$\prod_{i=1}^{N}p(x_i)$。参数未知，计算出现概率，这个概率的乘积也就是似然函数。此模型的对数似然函数为：</p>
+<script type="math/tex; mode=display">\ln p(\boldsymbol{x}|\boldsymbol{\pi}, \boldsymbol{\mu}, \boldsymbol{\Sigma}) = \sum_{n=1}^N \ln \left\{\sum_{k=1}^K \pi_k \mathcal{N}(\boldsymbol{x}_k| \boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)\right\}</script><hr>
+<h1 id="5-GMM的贝叶斯理解"><a href="#5-GMM的贝叶斯理解" class="headerlink" title="5. GMM的贝叶斯理解"></a>5. GMM的贝叶斯理解</h1><p>若训练集<script type="math/tex">D=\{x_1,x_2,\ldots,x_n\}</script>是由GMM生成的，令随机变量$Z_k$表示生成$X$的高斯分量，那么在给定x的条件下，z 的条件概率，可以表示为：</p>
+<script type="math/tex; mode=display">\begin{split}
+\gamma(z_k) &= p(z_k = 1| \boldsymbol{x}) \\
+&= \frac{p(z_k = 1) p(\boldsymbol{x}|z_k = 1)}{p(\boldsymbol{x}, z_k = 1)} \\
+&= \frac{p(z_k = 1) p(\boldsymbol{x}|z_k = 1)}{\sum_{j=1}^K p(z_j = 1) p(\boldsymbol{x}|z_j = 1)} \mbox{ (全概率公式)} \\
+&= \frac{\pi_k \mathcal{N}(\boldsymbol{x|\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k})}{\sum_{j=1}^K \pi_j \mathcal{N}(\boldsymbol{x|\boldsymbol{\mu}_j, \boldsymbol{\Sigma}_j})}
+\end{split}</script><p>其中$\pi_k$可看作是$z_k = 1$的先验概率，$\gamma(z_k)$可看成是观测到x之后，对应的后验概率。也就是Component k 对于生成此数据 x 的贡献量。<br>此时，只需要将 x 划分到使$\gamma(z_k)$最大时的 k 类簇里，就完成了 x 数据类的归属。这里与贝叶斯分类有相似之处，都通过贝叶斯公式展开，然后计算类先验概率和类条件概率，但是GMM的类条件概率不能直接求出，因为每个数据都可能属于任一个类簇。</p>
+<hr>
+<h1 id="6-EM算法GMM参数估计"><a href="#6-EM算法GMM参数估计" class="headerlink" title="6. EM算法GMM参数估计"></a>6. EM算法GMM参数估计</h1><p>首先，GMM 需要确定的参数如下：</p>
+<ol>
+<li>K，高斯混合模型的 Component 个数，需要由人工设定；</li>
+<li>$\pi_k$，每个 Component 的概率，也就是每个 component 下的样本占总样本的比重；</li>
+<li>$\mu_k$, $\sigma_k$,每个高斯 Component 的参数。</li>
+</ol>
+<h3 id="6-1-EM算法"><a href="#6-1-EM算法" class="headerlink" title="6.1 EM算法"></a>6.1 EM算法</h3><ol>
+<li>设定 Component 数目 K，初始化每个 Component 的参数，计算对数似然函数。</li>
+<li><p><strong>E-step</strong>:<br>E-step(Expectation)，计算期望，对应于GMM也就是，根据当前的$\pi_k、\mu_k、\sigma_k$计算后验概率：</p>
+<script type="math/tex; mode=display">\gamma(z_{nk}) = \frac{\pi_k\mathcal{N}(\boldsymbol{x}_n| \boldsymbol{\mu}_n, \boldsymbol{\Sigma}_n)}{\sum_{j=1}^K \pi_j \mathcal{N}(\boldsymbol{x}_n| \boldsymbol{\mu}_j, \boldsymbol{\Sigma}_j)}</script></li>
+<li><p><strong>M-step</strong>:<br>M-step(Maximum), 根据当前的各成分后验概率重新计算各 Component 的参数。也就是各参数的最大似然估计。具体的推导可根据上文的对数似然函数，要使其最大，则对每个参数分别求其偏导，令导为 0，可推出每个参数的表达式，具体可参见 PRML。</p>
+<script type="math/tex; mode=display">\begin{split}
+\boldsymbol{\mu}_k^{新} &= \frac{1}{N_k} \sum_{n=1}^N \gamma(z_{nk}) \boldsymbol{x}_n \\
+\boldsymbol{\Sigma}_k^{新} &= \frac{1}{N_k} \sum_{n=1}^N \gamma(z_{nk}) (\boldsymbol{x}_n - \boldsymbol{\mu}_k^{新}) (\boldsymbol{x}_n - \boldsymbol{\mu}_k^{新})^T \\
+\pi_k^{新} &= \frac{N_k}{N}
+\end{split}</script></li>
+<li>反复迭代E-M，直到收敛为止。<br><img src="zzh-em.png" width="500"><font size="2"><center>来源：机器学习.周志华</center></font>
+
+</li>
+</ol>
+<hr>
+<h1 id="7-GMM和K-means"><a href="#7-GMM和K-means" class="headerlink" title="7.GMM和K-means"></a>7.GMM和K-means</h1><p>GMM 和 K-means 很像，都是常用的聚类算法。两个算法都需要人为设定 Component 的个数。在 K-means ,聚类中心的初始化对最终聚类的效果影响显著，而GMM对每个Component的质心初始化也很敏感。不同的是，k-means 是先由参数得到数据的分类标签，再由数据和分类标签来计算参数。高斯混合模型EM算法是先由参数得到数据分类标签的概率分布，再由数据和分类标签来计算参数，二者都是通过迭代执行。K-means 的参数是簇心位置，GMM 则是各个高斯分布的参数。GMM 是基于概率的算法，是通过计算似然函数的最大值实现高斯分布参数的求解的，而 K-means 是计算当前簇中所有元素位置的均值来求解。</p>
+<hr>
+<h1 id="8-Python实现"><a href="#8-Python实现" class="headerlink" title="8. Python实现"></a>8. Python实现</h1><pre><code class="lang-python">def multiPDF(x, mu, sigma):
+    &quot;&quot;&quot;
+    多元高斯模型概率密度计算
+    &quot;&quot;&quot;
+    size = len(x)
+    if size ==len(mu) and (size, size) == sigma.shape:
+        detSigma = np.linalg.det(sigma)
+        try :
+            div = 1.0 / (np.math.pow(2 * np.pi, len(x) / 2.0) * np.math.pow(detSigma, 1.0 / 2))
+        except:
+            print (&quot;except&quot;,detSigma)
+
+        x_mu = np.matrix(x - mu)
+        invSigma = np.linalg.inv(sigma)
+        numerator = np.math.pow(np.math.e, -0.5 * (x_mu.T) * invSigma * x_mu)
+        result = numerator * div
+        return result
+    else:
+        return -1
+
+def logLikelihood(dataSet, Alpha, Mu, Sigma):
+    K = len(Alpha)
+    N, M = np.shape(dataSet)
+    P = np.zeros([N, K])
+    for k in range(K):
+        for i in range(N):
+            P[i, k] = multiPDF(dataSet[i, :][None].T, Mu[:, k][None].T, Sigma[:, :, k])
+    result = np.sum(np.log(np.dot(P,Alpha)))
+    return result
+
+
+def initEM(dataSet, K):
+    &quot;&quot;&quot;
+    N: 样本数
+    M: 样本维度
+    K: 混合模型个数，或者聚类个数
+    计算每个样本x 由个混合成分生成的后验概率
+    W[i,j] 代表i 由第j个模型生成的概率
+    初始化各项参数，按照原始数据的下标等分到不同的类别中，或者指定到某一成分生成的，利用Mximization 产生参数
+    &quot;&quot;&quot;
+
+    N, M = dataSet.shape
+    W = np.zeros([N, K])
+    numPerK = N / K
+    for k in range(K):
+        start = int(np.floor(k * numPerK))
+        end = int(np.floor((k + 1) * numPerK))
+        W[start: end, k] = 1
+
+    Alpha, Mu, Sigma = Mstep(dataSet, W)
+    return W, Alpha, Mu, Sigma
+
+
+def Mstep(dataSet, W):
+
+    # 每一列代表一个聚类/成分，
+    N, M = dataSet.shape
+    K = W.shape[1]
+
+    # 更新Alpha 混合系数
+    N_k = np.sum(W, 0)           # 每个成分所产生的样本概率和
+    Alpha = N_k / np.sum(N_k)    # /总样本
+
+    # 更新mu (M * K) 新均值向量
+    Mu = np.dot(np.dot(dataSet.T,W),np.diag(np.reciprocal(N_k)))
+
+    # 更新协方差矩阵（M*M*K ）（包含k个协方差矩阵)
+    Sigma = np.zeros([M, M, K])
+    for k in range(K):
+        dataMeanSub = dataSet.T - np.dot(Mu[:,k][None].T,np.ones([1,N]))
+        Sigma[:, :, k] = (dataMeanSub.dot(np.diag(W[:, k])).dot(dataMeanSub.T)) / N_k[k]
+
+    return Alpha, Mu, Sigma
+
+
+def Estep(dataSet, Alpha, Mu, Sigma):
+    &quot;&quot;&quot;
+    计算每个样本x 由个混合成分生成的后验概率
+    W[i,j] 代表i 由第j个模型生成的概率
+    &quot;&quot;&quot;
+
+    N = dataSet.shape[0]
+    K = len(Alpha)
+    W = np.zeros([N,K])
+    for k in range(K):
+        for i in range(N):
+            W[i, k] = Alpha[k] * multiPDF(dataSet[i, :][None].T, Mu[:, k][None].T, Sigma[:, :, k])
+    # 将每一行也就是一个样本出现的概率归一
+    W = W * np.reciprocal(np.sum(W, 1)[None].T)
+    return W
+
+
+def EM(data,K):
+    &quot;&quot;&quot;
+    EM 算法GMM参数估计算法主函数
+    &quot;&quot;&quot;
+
+    W, Alpha, Mu, Sigma = initEM(data, K)
+    iter = 0
+    prevLL = -999999
+    valLogLikelihood = []
+    while (True):
+
+        W = Estep(data, Alpha, Mu, Sigma)
+        Alpha, Mu, Sigma = Mstep(data, W)
+        valLL = logLikelihood(data, Alpha, Mu, Sigma)
+        iter = iter + 1
+        if iter % 1 == 0 :
+            valLogLikelihood.append(valLL)
+
+        if (iter &gt; 200 or abs(valLL - prevLL) &lt; 0.000000000001):
+            break
+        print valLL
+        prevLL = valLL
+    drawLikeliHood(valLogLikelihood)
+    return Alpha,Mu,Sigma
+</code></pre>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li>Christopher M. Bishop etc., Pattern Recognition and Machine Learning, Springer, 2006</li>
+<li>周志华, 机器学习</li>
+<li>Andrew Ng, Machine Learning</li>
+<li><a href="http://blog.pluskid.org/?p=39" target="_blank" rel="external">漫谈 Clustering (3): Gaussian Mixture Model</a></li>
+<li><a href="http://jermmy.xyz/2017/10/29/2017-10-29-GMM-and-EM/" target="_blank" rel="external">GMM与EM共舞</a><blockquote>
+<p>在博主学习过程中，参考了许多他人作品，并整理到笔记，后根据笔记作此篇文章，如文中有引用他人作品部分，还请指出，以添加说明。<br>请多多指教！</p>
+</blockquote>
+</li>
+</ol>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/12/18/PCA原理分析及Python实现/" data-toggle="tooltip" data-placement="top" title="Next Post">PCA原理分析及Python实现 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+        <!--Add by Surflyan -->
+        <!-- Share-->
+          <section>
+           <hr>
+             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>
+           </section>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Machine Learning" title="Machine Learning">Machine Learning</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!--DISQUES COMMENTS-->
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+            
+            <
+
+
+          <hr>
+           </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "softmargin";
+    var disqus_identifier = "http://softmargin.com/2017/12/24/高斯混合模型及其EM算法/";
+    var disqus_url = "http://softmargin.com/2017/12/24/高斯混合模型及其EM算法/";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Soft Margin 2017
+                    <br>
+                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a>
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span>
+                    Posted by <a href="https://github.com/Surflyan/Surflyan.github.io">Surflyan</a>
+
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://softmargin.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Surflyan
+    var _gaId = 'UA-90996514-2';
+    var _gaDomain = 'www.softmargin.org';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Surflyan
+    var _baId = '3747566a81b32444a5bb7052b11946c3';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Surflyan to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+
+<!-- Add By Surflayn -->
+<!--添加google-prettify 代码解析2017.6.2 -->
+
+<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+<script type="text/javascript">
+$(window).load(function(){
+   $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   prettyPrint();
+ })
+
+
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+
+</html>
