@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://softmargin.com/about/index.html</loc>
+    
+    <lastmod>2018-01-02T06:45:38.619Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://softmargin.com/2017/10/10/Git%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/</loc>
     
     <lastmod>2018-01-01T14:04:36.541Z</lastmod>
@@ -201,13 +208,6 @@
     <loc>http://softmargin.com/2017/09/20/%E4%BB%8EMVC%E6%9E%84%E6%88%90%E8%A7%A3%E6%9E%90Struts%E6%A1%86%E6%9E%B6/</loc>
     
     <lastmod>2017-10-03T11:58:16.325Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://softmargin.com/about/index.html</loc>
-    
-    <lastmod>2017-06-09T12:56:38.828Z</lastmod>
     
   </url>
   
