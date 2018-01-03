@@ -94,14 +94,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -197,7 +197,7 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="1-Struts-xml-举例"><a href="#1-Struts-xml-举例" class="headerlink" title="1. Struts.xml 举例"></a>1. Struts.xml 举例</h2><p>Struts.xml 是 Struts2 框架的核心配置文件，主要用于配置核心控制器 Action 类，同时还可以配置作用于 Action 的拦截器、Action 的 result 映射等，在程序运行时 struts.xml 将被 Struts 2 框架自动加载。</p>
+                <h1 id="1-Struts-xml-举例"><a href="#1-Struts-xml-举例" class="headerlink" title="1. Struts.xml 举例"></a>1. Struts.xml 举例</h1><p>Struts.xml 是 Struts2 框架的核心配置文件，主要用于配置核心控制器 Action 类，同时还可以配置作用于 Action 的拦截器、Action 的 result 映射等，在程序运行时 struts.xml 将被 Struts 2 框架自动加载。</p>
 <p>下面是一个完整的 Struts.xml 配置文件，来源于 Struts 官方文档，做了部分修改，作为介绍的例子。</p>
 <pre><code class="lang-xml">&lt;!DOCTYPE struts PUBLIC
      &quot;-//Apache Software Foundation//DTD Struts Configuration 2.0//EN&quot;
@@ -215,12 +215,12 @@
  &lt;/struts&gt;
 </code></pre>
 <hr>
-<h2 id="2-Package-配置元素"><a href="#2-Package-配置元素" class="headerlink" title="2. Package 配置元素"></a>2. Package 配置元素</h2><p>Package 配置元素用于声明一个包，通过一个必须的 name 属性作为他的标识，extedns 属性允许继承另外一个 Package 定义的配置，通常情况下生命的包需要继承于 struts-default 包。<br>Package 元素的 namespace 属性可以将 Package 中的 action 配置为不同的名称空间， Struts 2 使用 action 的名称和它所在的名称空间来标识一个 action 。</p>
+<h1 id="2-Package-配置元素"><a href="#2-Package-配置元素" class="headerlink" title="2. Package 配置元素"></a>2. Package 配置元素</h1><p>Package 配置元素用于声明一个包，通过一个必须的 name 属性作为他的标识，extedns 属性允许继承另外一个 Package 定义的配置，通常情况下生命的包需要继承于 struts-default 包。<br>Package 元素的 namespace 属性可以将 Package 中的 action 配置为不同的名称空间， Struts 2 使用 action 的名称和它所在的名称空间来标识一个 action 。</p>
 <hr>
-<h2 id="3-Action"><a href="#3-Action" class="headerlink" title="3. Action"></a>3. Action</h2><h4 id="3-1-认识-Action"><a href="#3-1-认识-Action" class="headerlink" title="3.1 认识 Action"></a>3.1 认识 Action</h4><p>Action 类是 Struts 2 的核心控制器，主要用于处理 HTTP 请求。通常在开发中的 Action 类，需要继承框架提供的 <code>com.opensymphony.xwork2.ActionSupport</code> 类，并重写该类的 execute（）方法，<strong> 需按照 JavaBean 规范实现 setter 方法，请求参数才能注入 </strong> 。</p>
-<h4 id="3-2-Action-的基本流程"><a href="#3-2-Action-的基本流程" class="headerlink" title="3.2 Action 的基本流程"></a>3.2 Action 的基本流程</h4><p>在 web.xml 中配置了 Struts2 的过滤器，因此当浏览器向 Web 容器发送一个 HTTP 请求时，Web 容器就调用 Struts2 过滤器的 doFilter() 方法。此时 Struts2 接收到 HTTP 请求，判断这个请求是否与某个 Action 对象相匹配。如果找到匹配的 Action 就会调用该对象的 execute（）方法，并根据结果返回相应的值。然后，Struts2 通过 Action 的返回值查找返回值所映射的页面，最后通过一定的视图返回给浏览器。</p>
-<h4 id="3-3-动态-Action"><a href="#3-3-动态-Action" class="headerlink" title="3.3 动态 Action"></a>3.3 动态 Action</h4><p>之前介绍的都是通过 Action 对象重写 execute（）方法处理请求的。但是在多业务逻辑中，这样就不适用了。Struts 2 框架提供了 Dynamic Action，通过请求对象中特定的方法处理某一业务逻辑。这样控制的代码必须写在一个<strong> 返回类型为 String 的无参public 方法 </strong> 中。</p>
-<h4 id="3-4-Action-的配置"><a href="#3-4-Action-的配置" class="headerlink" title="3.4 Action 的配置"></a>3.4 Action 的配置</h4><pre><code class="lang-xml">       &lt;action name=&quot;HelloWorld&quot; class=&quot;tutorial.HelloWorld&quot;&gt;
+<h1 id="3-Action"><a href="#3-Action" class="headerlink" title="3. Action"></a>3. Action</h1><h2 id="3-1-认识-Action"><a href="#3-1-认识-Action" class="headerlink" title="3.1 认识 Action"></a>3.1 认识 Action</h2><p>Action 类是 Struts 2 的核心控制器，主要用于处理 HTTP 请求。通常在开发中的 Action 类，需要继承框架提供的 <code>com.opensymphony.xwork2.ActionSupport</code> 类，并重写该类的 execute（）方法，<strong> 需按照 JavaBean 规范实现 setter 方法，请求参数才能注入 </strong> 。</p>
+<h2 id="3-2-Action-的基本流程"><a href="#3-2-Action-的基本流程" class="headerlink" title="3.2 Action 的基本流程"></a>3.2 Action 的基本流程</h2><p>在 web.xml 中配置了 Struts2 的过滤器，因此当浏览器向 Web 容器发送一个 HTTP 请求时，Web 容器就调用 Struts2 过滤器的 doFilter() 方法。此时 Struts2 接收到 HTTP 请求，判断这个请求是否与某个 Action 对象相匹配。如果找到匹配的 Action 就会调用该对象的 execute（）方法，并根据结果返回相应的值。然后，Struts2 通过 Action 的返回值查找返回值所映射的页面，最后通过一定的视图返回给浏览器。</p>
+<h2 id="3-3-动态-Action"><a href="#3-3-动态-Action" class="headerlink" title="3.3 动态 Action"></a>3.3 动态 Action</h2><p>之前介绍的都是通过 Action 对象重写 execute（）方法处理请求的。但是在多业务逻辑中，这样就不适用了。Struts 2 框架提供了 Dynamic Action，通过请求对象中特定的方法处理某一业务逻辑。这样控制的代码必须写在一个<strong> 返回类型为 String 的无参public 方法 </strong> 中。</p>
+<h2 id="3-4-Action-的配置"><a href="#3-4-Action-的配置" class="headerlink" title="3.4 Action 的配置"></a>3.4 Action 的配置</h2><pre><code class="lang-xml">       &lt;action name=&quot;HelloWorld&quot; class=&quot;tutorial.HelloWorld&quot;&gt;
               &lt;result  name = &quot;SUCCESS&quot;&gt;/HelloWorld.jsp&lt;/result&gt;
         &lt;/action&gt;
 </code></pre>
@@ -231,9 +231,9 @@
 <li>使用通配符调用。</li>
 </ol>
 <hr>
-<h2 id="4-Result-配置元素"><a href="#4-Result-配置元素" class="headerlink" title="4. Result 配置元素"></a>4. Result 配置元素</h2><p>当 Action 类的方法执行完成后，返回一个字符串类型的结果码，框架根据这个结果码选择对应的 Result 元素给浏览器。 <resutl> 元素的两个属性为 <strong> name </strong> 和 <strong> type </strong> ,其中 name 属性用于指定 Result 的逻辑名称，与 Action 对象的返回值相对应，name 属性的默认值为 “SUCCESS”。type 属性用于设置返回结果的类型，如请求转发和重定向等。</resutl></p>
+<h1 id="4-Result-配置元素"><a href="#4-Result-配置元素" class="headerlink" title="4. Result 配置元素"></a>4. Result 配置元素</h1><p>当 Action 类的方法执行完成后，返回一个字符串类型的结果码，框架根据这个结果码选择对应的 Result 元素给浏览器。 <resutl> 元素的两个属性为 <strong> name </strong> 和 <strong> type </strong> ,其中 name 属性用于指定 Result 的逻辑名称，与 Action 对象的返回值相对应，name 属性的默认值为 “SUCCESS”。type 属性用于设置返回结果的类型，如请求转发和重定向等。</resutl></p>
 <hr>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
 <li>Java Web 开发与实践</li>
 <li>Struts 官方文档</li>
 </ol>

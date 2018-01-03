@@ -94,14 +94,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -151,22 +151,27 @@
 
 
     <!-- Main Content -->
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/header.jpeg')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>软间阁 - Soft Margin</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">keep alive, keep enthusiastic</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    
+<!-- Create by Surflyan -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        /*background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')*/
+        height: 500px;
+        overflow: hidden;
+    }
+    header iframe{
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+</style>
+
+<header class="intro-header" >
+    <iframe src="https://surflyan.github.io/blog-index-jeveal/" />
+     </iframe>
 </header>
-
-
 
 <!-- Main Content -->
 <div class="container">
@@ -182,8 +187,59 @@
                 col-xs-12
                 post-container
             ">
-                <!-- Main Content -->
+                <!--layout: page -->
 
+
+<!-- Main Content -->
+
+
+<div class="post-preview">
+
+    <a href="/2017/09/27/Struts框架的配置/">
+        <h2 class="post-title">
+            Struts框架的配置
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            1. Struts.xml 举例Struts.xml 是 Struts2 框架的核心配置文件，主要用于配置核心控制器 Action 类，同时还可以配置作用于 Action 的拦截器、Action 的 result 映射等，在程序运行时 struts.xml 将被 Struts 2 框架自动加载。
+下面是一个完整的 Struts.xml 配置文件，来源于 Struts 官方文档，做了部分修改，......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Surflyan on
+        2017-09-27
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/09/23/Struts框架的处理过程/">
+        <h2 class="post-title">
+            Struts框架的处理过程
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+             注：  本博文主要翻译自 Struts 官方文档，附上链接 https://cwiki.apache.org/confluence/display/WW/Big+Picture
+
+Struts 对客户端的请求的处理主要经过下面几个过程：
+
+客户端的请求经过 Servlet 容器一系列的过滤器（Filter)
+过滤器 FilterDispatcher  被调用，FilterDispatche......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Surflyan on
+        2017-09-23
+    </p>
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -391,51 +447,6 @@ $ pip install pytesseract
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2017/07/10/算法分析之贪心算法/">
-        <h2 class="post-title">
-            算法分析之贪心算法
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            1. 算法思想求解优化问题通常可以一步一步来选择求解，贪心算法处理优化问题时，在每一步都选择当前最佳策略，希望通过局部优化来达到全局优化的效果。一般情况下，贪心算法仅会得到一个可行解，并非最优解。如 0-1背包问题 （这里不包括分数背包问题）。
-
-2. 前提条件任何问题只要其具备了贪心选择性和优化子结构就可通过贪心算法获得该问题的最优解。
- 贪心选择性  ： 如果一个优化问题的贪心选择必然出......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-07-10
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/07/07/算法分析之动态规划/">
-        <h2 class="post-title">
-            算法分析之动态规划
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            1. 算法思想动态规划建立在分治思想的基础上，在利用分治算法求解问题时，可能遇到子问题之间互相关联，会造成重复求解，从而影响算法效率。那么对于这类具有优化子结构和子问题重叠性的优化问题时，可以根据优化子问题设计数据结构和i问题的求解次序，从规模最小的子问题开始自底向上地计算每个子问题的解，保证每个子问题被求解一次；将求得的子问题的解和构造最优解所需要的信息存储在数据结构中；再根据最优解的构造......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-07-07
-    </p>
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -472,9 +483,15 @@ $ pip install pytesseract
                     <div class="tags">
                         
                             
-                            <a href="/tags/#hexo" title="hexo" rel="3">hexo</a>
+                            <a href="/tags/#hexo" title="hexo" rel="4">hexo</a>
                             
                         
+                            
+                            <a href="/tags/#Git" title="Git" rel="2">Git</a>
+                            
+                        
+                            
+                            <a href="/tags/#Linux" title="Linux" rel="2">Linux</a>
                             
                         
                             
@@ -488,11 +505,11 @@ $ pip install pytesseract
                             
                         
                             
-                            <a href="/tags/#Machine Learning" title="Machine Learning" rel="5">Machine Learning</a>
+                            <a href="/tags/#Database" title="Database" rel="2">Database</a>
                             
                         
                             
-                            <a href="/tags/#Database" title="Database" rel="2">Database</a>
+                            <a href="/tags/#Machine Learning" title="Machine Learning" rel="5">Machine Learning</a>
                             
                         
                             
@@ -522,8 +539,6 @@ $ pip install pytesseract
                             
                         
                             
-                        
-                            
                             <a href="/tags/#Algorithm" title="Algorithm" rel="5">Algorithm</a>
                             
                         
@@ -533,6 +548,8 @@ $ pip install pytesseract
                         
                             
                             <a href="/tags/#Software Engineering" title="Software Engineering" rel="2">Software Engineering</a>
+                            
+                        
                             
                         
                             

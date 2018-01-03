@@ -94,14 +94,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -195,12 +195,12 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="1-生成器-generator"><a href="#1-生成器-generator" class="headerlink" title="1. 生成器(generator)"></a>1. 生成器(generator)</h2><p>什么是生成器呢，要理解生成器你就必须先理解什么是迭代器，因为生成器也是一种迭代器，是一种更高级、更优雅的迭代器。<br>关于迭代器，如果你不明白的话，本博文的 <a href="http://www.codepalace.org/2017/03/05/Python%E8%BF%9B%E9%98%B6%E4%B9%8B%E8%BF%AD%E4%BB%A3%E5%99%A8/" target="_blank" rel="external">前一篇</a>有讲解，这里不再赘述。<br>首先，明白下面两点：</p>
+                <h1 id="1-生成器-generator"><a href="#1-生成器-generator" class="headerlink" title="1. 生成器(generator)"></a>1. 生成器(generator)</h1><p>什么是生成器呢，要理解生成器你就必须先理解什么是迭代器，因为生成器也是一种迭代器，是一种更高级、更优雅的迭代器。<br>关于迭代器，如果你不明白的话，本博文的 <a href="http://www.codepalace.org/2017/03/05/Python%E8%BF%9B%E9%98%B6%E4%B9%8B%E8%BF%AD%E4%BB%A3%E5%99%A8/" target="_blank" rel="external">前一篇</a>有讲解，这里不再赘述。<br>首先，明白下面两点：</p>
 <ul>
 <li>任意生成器都是迭代器 (反之不成立）。</li>
 <li>任意生成器，都是一个延迟产生值的工厂。</li>
 </ul>
-<h2 id="2-yield"><a href="#2-yield" class="headerlink" title="2. yield"></a>2. yield</h2><p>Python 有两种不同的方式提供生成器：<br>现在介绍第一种：<strong> 生成器函数 </strong><br> <strong>生成器函数</strong> ： 包含yield语句的函数。只不过使用 <code>yield</code> 语句来返回结果，而不是<code>return</code>，<code>yield</code> 语句不像 <code>return</code>那样返回值，而是产生多个值，而每次使用<code>yield语句</code> 时产生一个值时，函数就会被  <strong>挂起</strong>，即函数停留在那点等待被重新唤醒。函数被重新唤醒后就从停止的那点开始执行。这么说你可能还不明白，上例子：</p>
+<h1 id="2-yield"><a href="#2-yield" class="headerlink" title="2. yield"></a>2. yield</h1><p>Python 有两种不同的方式提供生成器：<br>现在介绍第一种：<strong> 生成器函数 </strong><br> <strong>生成器函数</strong> ： 包含yield语句的函数。只不过使用 <code>yield</code> 语句来返回结果，而不是<code>return</code>，<code>yield</code> 语句不像 <code>return</code>那样返回值，而是产生多个值，而每次使用<code>yield语句</code> 时产生一个值时，函数就会被  <strong>挂起</strong>，即函数停留在那点等待被重新唤醒。函数被重新唤醒后就从停止的那点开始执行。这么说你可能还不明白，上例子：</p>
 <pre><code class="lang-python">&gt;&gt;&gt; def CheckYield(n):
 ...     while n &gt; 0:
 ...         print &quot;before yield&quot;
@@ -225,8 +225,8 @@ StopIteration
 [&#39;__class__&#39;, &#39;__delattr__&#39;, &#39;__doc__&#39;, &#39;__format__&#39;, &#39;__getattribute__&#39;, &#39;__hash__&#39;, &#39;__init__&#39;, &#39;__iter__&#39;, &#39;__name__&#39;, &#39;__new__&#39;, &#39;__reduce__&#39;, &#39;__reduce_ex__&#39;, &#39;__repr__&#39;, &#39;__setattr__&#39;, &#39;__sizeof__&#39;, &#39;__str__&#39;, &#39;__subclasshook__&#39;, &#39;close&#39;, &#39;gi_code&#39;, &#39;gi_frame&#39;, &#39;gi_running&#39;, &#39;next&#39;, &#39;send&#39;, &#39;throw&#39;]
 </code></pre>
 <p>看到了吧，函数会在执行到 yield 语句之后返回一个值，然后下次接着<code>yield</code> 之后的语句运行。</p>
-<h2 id="3-生成器与迭代器的对比"><a href="#3-生成器与迭代器的对比" class="headerlink" title="3. 生成器与迭代器的对比"></a>3. 生成器与迭代器的对比</h2><p>现在我们分别使用迭代器和生成器来写一段打印0-4序列的代码。</p>
-<h4 id="3-1-迭代器"><a href="#3-1-迭代器" class="headerlink" title="3.1 迭代器"></a>3.1 迭代器</h4><pre><code class="lang-python">class CountIter:
+<h1 id="3-生成器与迭代器的对比"><a href="#3-生成器与迭代器的对比" class="headerlink" title="3. 生成器与迭代器的对比"></a>3. 生成器与迭代器的对比</h1><p>现在我们分别使用迭代器和生成器来写一段打印0-4序列的代码。</p>
+<h2 id="3-1-迭代器"><a href="#3-1-迭代器" class="headerlink" title="3.1 迭代器"></a>3.1 迭代器</h2><pre><code class="lang-python">class CountIter:
     def __init__(self, n):
         self.n = n
     def __iter__(self):
@@ -242,7 +242,7 @@ StopIteration
     print i
 </code></pre>
 <p>CountIter类就是一个迭代器，它的 <code>__iter__()</code>方法返回可迭代对象，<code>next()</code>方法则执行下一次迭代。</p>
-<h4 id="3-2-生成器"><a href="#3-2-生成器" class="headerlink" title="3.2 生成器"></a>3.2 生成器</h4><pre><code class="lang-python">def count(n):
+<h2 id="3-2-生成器"><a href="#3-2-生成器" class="headerlink" title="3.2 生成器"></a>3.2 生成器</h2><pre><code class="lang-python">def count(n):
     x = 0
     while x &lt; n:
         yield x
@@ -251,7 +251,7 @@ StopIteration
     print i
 </code></pre>
 <p>什么感觉？最直观的就是生成器写的代码好少。<br>迭代器每次在执行完 <code>next()</code> 方法并返回之后,该方法的上下文环境就会消失了，所有的<code>next()</code>方法中定义的局变就无法被访问了，在迭代器中，靠<code>self.x+=1</code>来记录next 之后增减。</p>
-<h4 id="3-3-惰性求值"><a href="#3-3-惰性求值" class="headerlink" title="3.3 惰性求值"></a>3.3 惰性求值</h4><p>对于生成器，每次执行<code>next()</code>方法后，执行到<code>yield</code>关键字处，并将<code>yield</code>后的参数值返回，同时当前生成器函数的上下文会被保留下来。也就是函数内所有变量的状态会被保留，同时函数代码执行到的位置会被保留，像是被挂起一样。这个特点被称为 <strong>延迟计算</strong> 或 <strong>惰性求值(Lazy evaluation)</strong>，可以有效的节省内存。惰性求值实际上是现实了<strong>协同程序</strong> 的思想。</p>
+<h2 id="3-3-惰性求值"><a href="#3-3-惰性求值" class="headerlink" title="3.3 惰性求值"></a>3.3 惰性求值</h2><p>对于生成器，每次执行<code>next()</code>方法后，执行到<code>yield</code>关键字处，并将<code>yield</code>后的参数值返回，同时当前生成器函数的上下文会被保留下来。也就是函数内所有变量的状态会被保留，同时函数代码执行到的位置会被保留，像是被挂起一样。这个特点被称为 <strong>延迟计算</strong> 或 <strong>惰性求值(Lazy evaluation)</strong>，可以有效的节省内存。惰性求值实际上是现实了<strong>协同程序</strong> 的思想。</p>
 <blockquote>
 <p><strong>协同程序</strong>：是一个可以独立运行的函数调用，该调用可以被暂停或者挂起，之后还能够从程序流挂起的地方继续或重新开始。当协同程序被挂起时，Python 就能够从该协同程序中获取一个处于中间状态的属性的返回值(由 yield 返回)，当调用 next() 方法使得程序流回到协同程序中时，能够为其传入额外的或者是被改变了的参数，并且从上次挂起的下一条语句继续执行。这是一种类似于进程中断的函数调用方式。<strong>这种挂起函数调用并在返回属性中间值后，仍然能够多次继续执行的协同程序被称之为生成器</strong>。</p>
 </blockquote>
@@ -263,7 +263,7 @@ print list(lst)
 [0, 1, 2, 3, 4]
 []
 </code></pre>
-<h2 id="4-生成器表达式"><a href="#4-生成器表达式" class="headerlink" title="4.生成器表达式"></a>4.生成器表达式</h2><p>列表解析使用起来非常方便，可是，它必须一次性生成所有的数据，用来创建列表对象。<br>因此，生成器根据列表解析，结合自身每次返回一个值，然后挂起的特点，解决这个问题。</p>
+<h1 id="4-生成器表达式"><a href="#4-生成器表达式" class="headerlink" title="4.生成器表达式"></a>4.生成器表达式</h1><p>列表解析使用起来非常方便，可是，它必须一次性生成所有的数据，用来创建列表对象。<br>因此，生成器根据列表解析，结合自身每次返回一个值，然后挂起的特点，解决这个问题。</p>
 <p>列表解析:<br><code>[expr for iter_var in iterable if cond_expr]</code></p>
 <pre><code class="lang-python">&gt;&gt;&gt;lst=[x*x for x in range(5)]
 &gt;&gt;&gt;lst
@@ -279,8 +279,8 @@ print list(lst)
 [1,4,9,16]
 </code></pre>
 <p>两者的语法相似，但生成器表达式返回的不是一个列表类型对象，而是一个生成器对象，生成器是一个内存使用友好的结构。</p>
-<h2 id="5-生成器方法"><a href="#5-生成器方法" class="headerlink" title="5. 生成器方法"></a>5. 生成器方法</h2><p>生成器的新特性是在开始运行后为生成器提供值的能力，表现为和生成器和”外部世界“交流的渠道。</p>
-<h4 id="5-1-close-方法"><a href="#5-1-close-方法" class="headerlink" title="5.1 close()方法"></a>5.1 close()方法</h4><p><code>close()</code>方法就是关闭生成器。生成器被关闭后，再调用next()方法，会立即抛出StopIteration异常。</p>
+<h1 id="5-生成器方法"><a href="#5-生成器方法" class="headerlink" title="5. 生成器方法"></a>5. 生成器方法</h1><p>生成器的新特性是在开始运行后为生成器提供值的能力，表现为和生成器和”外部世界“交流的渠道。</p>
+<h2 id="5-1-close-方法"><a href="#5-1-close-方法" class="headerlink" title="5.1 close()方法"></a>5.1 close()方法</h2><p><code>close()</code>方法就是关闭生成器。生成器被关闭后，再调用next()方法，会立即抛出StopIteration异常。</p>
 <pre><code class="lang-python">&gt;&gt;&gt; ge = (x for x in range(5))
 &gt;&gt;&gt; ge.close()
 &gt;&gt;&gt; ge.next()
@@ -289,7 +289,7 @@ Traceback (most recent call last):
     ge.next()
 StopIteration
 </code></pre>
-<h4 id="5-2-send-方法"><a href="#5-2-send-方法" class="headerlink" title="5.2 send()方法"></a>5.2 send()方法</h4><p>这或许是生成器最重要的方法，通过 <code>send()</code>想生成器内部传递参数。</p>
+<h2 id="5-2-send-方法"><a href="#5-2-send-方法" class="headerlink" title="5.2 send()方法"></a>5.2 send()方法</h2><p>这或许是生成器最重要的方法，通过 <code>send()</code>想生成器内部传递参数。</p>
 <pre><code class="lang-python">def count(n):
     x = 0
     while x &lt; n:
@@ -307,7 +307,7 @@ Hello,Surflyan
 1
 &gt;&gt;&gt;
 </code></pre>
-<h2 id="6-小结"><a href="#6-小结" class="headerlink" title="6. 小结"></a>6. 小结</h2><ol>
+<h1 id="6-小结"><a href="#6-小结" class="headerlink" title="6. 小结"></a>6. 小结</h1><ol>
 <li>生成器函数语法上与函数类似,差别在于，生成器使用<code>yield</code>语句返回一个值。</li>
 <li>状态挂起，生成器最大的特性在与状态挂起。</li>
 <li>由于惰性求值的特性，使得内存占用极少。</li>

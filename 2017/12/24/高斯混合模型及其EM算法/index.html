@@ -94,14 +94,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -242,7 +242,7 @@
 <li>$\pi_k$，每个 Component 的概率，也就是每个 component 下的样本占总样本的比重；</li>
 <li>$\mu_k$, $\sigma_k$,每个高斯 Component 的参数。</li>
 </ol>
-<h3 id="6-1-EM算法"><a href="#6-1-EM算法" class="headerlink" title="6.1 EM算法"></a>6.1 EM算法</h3><ol>
+<h2 id="6-1-EM算法"><a href="#6-1-EM算法" class="headerlink" title="6.1 EM算法"></a>6.1 EM算法</h2><ol>
 <li>设定 Component 数目 K，初始化每个 Component 的参数，计算对数似然函数。</li>
 <li><p><strong>E-step</strong>:<br>E-step(Expectation)，计算期望，对应于GMM也就是，根据当前的$\pi_k、\mu_k、\sigma_k$计算后验概率：</p>
 <script type="math/tex; mode=display">\gamma(z_{nk}) = \frac{\pi_k\mathcal{N}(\boldsymbol{x}_n| \boldsymbol{\mu}_n, \boldsymbol{\Sigma}_n)}{\sum_{j=1}^K \pi_j \mathcal{N}(\boldsymbol{x}_n| \boldsymbol{\mu}_j, \boldsymbol{\Sigma}_j)}</script></li>
@@ -391,6 +391,10 @@ def EM(data,K):
                 <hr>
 
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/01/02/部署hexo到VPS/" data-toggle="tooltip" data-placement="top" title="Previous Post">&larr; 部署hexo到VPS</a>
+                        </li>
                     
                     
                         <li class="next">

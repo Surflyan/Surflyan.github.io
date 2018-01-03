@@ -94,14 +94,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -265,7 +265,7 @@ def autoNorm(dataset):
 dataset=autoNorm(dataset)
 print dataset
 </code></pre>
-<h3 id="5-1-归一化后的数据"><a href="#5-1-归一化后的数据" class="headerlink" title="5.1 归一化后的数据"></a>5.1 归一化后的数据</h3><pre><code class="lang-python">[[ 0.44832535  0.39805139  0.56233353]
+<h2 id="5-1-归一化后的数据"><a href="#5-1-归一化后的数据" class="headerlink" title="5.1 归一化后的数据"></a>5.1 归一化后的数据</h2><pre><code class="lang-python">[[ 0.44832535  0.39805139  0.56233353]
  [ 0.15873259  0.34195467  0.98724416]
  [ 0.28542943  0.06892523  0.47449629]
  ...,
@@ -317,7 +317,7 @@ accuracy=0.958000
 </code></pre>
 <p>可以看到，只有第四个预测数据预测错误。<br>accuracy 为整个测试集的预测准确度。</p>
 <hr>
-<h1 id="9-其他测试"><a href="#9-其他测试" class="headerlink" title="9. 其他测试"></a>9. 其他测试</h1><h3 id="9-1-数据集的划分"><a href="#9-1-数据集的划分" class="headerlink" title="9.1 数据集的划分"></a>9.1 数据集的划分</h3><p>调整训练集和测试集的划分，训练集从20%到90%</p>
+<h1 id="9-其他测试"><a href="#9-其他测试" class="headerlink" title="9. 其他测试"></a>9. 其他测试</h1><h2 id="9-1-数据集的划分"><a href="#9-1-数据集的划分" class="headerlink" title="9.1 数据集的划分"></a>9.1 数据集的划分</h2><p>调整训练集和测试集的划分，训练集从20%到90%</p>
 <pre><code class="lang-python">from scipy import interpolate
 plt.rcParams[&#39;font.sans-serif&#39;]=[&#39;SimHei&#39;]
 plt.rcParams[&#39;axes.unicode_minus&#39;]=False
@@ -339,7 +339,7 @@ plt.ylabel(u&quot;预测精度&quot;)
 plt.show()
 </code></pre>
 <p><img src="div.png" width="400"></p>
-<h3 id="9-2-k值的选取"><a href="#9-2-k值的选取" class="headerlink" title="9.2 k值的选取"></a>9.2 k值的选取</h3><p>k值从1到10</p>
+<h2 id="9-2-k值的选取"><a href="#9-2-k值的选取" class="headerlink" title="9.2 k值的选取"></a>9.2 k值的选取</h2><p>k值从1到10</p>
 <pre><code class="lang-python">from scipy import interpolate
 plt.rcParams[&#39;font.sans-serif&#39;]=[&#39;SimHei&#39;]
 plt.rcParams[&#39;axes.unicode_minus&#39;]=False
@@ -362,6 +362,9 @@ plt.savefig(&quot;k.png&quot;,dpi=100)
 plt.show()
 </code></pre>
 <p><img src="k.png" width="400"></p>
+<blockquote>
+<p>请多多指教！</p>
+</blockquote>
 
 
                 <hr>

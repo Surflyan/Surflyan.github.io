@@ -94,14 +94,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -151,22 +151,27 @@
 
 
     <!-- Main Content -->
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/header.jpeg')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>软间阁 - Soft Margin</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">keep alive, keep enthusiastic</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    
+<!-- Create by Surflyan -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        /*background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')*/
+        height: 500px;
+        overflow: hidden;
+    }
+    header iframe{
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+</style>
+
+<header class="intro-header" >
+    <iframe src="https://surflyan.github.io/blog-index-jeveal/" />
+     </iframe>
 </header>
-
-
 
 <!-- Main Content -->
 <div class="container">
@@ -182,8 +187,61 @@
                 col-xs-12
                 post-container
             ">
-                <!-- Main Content -->
+                <!--layout: page -->
 
+
+<!-- Main Content -->
+
+
+<div class="post-preview">
+
+    <a href="/2017/01/28/Hexo搭建个人博客-优化/">
+        <h2 class="post-title">
+            Hexo搭建个人博客--优化
+        </h2>
+        <h3 class="post-subtitle">
+            博客的后期处理、提交 sitemap
+        </h3>
+        <div class="post-content-preview">
+            相信你已经可以通过域名来访问到你的博客了，但还有一些事情是必须要做的，现在我们就来讲讲后续的处理吧。
+1. 评论功能一篇博文，分享思想。读者有发表想法的权利，所以我们必须提供评论功能。由于我们搭建的是静态网站，网站本身并不能存放评论，必须使用第三方提供的服务。国内一般使用较多的就是 多说了。
+首先注册一个多说账号，之后官网会给出详细的引导，你可以获取到通用代码，你可以将这段通用代码插入 pa......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Surflyan on
+        2017-01-28
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/01/26/Hexo搭建个人博客--进阶/">
+        <h2 class="post-title">
+            Hexo搭建个人博客--进阶
+        </h2>
+        <h3 class="post-subtitle">
+            hexo 搭建博客完整实现
+        </h3>
+        <div class="post-content-preview">
+            前一篇博文已经交代了准备工作，完成以后，就可以开始搭建自己的博客了，本博文按照博主建站顺序来引导，从本地预览到上传 github ，再到绑定域名浏览。 希望可以帮助你快速完成搭建。开始吧。
+安装 hexo.打开 Git bash ,执行：
+$ npm install -g hexo
+执行：
+hexo -v
+查看 hexo 是否安装完成，及hexo版本号
+hexo 安装完之后，就可使用hexo......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Surflyan on
+        2017-01-26
+    </p>
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -240,9 +298,15 @@ Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多�
                     <div class="tags">
                         
                             
-                            <a href="/tags/#hexo" title="hexo" rel="3">hexo</a>
+                            <a href="/tags/#hexo" title="hexo" rel="4">hexo</a>
                             
                         
+                            
+                            <a href="/tags/#Git" title="Git" rel="2">Git</a>
+                            
+                        
+                            
+                            <a href="/tags/#Linux" title="Linux" rel="2">Linux</a>
                             
                         
                             
@@ -256,11 +320,11 @@ Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多�
                             
                         
                             
-                            <a href="/tags/#Machine Learning" title="Machine Learning" rel="5">Machine Learning</a>
+                            <a href="/tags/#Database" title="Database" rel="2">Database</a>
                             
                         
                             
-                            <a href="/tags/#Database" title="Database" rel="2">Database</a>
+                            <a href="/tags/#Machine Learning" title="Machine Learning" rel="5">Machine Learning</a>
                             
                         
                             
@@ -290,8 +354,6 @@ Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多�
                             
                         
                             
-                        
-                            
                             <a href="/tags/#Algorithm" title="Algorithm" rel="5">Algorithm</a>
                             
                         
@@ -301,6 +363,8 @@ Github PagesGithub 作为全世界程序员的 Facebook ,如今世界上众多�
                         
                             
                             <a href="/tags/#Software Engineering" title="Software Engineering" rel="2">Software Engineering</a>
+                            
+                        
                             
                         
                             

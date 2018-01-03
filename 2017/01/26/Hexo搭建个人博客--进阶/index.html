@@ -94,14 +94,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -196,14 +196,14 @@
                 post-container">
 
                 <p>前一篇博文已经交代了准备工作，完成以后，就可以开始搭建自己的博客了，本博文按照博主建站顺序来引导，从本地预览到上传 github ，再到绑定域名浏览。 希望可以帮助你快速完成搭建。开始吧。</p>
-<h2 id="安装-hexo"><a href="#安装-hexo" class="headerlink" title="安装 hexo"></a>安装 hexo</h2><p>.<br>打开 <strong>Git bash</strong> ,执行：</p>
+<h1 id="安装-hexo"><a href="#安装-hexo" class="headerlink" title="安装 hexo"></a>安装 hexo</h1><p>.<br>打开 <strong>Git bash</strong> ,执行：</p>
 <pre><code>$ npm install -g hexo
 </code></pre><p>执行：</p>
 <pre><code>hexo -v
 </code></pre><p>查看 hexo 是否安装完成，及hexo版本号</p>
 <p>hexo 安装完之后，就可使用hexo，<a href="https://hexo.io/docs/commands.html#new" target="_blank" rel="external">了解hexo的所有命令</a></p>
 <p>如果想快速完成自己的博客，你也可以接着往下做，最常用的命令在后续都会讲到。</p>
-<h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>通过 cd 选择你想将博客文件放置的位置：</p>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>通过 cd 选择你想将博客文件放置的位置：</p>
 <p>执行:</p>
 <pre><code>$ hexo init Blog     //自己设文件名，我设为Blog
 </code></pre><p>将会在当前目录下生成一个名为Blog的文件夹。进入Blog：</p>
@@ -212,18 +212,18 @@
 <pre><code>$ npm install
 </code></pre><p>完成以后，该文件夹下的目录结构如下：</p>
 <p><img src="15-00-38.jpg" alt=""></p>
-<h4 id="生成静态文件"><a href="#生成静态文件" class="headerlink" title="生成静态文件"></a>生成静态文件</h4><p>执行：</p>
+<h2 id="生成静态文件"><a href="#生成静态文件" class="headerlink" title="生成静态文件"></a>生成静态文件</h2><p>执行：</p>
 <pre><code>$ hexo generate
 </code></pre><p>该命令会创建一个 <code>public</code> 文件夹，在 <code>public</code> 下生成所有的静态文件。有了静态文件，通过任何 web server 就可以独立运行网站了。</p>
 <p>执行完该命令后，可以看到<code>warning: LF will be...</code> : 实际没什么影响，不习惯可通过执行下行代码消除：</p>
 <pre><code>$ git config --global core.autocrlf false
-</code></pre><h4 id="本地启动"><a href="#本地启动" class="headerlink" title="本地启动"></a>本地启动</h4><p>执行：</p>
+</code></pre><h2 id="本地启动"><a href="#本地启动" class="headerlink" title="本地启动"></a>本地启动</h2><p>执行：</p>
 <pre><code>$ hexo server
 </code></pre><p>若成功启动则会看到如下</p>
 <pre><code>INFO Hexo is running at http://localhost:4000/.Press Ctrl+C to stop.
 </code></pre><p>此时端口4000打开，打开浏览器，输入上面的网址，你会看到hexo默认的主题界面landscape，看到了吗？</p>
 <p>下面是博主遇到的错误，如果不幸遇到，参见下面。</p>
-<h4 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h4><p>1.执行 hexo server 出现：</p>
+<h2 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h2><p>1.执行 hexo server 出现：</p>
 <pre><code>Usage: hexo &lt;Command&gt;
 </code></pre><p>执行：</p>
 <pre><code>$ npm install hexo-server --save
@@ -237,29 +237,29 @@
 <p>3.执行hexo sever，出现：</p>
 <pre><code>Cannot read property &#39;replace&#39; of null
 </code></pre><p>检查站点 <code>_config.yml</code>的 url： yoursite.com (保证有一个域名)</p>
-<h2 id="博客目录说明"><a href="#博客目录说明" class="headerlink" title="博客目录说明"></a>博客目录说明</h2><p>博客目录下各文件说明 <a href="http://www.jianshu.com/p/17d55d420d94" target="_blank" rel="external">参见这里</a>.</p>
-<h2 id="博客配置"><a href="#博客配置" class="headerlink" title="博客配置"></a>博客配置</h2><p>在 Blog 目录下的<code>_config.yml</code>文件就是博客的配置文件，在这里可以对网站进行一些重要信息（如标题，网址等）的设定<br>这里是<a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="external">官方配置文件说明</a>.</p>
-<h2 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h2><p>如果不喜欢 hexo 默认的主题，现在就可以去选择一个自己喜欢的主题了。如果你是新手，可以到 <a href="https://hexo.io/themes/" target="_blank" rel="external">hexo主题</a> 选择偏爱的主题，如果有能力，也可以自己配置个性化主题。</p>
+<h1 id="博客目录说明"><a href="#博客目录说明" class="headerlink" title="博客目录说明"></a>博客目录说明</h1><p>博客目录下各文件说明 <a href="http://www.jianshu.com/p/17d55d420d94" target="_blank" rel="external">参见这里</a>.</p>
+<h1 id="博客配置"><a href="#博客配置" class="headerlink" title="博客配置"></a>博客配置</h1><p>在 Blog 目录下的<code>_config.yml</code>文件就是博客的配置文件，在这里可以对网站进行一些重要信息（如标题，网址等）的设定<br>这里是<a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="external">官方配置文件说明</a>.</p>
+<h1 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h1><p>如果不喜欢 hexo 默认的主题，现在就可以去选择一个自己喜欢的主题了。如果你是新手，可以到 <a href="https://hexo.io/themes/" target="_blank" rel="external">hexo主题</a> 选择偏爱的主题，如果有能力，也可以自己配置个性化主题。</p>
 <p>更换主题，博主在这儿遇到不少坑。</p>
-<h4 id="选择主题"><a href="#选择主题" class="headerlink" title="选择主题"></a>选择主题</h4><p>找到喜欢的主题，确保其是<strong>支持 hexo</strong> 的主题，从 github clone 到<code>Blog theme</code>文件夹中，或者也可以下载<code>.zip</code>在解压到<code>Blog/theme</code>文件夹中。<br>采用 clone 方式，在 theme 文件夹中，执行<code>git bansh here</code>，<br>以 yilia 主题为例，执行命令：</p>
+<h2 id="选择主题"><a href="#选择主题" class="headerlink" title="选择主题"></a>选择主题</h2><p>找到喜欢的主题，确保其是<strong>支持 hexo</strong> 的主题，从 github clone 到<code>Blog theme</code>文件夹中，或者也可以下载<code>.zip</code>在解压到<code>Blog/theme</code>文件夹中。<br>采用 clone 方式，在 theme 文件夹中，执行<code>git bansh here</code>，<br>以 yilia 主题为例，执行命令：</p>
 <pre><code>$ git clone https://github.com/litten/hexo-theme-yilia.git themes/yilia
 </code></pre><p>若采用解压缩方式，在解压以后<strong>修改文件夹名为主题名 yilia</strong>。</p>
-<h4 id="修改theme"><a href="#修改theme" class="headerlink" title="修改theme"></a>修改theme</h4><p>在站点配置文件_config.yml 中修改 theme：为 yilia.<br><img src="16-24-10.jpg" alt=""><br><strong>注意</strong>： 后有一个空格；</p>
+<h2 id="修改theme"><a href="#修改theme" class="headerlink" title="修改theme"></a>修改theme</h2><p>在站点配置文件_config.yml 中修改 theme：为 yilia.<br><img src="16-24-10.jpg" alt=""><br><strong>注意</strong>： 后有一个空格；</p>
 <p>如果你初始化了多个 Blog 文件夹，则在站点配置文件的 root：设为你的 Blog 文件夹名。</p>
-<p>这时候你的主题就更换完成了。来验证一下吧。<br>检查你的站点 _config.yml:<br>url 这时候可以设为： <code>yoursite.com</code><br>root: <code>/Blog</code>  (你的博客目录)</p>
+<p>这时候你的主题就更换完成了。来验证一下吧。<br>检查你的站点 <code>_config.yml</code>:<br>url 这时候可以设为： <code>yoursite.com</code><br>root: <code>/Blog</code>  (你的博客目录)</p>
 <p>执行以下代码：</p>
 <pre><code>hexo clean      //清除public文件
 hexo generate   //生成public文件，可简写 hexo g
 hexo sever      //启动本地服务器，可简写 hexo s
 </code></pre><p>怎么样新的主题看到了吧。</p>
-<h2 id="上传-Github"><a href="#上传-Github" class="headerlink" title="上传 Github"></a>上传 Github</h2><p>你的博客在本地已经可以预览了，现在要做的就是上传到 Github 上。</p>
+<h1 id="上传-Github"><a href="#上传-Github" class="headerlink" title="上传 Github"></a>上传 Github</h1><p>你的博客在本地已经可以预览了，现在要做的就是上传到 Github 上。</p>
 <p>如果你是直接 fork 了别人的主题，那么你只需要将你的仓库名称改为 <code>your_github_name.github.io</code>,你就拥有了存放博客的仓库。</p>
 <p>如果你还没有存放博客的仓库，那么你需要新建仓库。</p>
-<h4 id="新建博客仓库"><a href="#新建博客仓库" class="headerlink" title="新建博客仓库"></a>新建博客仓库</h4><ol>
+<h2 id="新建博客仓库"><a href="#新建博客仓库" class="headerlink" title="新建博客仓库"></a>新建博客仓库</h2><ol>
 <li>新建名为<code>your_github_name.github.io</code>的仓库;</li>
 <li>打开 <code>setting</code> 页面，向下找到 <code>GitHub Pages</code>,开启<code>Automatic page generator</code>.</li>
 </ol>
-<h4 id="修改站点-config-yml"><a href="#修改站点-config-yml" class="headerlink" title="修改站点 _config.yml"></a>修改站点 _config.yml</h4><p>在站点配置文件 _config.yml 中 deploy部分，设置为：</p>
+<h2 id="修改站点-config-yml"><a href="#修改站点-config-yml" class="headerlink" title="修改站点 _config.yml"></a>修改站点 _config.yml</h2><p>在站点配置文件 _config.yml 中 deploy部分，设置为：</p>
 <pre><code>deploy:
       type: git
       repo: &lt;your_reposotory url&gt;     //例：https://github.com/Surflyan/Surflyan.github.io.git
@@ -268,7 +268,7 @@ hexo sever      //启动本地服务器，可简写 hexo s
 $ hexo g
 $ hexo d
 </code></pre><p>这时候如果你没有配置 <code>SSH Key</code> , 会提示你输入账号密码，如果配置了则不会出现这步。<br>之后就部署成功了，可以到你的 github 上查看， 在<code>Settings</code>页面的 <code>GitHub Pages</code> 可以看到： <code>Your site is published at your_github_name.github.io</code>, 现在你就可以访问你的网站了。</p>
-<h4 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h4><p>1.提示找不到 Git</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p>1.提示找不到 Git</p>
 <p>Hexo 3.0 以后<code>depoly git</code>被分开，需要单独安装，命令如下：</p>
 <pre><code>npm install hexo-deployer-git --save
 </code></pre><p>只能装好再次尝试。</p>
@@ -282,7 +282,7 @@ root: /                      //root 后/一定不能少
 root： /Blog
 </code></pre><p>但是博主这样尝试并没有解决上传 github 样式丢失的问题。<br>在本地预览的时候 ，需要再次更改站点_config.yml 的 root 为<br><code>root: /Blog</code></p>
 <p>这是博主遇到的较大的坑，并没有找更好的解决办法。</p>
-<h2 id="域名绑定"><a href="#域名绑定" class="headerlink" title="域名绑定"></a>域名绑定</h2><p>如果你没有购买域名，可以接受 github 提供的二级域名的话，可跳过这步。</p>
+<h1 id="域名绑定"><a href="#域名绑定" class="headerlink" title="域名绑定"></a>域名绑定</h1><p>如果你没有购买域名，可以接受 github 提供的二级域名的话，可跳过这步。</p>
 <p><strong>确保你的域名 DNS 设置正确</strong> 。</p>
 <p>在 <code>source</code>目录下新建文件名为<code>CHAME</code>的纯文本文件，<strong>无后缀</strong>，内容为你的域名：<br><code>your_site.com</code>, 也可使用<code>wwww.your_site.com</code>的形式。</p>
 <p>这是就可以提交 github 了，依旧执行这三条代码：</p>
@@ -290,12 +290,12 @@ root： /Blog
 $ hexo g
 $ hexo d
 </code></pre><p>通过你的域名访问你的网站可以了吗。</p>
-<h2 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h2><p>开始你的第一篇博文吧。<br>打开 Git bash 或者 本地命令行，进入你的博客目录，执行：</p>
+<h1 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h1><p>开始你的第一篇博文吧。<br>打开 Git bash 或者 本地命令行，进入你的博客目录，执行：</p>
 <pre><code>$ hexo new &quot;我的第一篇博文&quot;
 </code></pre><p>此时在 <code>source/_post</code> 文件夹下就可看到你的第一篇博文，还有一个同名文件夹，用来存放该篇博文的用到的图片。<br>打开你的博文，就可以使用 <code>Markdown</code> 语法来写博文了，试试吧。</p>
 <p>写完可先在本地预览。</p>
 <p>可能不少朋友还会遇到在_post下删除了文章后，执行 <code>hexo g</code>后又恢复了，你需要先删除掉<code>db.json</code>文件，在执行<code>hexo clean</code>、<code>hexo g</code>.</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p> 终于写完了，肩痛。<br> 现在，你的博客基本成型了，但是要做的工作还有很多。下篇介绍后续处理。</p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p> 终于写完了，肩痛。<br> 现在，你的博客基本成型了，但是要做的工作还有很多。下篇介绍后续处理。</p>
 <blockquote>
 <p>请多多指教 !</p>
 </blockquote>

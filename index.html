@@ -94,14 +94,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -151,22 +151,27 @@
 
 
     <!-- Main Content -->
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/header.jpeg')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>软间阁 - Soft Margin</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">keep alive, keep enthusiastic</span>
-                </div>
-            </div>
-        </div>
-    </div>
+    
+<!-- Create by Surflyan -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        /*background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')*/
+        height: 500px;
+        overflow: hidden;
+    }
+    header iframe{
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+</style>
+
+<header class="intro-header" >
+    <iframe src="https://surflyan.github.io/blog-index-jeveal/" />
+     </iframe>
 </header>
-
-
 
 <!-- Main Content -->
 <div class="container">
@@ -182,8 +187,56 @@
                 col-xs-12
                 post-container
             ">
-                <!-- Main Content -->
+                <!--layout: page -->
 
+
+<!-- Main Content -->
+
+
+<div class="post-preview">
+
+    <a href="/2018/01/04/关于博客地址变更/">
+        <h2 class="post-title">
+            关于博客地址变更
+        </h2>
+        <h3 class="post-subtitle">
+            博客启用新域名
+        </h3>
+        <div class="post-content-preview">
+            感谢你的访问，博客已迁移到个人服务器上，并启用新域名 www.SoftMargin.com, Github Page 上的博客停止更新。
+欢迎访问  软间阁-Soft Margin 
+...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Surflyan on
+        2018-01-04
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/01/02/部署hexo到VPS/">
+        <h2 class="post-title">
+            部署hexo到VPS
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            1. 前言终于再次折腾了下博客。到 google analytics 上看了下这一年来的浏览量，还可以，但是全部来源于google，没有来自百度的记录。查了下，果然百度没有收录任何一篇博客。这是因为 github page 限制了百度爬虫。于是，决定将博客部署到个人VPS上。
+既然决定要将 hexo blog 部署到 vps上，那么如何实现自动部署是我们所关注的。可以在 vps 搭个 Git......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Surflyan on
+        2018-01-02
+    </p>
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -392,54 +445,6 @@ git reset HEAD &lt;file&......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2017/09/27/Struts框架的配置/">
-        <h2 class="post-title">
-            Struts框架的配置
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            1. Struts.xml 举例Struts.xml 是 Struts2 框架的核心配置文件，主要用于配置核心控制器 Action 类，同时还可以配置作用于 Action 的拦截器、Action 的 result 映射等，在程序运行时 struts.xml 将被 Struts 2 框架自动加载。
-下面是一个完整的 Struts.xml 配置文件，来源于 Struts 官方文档，做了部分修改，......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-09-27
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/09/23/Struts框架的处理过程/">
-        <h2 class="post-title">
-            Struts框架的处理过程
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-             注：  本博文主要翻译自 Struts 官方文档，附上链接 https://cwiki.apache.org/confluence/display/WW/Big+Picture
-
-Struts 对客户端的请求的处理主要经过下面几个过程：
-
-客户端的请求经过 Servlet 容器一系列的过滤器（Filter)
-过滤器 FilterDispatcher  被调用，FilterDispatche......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Surflyan on
-        2017-09-23
-    </p>
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -472,9 +477,15 @@ Struts 对客户端的请求的处理主要经过下面几个过程：
                     <div class="tags">
                         
                             
-                            <a href="/tags/#hexo" title="hexo" rel="3">hexo</a>
+                            <a href="/tags/#hexo" title="hexo" rel="4">hexo</a>
                             
                         
+                            
+                            <a href="/tags/#Git" title="Git" rel="2">Git</a>
+                            
+                        
+                            
+                            <a href="/tags/#Linux" title="Linux" rel="2">Linux</a>
                             
                         
                             
@@ -488,11 +499,11 @@ Struts 对客户端的请求的处理主要经过下面几个过程：
                             
                         
                             
-                            <a href="/tags/#Machine Learning" title="Machine Learning" rel="5">Machine Learning</a>
+                            <a href="/tags/#Database" title="Database" rel="2">Database</a>
                             
                         
                             
-                            <a href="/tags/#Database" title="Database" rel="2">Database</a>
+                            <a href="/tags/#Machine Learning" title="Machine Learning" rel="5">Machine Learning</a>
                             
                         
                             
@@ -522,8 +533,6 @@ Struts 对客户端的请求的处理主要经过下面几个过程：
                             
                         
                             
-                        
-                            
                             <a href="/tags/#Algorithm" title="Algorithm" rel="5">Algorithm</a>
                             
                         
@@ -533,6 +542,8 @@ Struts 对客户端的请求的处理主要经过下面几个过程：
                         
                             
                             <a href="/tags/#Software Engineering" title="Software Engineering" rel="2">Software Engineering</a>
+                            
+                        
                             
                         
                             

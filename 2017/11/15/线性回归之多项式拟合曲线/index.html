@@ -94,14 +94,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -196,8 +196,8 @@
                 post-container">
 
                 <h1 id="1-线性回归模型"><a href="#1-线性回归模型" class="headerlink" title="1. 线性回归模型"></a>1. 线性回归模型</h1><p>通常变量之间存在着某种关系，可以使用线性方程来描述这种关系。</p>
-<h3 id="1-1-函数模型"><a href="#1-1-函数模型" class="headerlink" title="1.1 函数模型"></a>1.1 函数模型</h3><p><img src="model.jpg" alt="model"><br>对于多样本数据，可写成矩阵形式：<br><img src="matrix-model.jpg" alt="matrix-model"></p>
-<h3 id="1-2-损失函数"><a href="#1-2-损失函数" class="headerlink" title="1.2 损失函数"></a>1.2 损失函数</h3><p>需要根据样本数据，来找到一条曲线拟合这些数据，因此需要一个标准来刻画曲线与实际值的距离。<br><strong> 损失函数（loss function）</strong> ：刻画拟合曲线与目标label 距离的函数。使用残差平方和作为loss function</p>
+<h2 id="1-1-函数模型"><a href="#1-1-函数模型" class="headerlink" title="1.1 函数模型"></a>1.1 函数模型</h2><p><img src="model.jpg" alt="model"><br>对于多样本数据，可写成矩阵形式：<br><img src="matrix-model.jpg" alt="matrix-model"></p>
+<h2 id="1-2-损失函数"><a href="#1-2-损失函数" class="headerlink" title="1.2 损失函数"></a>1.2 损失函数</h2><p>需要根据样本数据，来找到一条曲线拟合这些数据，因此需要一个标准来刻画曲线与实际值的距离。<br><strong> 损失函数（loss function）</strong> ：刻画拟合曲线与目标label 距离的函数。使用残差平方和作为loss function</p>
 <p><img src="loss-function.jpg" alt="loss-function"></p>
 <p>因此，现在目标就变成了求出使损失函数最小的线性方程的系数矩阵 W。</p>
 <hr>
@@ -210,15 +210,15 @@ YNoise = [np.random.normal(0,0.2 )+ y for y in Y]
 Y = np.matrix(YNoise)
 </code></pre>
 <hr>
-<h3 id="3-1-最小二乘法"><a href="#3-1-最小二乘法" class="headerlink" title="3.1 最小二乘法"></a>3.1 最小二乘法</h3><h4 id="3-1-1-解析解推导"><a href="#3-1-1-解析解推导" class="headerlink" title="3.1.1 解析解推导"></a>3.1.1 解析解推导</h4><p>当样本矩阵满秩可求解时，可以直接求出解析解，求得最优解。<br>解析解推导：<br><img src="analytical-solution.jpg" alt="analytical-solution"></p>
-<h4 id="3-1-2-拟合结果"><a href="#3-1-2-拟合结果" class="headerlink" title="3.1.2 拟合结果"></a>3.1.2 拟合结果</h4><p>使用解析解的方式进行拟合。用4阶和5阶多项式拟合结果如下：</p>
+<h2 id="3-1-最小二乘法"><a href="#3-1-最小二乘法" class="headerlink" title="3.1 最小二乘法"></a>3.1 最小二乘法</h2><h3 id="3-1-1-解析解推导"><a href="#3-1-1-解析解推导" class="headerlink" title="3.1.1 解析解推导"></a>3.1.1 解析解推导</h3><p>当样本矩阵满秩可求解时，可以直接求出解析解，求得最优解。<br>解析解推导：<br><img src="analytical-solution.jpg" alt="analytical-solution"></p>
+<h3 id="3-1-2-拟合结果"><a href="#3-1-2-拟合结果" class="headerlink" title="3.1.2 拟合结果"></a>3.1.2 拟合结果</h3><p>使用解析解的方式进行拟合。用4阶和5阶多项式拟合结果如下：</p>
 <p><img src="4-rank.png" width="400"><br><img src="5-rank.png" width="400"></p>
-<h3 id="3-2-梯度下降法"><a href="#3-2-梯度下降法" class="headerlink" title="3.2 梯度下降法"></a>3.2 梯度下降法</h3><p>当样本矩阵不是满秩矩阵时，可以采用迭代的方法求解优化解。梯度下降法是一种求解局部最优的方法。对于函数$F(x)$ ，在$x_1$ 点的梯度时$F(x)$ 增长最快的方向，相反方向，就是该点下降最快的方向。沿着最快下降方向，可以增加优化解的求解速度。</p>
-<h4 id="3-2-1-求解思路"><a href="#3-2-1-求解思路" class="headerlink" title="3.2.1 求解思路"></a>3.2.1 求解思路</h4><ol>
+<h2 id="3-2-梯度下降法"><a href="#3-2-梯度下降法" class="headerlink" title="3.2 梯度下降法"></a>3.2 梯度下降法</h2><p>当样本矩阵不是满秩矩阵时，可以采用迭代的方法求解优化解。梯度下降法是一种求解局部最优的方法。对于函数$F(x)$ ，在$x_1$ 点的梯度时$F(x)$ 增长最快的方向，相反方向，就是该点下降最快的方向。沿着最快下降方向，可以增加优化解的求解速度。</p>
+<h3 id="3-2-1-求解思路"><a href="#3-2-1-求解思路" class="headerlink" title="3.2.1 求解思路"></a>3.2.1 求解思路</h3><ol>
 <li>首先对 $\theta$ 赋值，这个值可以是随机的，也可以是一个全零的向量。</li>
 <li>改变 $\theta$ 的值，使得 $J(\theta)$ 按梯度下降的方向进行减少。<br> 我们可以通过对 $J(\theta)$ 求偏导，得到 $\theta$ 的更新方程：<br> $\theta = \theta - \alpha(X^{T}(X\theta - Y))$<br> 一直迭代，直到收敛。</li>
 </ol>
-<h4 id="3-2-2-代码实现"><a href="#3-2-2-代码实现" class="headerlink" title="3.2.2 代码实现"></a>3.2.2 代码实现</h4><pre><code class="lang-python"># 梯度下降法
+<h3 id="3-2-2-代码实现"><a href="#3-2-2-代码实现" class="headerlink" title="3.2.2 代码实现"></a>3.2.2 代码实现</h3><pre><code class="lang-python"># 梯度下降法
 def batchGradientDescent(x,y,theta,alpha,maxIterations):
     &quot;&quot;&quot;
     :param alpha 迭代步长
@@ -246,13 +246,13 @@ def RegularzedGradientDescent(x,y,theta,alpha,maxIterations,lamb):
 <hr>
 <h1 id="4-过拟合分析"><a href="#4-过拟合分析" class="headerlink" title="4. 过拟合分析"></a>4. 过拟合分析</h1><p><img src="overfitting-9.png" width="400"><br><img src="overfitting-10.png" width="400"></p>
 <p>以最小二乘法拟合多项式为例，图一是以9阶多项式拟合的，图二是以10阶多项式拟合的，可以看到对于样本点似乎都拟合的非常好，10阶多项式更是经过了每个样本点，拟合出了一条扭曲的曲线，不停上下波动。这样是很好的拟合吗，当然不是。过拟合能很好的拟合样本点，几乎拟合所有的训练数据。但却导致它失去了泛化能力，在运用到新样本上后，预测的结果差强人意。</p>
-<h3 id="4-2-克服过拟合"><a href="#4-2-克服过拟合" class="headerlink" title="4.2 克服过拟合"></a>4.2 克服过拟合</h3><h4 id="4-2-1-增加样本数据量"><a href="#4-2-1-增加样本数据量" class="headerlink" title="4.2.1 增加样本数据量"></a>4.2.1 增加样本数据量</h4><p>下图为将样本数据增加到40个点以后，用10阶多项式进行拟合的效果。过拟合效果明显减弱。</p>
+<h2 id="4-2-克服过拟合"><a href="#4-2-克服过拟合" class="headerlink" title="4.2 克服过拟合"></a>4.2 克服过拟合</h2><h3 id="4-2-1-增加样本数据量"><a href="#4-2-1-增加样本数据量" class="headerlink" title="4.2.1 增加样本数据量"></a>4.2.1 增加样本数据量</h3><p>下图为将样本数据增加到40个点以后，用10阶多项式进行拟合的效果。过拟合效果明显减弱。</p>
 <figure class="center">
 <img src="overcome-datasize.png" width="400">
 </figure>
 
 <p><em>有时候不是因为算法好赢了，而是因为拥有更多的数据才赢了</em>。但是，增加样本却不是处处适用的方法，有时候没有那么多数据，就没办法再增加样本。增加样本，也会加大计算量。</p>
-<h4 id="4-2-2-增加惩罚项"><a href="#4-2-2-增加惩罚项" class="headerlink" title="4.2.2 增加惩罚项"></a>4.2.2 增加惩罚项</h4><p>增加惩罚项的方法通常非常有效，当有很多特征变量时，每个变量都会起作用。增加惩罚项，通常是在代价函数后面加上一个2-范数项（也可能是1-范数）。增加了惩罚项，会对每个参数都会进行收缩（shrink)）。这将会使得参数的值尽可能小，参数越小，通常对应于越光滑的函数，也就是更加简单的函数。就会有效避免发生过拟合。<br>下图为使用共轭梯度法用10阶多项式拟合的结果，比较了加惩罚项和不加惩罚项两种拟合效果：</p>
+<h3 id="4-2-2-增加惩罚项"><a href="#4-2-2-增加惩罚项" class="headerlink" title="4.2.2 增加惩罚项"></a>4.2.2 增加惩罚项</h3><p>增加惩罚项的方法通常非常有效，当有很多特征变量时，每个变量都会起作用。增加惩罚项，通常是在代价函数后面加上一个2-范数项（也可能是1-范数）。增加了惩罚项，会对每个参数都会进行收缩（shrink)）。这将会使得参数的值尽可能小，参数越小，通常对应于越光滑的函数，也就是更加简单的函数。就会有效避免发生过拟合。<br>下图为使用共轭梯度法用10阶多项式拟合的结果，比较了加惩罚项和不加惩罚项两种拟合效果：</p>
 <p><figure class="center">
 <img src="CG-2norm.png" width="400">
 </figure><br>增加惩罚项时，惩罚项系数的选择是特别关键的。惩罚系数过大，会导致参数趋于零，类似于拟合了一条直线，也就是欠拟合现象。所以，惩罚系数需要在两者之间平衡，来避免过拟合，同时避免欠拟合。</p>
@@ -291,6 +291,20 @@ def RegularzedGradientDescent(x,y,theta,alpha,maxIterations,lamb):
 
             </div>
     <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
         
 
 
@@ -572,6 +586,50 @@ def RegularzedGradientDescent(x,y,theta,alpha,maxIterations,lamb):
 
 
 <!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Surflyan to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
 
 
 

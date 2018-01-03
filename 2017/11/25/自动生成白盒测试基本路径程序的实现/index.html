@@ -94,14 +94,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -226,7 +226,7 @@
 <font size="2"><center>图二 情况二</center></font>
 
 <h1 id="4-思路分析"><a href="#4-思路分析" class="headerlink" title="4. 思路分析"></a>4. 思路分析</h1><p>依据输入，建立有向图结构。博主在这里使用邻接矩阵的形式建立了图结构，使用数字表示语句类型，-1表示不连通，0 表示false分支，1表示true分支，2表示基本语句。</p>
-<h3 id="4-1-遍历函数分析"><a href="#4-1-遍历函数分析" class="headerlink" title="4.1 遍历函数分析"></a>4.1 遍历函数分析</h3><ol>
+<h2 id="4-1-遍历函数分析"><a href="#4-1-遍历函数分析" class="headerlink" title="4.1 遍历函数分析"></a>4.1 遍历函数分析</h2><ol>
 <li>根据深度优先思路进行遍历，终止条件有两个：<ul>
 <li>遍历到返回语句，也就是没有孩子节点的节点,终止此次遍历；</li>
 <li>遇到已经在当前遍历路径上的节点，终止此次遍历；</li>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="GeLUEEMppZkm_pdKdcvX8J5Qtqt5zSPvDnWvyDs2vh4" />
+    <meta name="baidu-site-verification" content="GAyfJmGR5b" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          部署hexo到VPS - 软间阁 | Soft Margin
+        
+    </title>
+
+    <link rel="canonical" href="http://softmargin.com/2018/01/02/部署hexo到VPS/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <!--<link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- add by Surflyan-->
+    <link href="/js/google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+    <link href="/js/google-code-prettify/tomorrow-night-eighties.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">软间阁 - Soft Margin</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/header.jpeg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
+                        
+                          <a class="tag" href="/tags/#Git" title="Git">Git</a>
+                        
+                          <a class="tag" href="/tags/#Linux" title="Linux">Linux</a>
+                        
+                    </div>
+                    <h1>部署hexo到VPS</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by Surflyan on
+                        2018-01-02
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h1><p>终于再次折腾了下博客。到 google analytics 上看了下这一年来的浏览量，还可以，但是全部来源于google，没有来自百度的记录。查了下，果然百度没有收录任何一篇博客。这是因为 github page 限制了百度爬虫。于是，决定将博客部署到个人VPS上。</p>
+<p>既然决定要将 hexo blog 部署到 vps上，那么如何实现自动部署是我们所关注的。可以在 vps 搭个 Git 服务器，建立存放 hexo blog 的远程仓库，然后利用 Git Hooks 实现博客文件自动下载到工作目录，至于 web 服务器可以选择 Nginx 。博主服务器系统为 ubuntu 16.04。</p>
+<h1 id="2-Git-服务器搭建"><a href="#2-Git-服务器搭建" class="headerlink" title="2. Git 服务器搭建"></a>2. Git 服务器搭建</h1><p>Git 服务器搭建，其实就是在 vps 搭建远程仓库作为私有仓库，与 GitHub 作为远程仓库本质上是一样的。</p>
+<h2 id="2-1-安装-Git"><a href="#2-1-安装-Git" class="headerlink" title="2.1 安装 Git"></a>2.1 安装 Git</h2><pre><code>$ sudo apt-get install git
+$ git --version
+</code></pre><h2 id="2-2-创建git用户"><a href="#2-2-创建git用户" class="headerlink" title="2.2 创建git用户"></a>2.2 创建git用户</h2><p>为系统特意创建一个新的用户来管理 git 仓库，新用户通常命名为 git 。创建新用户不是必须的，这么做只是从安全上出发，毕竟直接以 root 用户登陆还是有很大的风险的，对于新用户可以不必给予 sudo 权限。</p>
+<pre><code>$ sudo adduser git
+$ ls /home
+</code></pre><h2 id="2-3-创建登陆证书"><a href="#2-3-创建登陆证书" class="headerlink" title="2.3 创建登陆证书"></a>2.3 创建登陆证书</h2><p>创建登陆证书是为使用 git 用户对仓库管理而无需输入密码。将本地的公钥（在已生成本地密钥的情况下）也就是用户主目录下的<code>.ssh/id_rsa.pub</code>文件写入到新创建的 git 用户主目录下。即<code>/home/git/.ssh/authorized_heys</code>文件里。git 目录下的这些文件需手动创建，注意文件的所有权需属于 git 用户。</p>
+<pre><code>$ mkdir /home/git/.ssh
+$ touch /home/git/.ssh/authorized_keys
+# 写入公钥
+$ cat id_rsa.pub&gt;&gt; suthorized_keys
+</code></pre><p>配置公钥后不生效排查步骤：</p>
+<ol>
+<li>查看 git 用户主目录下 .ssh 文件所有权，所有权需属于git用户。若不属于git用户，改变.ssh 所有权<code>chown -R git:git .ssh</code></li>
+<li>查看 .ssh 文件及 authorized_keys 文件权限。赋予.ssh 文件<code>rwx</code> 权限，authorized_keys <code>rw</code> 权限。<br><code>chomd 700 .ssh</code><br><code>chomd 600 .ssh/authorized_keys</code></li>
+<li>查看<code>/etc/ssh/sshd_config</code>,是否开启验证，即如下：<br><code>RSAAuthentication yes</code><br><code>PubkeyAuthentication yes</code></li>
+<li>重启sshd服务,<code>service sshd restart</code></li>
+</ol>
+<h2 id="2-4-创建git仓库"><a href="#2-4-创建git仓库" class="headerlink" title="2.4 创建git仓库"></a>2.4 创建git仓库</h2><p>创建一个裸仓库作为远程仓库，保存后面要推送的 hexo blog。博主选择在 git 用户主目录下创建仓库。</p>
+<pre><code>$ mkdir -p /home/git/repo/blog.git
+
+# 初始化裸仓库
+$ git init --bare blog.git
+
+# 更改裸仓库所有权为 git 用户
+$ chown -R git:git blog.git
+</code></pre><p>创建远程仓库，也叫裸仓库。裸仓库与本地仓库区别就是裸仓库没有工作区，只是为了存储，而不是为了直接在裸仓库里修改文件。</p>
+<p>现在你可以在本地进行测试了。</p>
+<pre><code>$ git clone git@server:/home/git/repo/blog.git
+# server 为你的 vps ip / 域名
+</code></pre><p>执行后会提示你克隆了一个空仓库，当然了，这个仓库只是刚初始化的，并没有放任何东东。</p>
+<h2 id="2-5-禁用-shell-登陆"><a href="#2-5-禁用-shell-登陆" class="headerlink" title="2.5 禁用 shell 登陆"></a>2.5 禁用 shell 登陆</h2><p>禁用新创建的 git 用户 shell 登陆。这一步也是为了安全，毕竟创建 git 用户的初衷就是管理 git 仓库，无需做其他事情。所以只保留 git 用户使用 ssh 连接进行对 git 仓库进行push、fetch 等权力，禁止其通过 ssh 登陆进行操作。</p>
+<p>编辑<code>/etc/passwd</code>文件，将下面一行:<br><code>git:x:0000:0000:,,,:/home/git:/bin/bash</code><br>改为：<br><code>git:x:0000:0000:,,,:/home/git:/usr/git-shell</code></p>
+<h1 id="3-git-hooks"><a href="#3-git-hooks" class="headerlink" title="3. git hooks"></a>3. git hooks</h1><p>现在已经有了存放 hexo blog 的仓库。就可以考虑将本地的 hexo blog 部署上去了。在这之前，先来了解下 hexo 的部署机制。hexo 生成博客页面是在输入 <code>hexo g</code>后，根据主题设定，生成博客页面以及其他样式文件，并保存在 public 文件夹中。hexo 自身的部署工具是 <code>hexo-deployer-git</code> 插件, 执行 <code>hexo d</code>, 会自动创建 .deploy_git 站点，包含了 public 文件夹里的内容，并且将它推送到配置文件 <code>_config.yml</code>指定文件里指定的仓库地址。</p>
+<p>由于远程仓库没有工作目录，因此需要将仓库里的的内容下载到 vps 本地文件夹里。这里可以采用在服务器上创建一个本地 server_local_blog 仓库连接到 blog.git 远程仓库，blog.git 仓库有新的推送，就将新推送 fetch 到 server_local_blog。还可以选择用 git work-tree 将blog.git 内容 checkout 到新的工作区的方式。这里采用后者实现。两者实现方式都需要 git hooks。</p>
+<p>这里用到的是服务端的<code>post-receive hook</code>,主要机制就是在 git 仓库接收到推送,处理完成以后，触发 post-receive 中的命令。</p>
+<h2 id="3-1-创建服务端blog-folder"><a href="#3-1-创建服务端blog-folder" class="headerlink" title="3.1 创建服务端blog folder"></a>3.1 创建服务端blog folder</h2><p>个人选择在/home/git/下创建blog_public文件夹存放博客文件。</p>
+<pre><code>$ mkdir -p /home/git/blog_public
+
+# 修改blog_public 所有权
+$ chown -R git:git /home/git/blog_public
+</code></pre><h2 id="3-2-配置git-hooks"><a href="#3-2-配置git-hooks" class="headerlink" title="3.2 配置git hooks"></a>3.2 配置git hooks</h2><pre><code># 新建post-receive hook
+$ cd /home/git/repo/blog.git/hooks
+$ touch post-receive
+</code></pre><p>在post-receive 里写入指令：</p>
+<pre><code>git --work-tree=/home/git/blog_public --git-dir=/home/git/repo/blog.git checkout -f
+</code></pre><p>基本的工作机制就是当 blog.git 有新的推送时，将推送内容下载到blog_public这个新定义的工作目录中。</p>
+<h1 id="4-Nginx"><a href="#4-Nginx" class="headerlink" title="4. Nginx"></a>4. Nginx</h1><p><em>Nginx 是一款面向性能设计的 HTTP 服务器，相较于Apache、lighttpd 具有占有内存少，稳定性高等优势</em>。选择 Nginx 作为 hexo blog 的 web 服务器。</p>
+<h2 id="4-1-安装-Nginx"><a href="#4-1-安装-Nginx" class="headerlink" title="4.1 安装 Nginx"></a>4.1 安装 Nginx</h2><pre><code>$ sudo apt-get install nginx
+
+# 启动 Nginx
+$ sudo /etc/init.d/nginx start
+</code></pre><p>访问服务器，应该可以看到 Nginx 的欢迎页面。</p>
+<h2 id="4-2-配置-Nginx"><a href="#4-2-配置-Nginx" class="headerlink" title="4.2 配置 Nginx"></a>4.2 配置 Nginx</h2><p>Nginx 的配置文件在<code>/etc/nginx/nginx.conf</code>，设置 Nginx 的用户和根目录。</p>
+<pre><code># 修改用户为 git 用户
+user git
+
+http {
+    ...
+    ...
+    include /etc/nginx/conf.d/*.conf
+    include /etc/nginx/sites-enabled/*;
+    server {
+        listen 80 default_server;
+        listen [::] 80 default_server;
+        server_name www.softmargin.com;   # 你的vps ip/域名
+        root   /home/git/blog_public;     # 你博客放置的位置
+    }
+}
+</code></pre><p>删除 Nginx 默认配置文件<code>/etc/nginx/sites-enabled</code>，后重新启动 Nginx，</p>
+<pre><code>$ /etc/init.d/nginx restart
+</code></pre><p>由于每个人 vps 环境不一样，你可能遇到 Nginx 启动不了的问题，通过以下几条指令进行排查：</p>
+<pre><code>$ nginx -t -c /etc/nginx/nginx.conf
+
+# 查看端口占用
+$ grep -R default_server /etc/nginx
+
+$ systemctl status nginx.service
+</code></pre><h2 id="4-3-Nginx-开机自启动"><a href="#4-3-Nginx-开机自启动" class="headerlink" title="4.3 Nginx 开机自启动"></a>4.3 Nginx 开机自启动</h2><p>将 Nginx 设置为开机自启动。将命令 <code>/etc/init.d/nginx start</code> 写到<code>/etc/rc.local</code>文件 <code>exit</code> 之前。</p>
+<h1 id="5-修改本地配置文件"><a href="#5-修改本地配置文件" class="headerlink" title="5. 修改本地配置文件"></a>5. 修改本地配置文件</h1><p>修改本地 hexo 配置文件_config.yml 中的部署仓库为 vps 上创建的 blog.git。</p>
+<pre><code># Deployment
+deploy:
+  type: git
+  repo: git@server:/home/git/repo/blog.git   #server 为你的vps ip / 域名
+</code></pre><p>现在所有工作都完成了。试着将你的 hexo blog 推送到你的服务器上，然后访问之。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000" target="_blank" rel="external">廖雪峰-搭建Git服务器</a></li>
+<li><a href="http://www.swiftyper.com/2016/04/17/deploy-hexo-with-git-hook/#%E4%BD%BF-zhuang-%E7%94%A8-bi" target="_blank" rel="external">使用 Git Hook 自动部署 Hexo 到个人 VPS</a></li>
+</ol>
+<blockquote>
+<p>不如将你本地的整个 hexo blog 生成新的 git 仓库，然后在服务器建立新的远程仓库，推送上去作为备份，也能实现你的在别的电脑上写自己的博客的美好愿望。<br>请多多指教！</p>
+</blockquote>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/01/04/关于博客地址变更/" data-toggle="tooltip" data-placement="top" title="Previous Post">&larr; 关于博客地址变更</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/12/24/高斯混合模型及其EM算法/" data-toggle="tooltip" data-placement="top" title="Next Post">高斯混合模型及其EM算法 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+        <!--Add by Surflyan -->
+        <!-- Share-->
+          <section>
+           <hr>
+             <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a></div>
+           </section>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","qzone","weixin","douban","tsina","evernotecn","youdao","renren","tqq","kaixin001","sqq","tieba","fbook","copy","mogujie","isohu"],"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{},"image":{"viewList":["qzone","tsina","weixin","evernotecn","youdao","sqq","douban","copy"],"viewText":"分享到：","viewSize":"16"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+        
+
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
+                        
+                          <a class="tag" href="/tags/#Git" title="Git">Git</a>
+                        
+                          <a class="tag" href="/tags/#Linux" title="Linux">Linux</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!--DISQUES COMMENTS-->
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                
+            
+            <
+
+
+          <hr>
+           </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "softmargin";
+    var disqus_identifier = "http://softmargin.com/2018/01/02/部署hexo到VPS/";
+    var disqus_url = "http://softmargin.com/2018/01/02/部署hexo到VPS/";
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/Surflyan">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 软间阁 - Soft Margin 2018
+                    <br>
+                    Theme by <a href="https://hexo.io/zh-cn/">Hexo</a>
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span>
+                    Posted by <a href="https://github.com/Surflyan/Surflyan.github.io">Surflyan</a>
+
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!--
+     Because of the native support for backtick-style fenced code blocks
+     right within the Markdown is landed in Github Pages,
+     From V1.6, There is no need for Highlight.js,
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://softmargin.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+
+
+
+
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Surflyan
+    var _gaId = 'UA-90996514-2';
+    var _gaDomain = 'www.softmargin.org';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Surflyan
+    var _baId = '3747566a81b32444a5bb7052b11946c3';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- Side Catalog -->
+
+<script type="text/javascript">
+    function generateCatalog (selector) {
+        var P = $('div.post-container'),a,n,t,l,i,c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#"+$(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="'+i+'" rel="nofollow">'+t+'</a>');
+            l = $('<li class="'+n+'_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    // toggle side catalog
+    $(".catalog-toggle").click((function(e){
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    /*
+     * Doc: https://github.com/davist11/jQuery-One-Page-Nav
+     * Fork by Surflyan to support padding
+     */
+    async("/js/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://softmargin.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+
+<!-- Add By Surflayn -->
+<!--添加google-prettify 代码解析2017.6.2 -->
+
+<script type="text/javascript" src="/js/google-code-prettify/prettify.js"></script>
+<script type="text/javascript">
+$(window).load(function(){
+   $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+   prettyPrint();
+ })
+
+
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+
+</html>

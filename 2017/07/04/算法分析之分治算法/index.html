@@ -94,14 +94,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -195,27 +195,27 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="1-基本原理"><a href="#1-基本原理" class="headerlink" title="1. 基本原理"></a>1. 基本原理</h2><p>经验告诉我们，小规模问题的解通常比大规模问题的解更容易得到，所以，在面对一个大规模问题时，可以考虑转换为几个具有相同形式的子问题来求解。实践证明，这种分而治之的策略简单而实用。</p>
+                <h1 id="1-基本原理"><a href="#1-基本原理" class="headerlink" title="1. 基本原理"></a>1. 基本原理</h1><p>经验告诉我们，小规模问题的解通常比大规模问题的解更容易得到，所以，在面对一个大规模问题时，可以考虑转换为几个具有相同形式的子问题来求解。实践证明，这种分而治之的策略简单而实用。</p>
 <hr>
-<h2 id="2-适用前提"><a href="#2-适用前提" class="headerlink" title="2. 适用前提"></a>2. 适用前提</h2><ol>
+<h1 id="2-适用前提"><a href="#2-适用前提" class="headerlink" title="2. 适用前提"></a>2. 适用前提</h1><ol>
 <li>问题的规模缩小到一定程度可以轻易解决</li>
 <li>问题可以分解为若干个规模较小的相同问题，即该问题具有最优子结构性质</li>
 <li>利用该问题分解出的子问题的解可以合并为该问题的解</li>
 <li>该问题所分解出的各个子问题是相互独立的，即子问题之间不包含公共的子问题</li>
 </ol>
 <hr>
-<h2 id="3-处理步骤"><a href="#3-处理步骤" class="headerlink" title="3. 处理步骤"></a>3. 处理步骤</h2><p><strong> 划分 </strong> ： 将原问题分解成一些子问题，子问题在形式上与原问题相同。<br><strong> 递归求解 </strong> ：递归调用设计中的算法求解这些子问题。若递归调用时子问题的规模足够小，可以直接给出子问题的解。<br><strong> 合并 </strong> ：将子问题的解合并成原问题的解。</p>
+<h1 id="3-处理步骤"><a href="#3-处理步骤" class="headerlink" title="3. 处理步骤"></a>3. 处理步骤</h1><p><strong> 划分 </strong> ： 将原问题分解成一些子问题，子问题在形式上与原问题相同。<br><strong> 递归求解 </strong> ：递归调用设计中的算法求解这些子问题。若递归调用时子问题的规模足够小，可以直接给出子问题的解。<br><strong> 合并 </strong> ：将子问题的解合并成原问题的解。</p>
 <hr>
-<h2 id="4-复杂度分析"><a href="#4-复杂度分析" class="headerlink" title="4. 复杂度分析"></a>4. 复杂度分析</h2><p>划分阶段的复杂度为 D(n) , 递归求解阶段的复杂度为 aT（n/b）， 合并阶段复杂度C(n);<br>可以得到分治算法递归方程：</p>
+<h1 id="4-复杂度分析"><a href="#4-复杂度分析" class="headerlink" title="4. 复杂度分析"></a>4. 复杂度分析</h1><p>划分阶段的复杂度为 D(n) , 递归求解阶段的复杂度为 aT（n/b）， 合并阶段复杂度C(n);<br>可以得到分治算法递归方程：</p>
 <pre><code>T(n)=Θ(1)                   n≤c
 T(n)=aT(n/b)+ D(n) +C(n)    n&gt;c
 </code></pre><hr>
-<h2 id="5-实例分析"><a href="#5-实例分析" class="headerlink" title="5. 实例分析"></a>5. 实例分析</h2><p>通过 <code>Strassen矩阵乘法</code> 和 <code>线性时间选择算法</code> 两个实例来进一步理解分治算法，以及降低复杂度的两个方向。</p>
-<h3 id="5-1-Strassen矩阵乘法"><a href="#5-1-Strassen矩阵乘法" class="headerlink" title="5.1 Strassen矩阵乘法"></a>5.1 Strassen矩阵乘法</h3><p>输入： n<em>n的矩阵X和Y<br>输出： X和Y的乘积XY=X</em>Y;<br>矩阵乘法公式：${z<em>{ij}} = \sum</em>{k=1}^n { {x<em>{ik} }{ y</em>{kj} } } $，时间复杂度为$\Theta (n^3)$。<br>考虑分治算法处理该问题，矩阵X，Y，XY都可以分成如下四个矩阵：</p>
+<h1 id="5-实例分析"><a href="#5-实例分析" class="headerlink" title="5. 实例分析"></a>5. 实例分析</h1><p>通过 <code>Strassen矩阵乘法</code> 和 <code>线性时间选择算法</code> 两个实例来进一步理解分治算法，以及降低复杂度的两个方向。</p>
+<h2 id="5-1-Strassen矩阵乘法"><a href="#5-1-Strassen矩阵乘法" class="headerlink" title="5.1 Strassen矩阵乘法"></a>5.1 Strassen矩阵乘法</h2><p>输入： n<em>n的矩阵X和Y<br>输出： X和Y的乘积XY=X</em>Y;<br>矩阵乘法公式：${z<em>{ij}} = \sum</em>{k=1}^n { {x<em>{ik} }{ y</em>{kj} } } $，时间复杂度为$\Theta (n^3)$。<br>考虑分治算法处理该问题，矩阵X，Y，XY都可以分成如下四个矩阵：</p>
 <script type="math/tex; mode=display">X = \left[ {\matrix{ A &ensp;   B  \cr  C &ensp; D  \cr } } \right],Y = \left[ {\matrix{ E &ensp; F  \cr   G &ensp; H  \cr } } \right],XY = \left[ {\matrix{   {AE + BG} &ensp; {AF + BH}  \cr {CE + DG} &ensp; {CF + DH}  \cr } } \right]</script><p>采用上述分块矩阵的做法，递归调用8次，时间复杂度仍然为$\Theta (n^3)$。<br>Strassen首先观察到矩阵乘法具有如下的特征：</p>
 <script type="math/tex; mode=display">{P_1} = A(F - H),{P_2} = (A + B)H,{P_3} = (C + D)E,{P_4} = D(G - E)</script><script type="math/tex; mode=display">{P_5} = (A + D)(E + H),{P_6} = (B - D)(G + H),{P_7} = (A - C)(E + F)</script><script type="math/tex; mode=display">XY = \left[ {\matrix{  {AE + BG} &ensp; {AF + BH}  \cr   {CE + DG} &ensp;{CF + DH}  \cr } } \right] = \left[ { \matrix{   { {P_5} + {P_4} - {P_2} + {P_7} } &ensp; { {P_1} + {P_2} }  \cr { {P_3} + {P_4} } &ensp;{ {P_1} + {P_5} - {P_3} - {P_7} }  \cr } } \right]</script><p>因此，分治算法的递归求解阶段只需求解7个规模为n/2的子问题。<br>该算法时间复杂度约为$\Theta (n^{2.81})$</p>
 <hr>
-<h3 id="5-2-线性时间选择算法"><a href="#5-2-线性时间选择算法" class="headerlink" title="5.2 线性时间选择算法"></a>5.2 线性时间选择算法</h3><p>中位数的线性时间选择算法，经数十年前人的努力，证明了从n个数中选取中位数需要的比较操作次数介于 1.5n 到 5.43n 之间。<br>问题：<br>输入： n个(不同)数构成的集合X,整数i,其中1≤i≤n<br>输出：  x∈X使得X中恰有i-1个元素小于x</p>
+<h2 id="5-2-线性时间选择算法"><a href="#5-2-线性时间选择算法" class="headerlink" title="5.2 线性时间选择算法"></a>5.2 线性时间选择算法</h2><p>中位数的线性时间选择算法，经数十年前人的努力，证明了从n个数中选取中位数需要的比较操作次数介于 1.5n 到 5.43n 之间。<br>问题：<br>输入： n个(不同)数构成的集合X,整数i,其中1≤i≤n<br>输出：  x∈X使得X中恰有i-1个元素小于x</p>
 <ol>
 <li>分组，每组5个数 最后一组可能少于5个数</li>
 <li>将每组数分别用InsertionSort排序 选出每组元素的中位数</li>
@@ -241,7 +241,7 @@ else
    retrun Select(A[k+1:n],i-k);
 </code></pre><p>可以发现，在A或C上求解子问题时算法至少剪除[ $\frac{3n}{10}$] 的数据。时间复杂度T(n)=Θ(n)</p>
 <hr>
-<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><ul>
+<h1 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h1><ul>
 <li>实例一：启示我们，应该观察问题的解的构成，尽可能减少要求解的子问题的个数，从而降低复杂度。</li>
 <li>实例二：实质是一种基于剪枝搜索方法的分治算法。 关键在于每回递归求解不论在何种情况下都能剪除至少为n的常数因子个数据。</li>
 </ul>

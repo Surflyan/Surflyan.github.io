@@ -94,14 +94,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -202,14 +202,14 @@
 <hr>
 <h1 id="1-安装Tesseract"><a href="#1-安装Tesseract" class="headerlink" title="1. 安装Tesseract"></a>1. 安装Tesseract</h1><p>对于windows用户，可以参考下文。<br>其他系统用户，参见<a href="https://github.com/tesseract-ocr/tesseract/wiki" target="_blank" rel="external">官方文档</a>.<br>由于官方不提供最新的 v3.05安装包，博主选择了由 Mannheim University 维护提供的<a href="https://github.com/UB-Mannheim/tesseract/wiki" target="_blank" rel="external">installer</a>.<br>安装默认为英文语言包，如有其他语言需要可在安装过程中，在<code>Additional language data</code>中选择相应语言。<br>安装完成之后，将其添加到path环境变量中，以便后续使用。</p>
 <hr>
-<h1 id="2-测试Tesseract-OCR"><a href="#2-测试Tesseract-OCR" class="headerlink" title="2. 测试Tesseract OCR"></a>2. 测试Tesseract OCR</h1><h3 id="2-1-检测安装"><a href="#2-1-检测安装" class="headerlink" title="2.1 检测安装"></a>2.1 检测安装</h3><p>首先验证 Tesseract 是否成功安装</p>
+<h1 id="2-测试Tesseract-OCR"><a href="#2-测试Tesseract-OCR" class="headerlink" title="2. 测试Tesseract OCR"></a>2. 测试Tesseract OCR</h1><h2 id="2-1-检测安装"><a href="#2-1-检测安装" class="headerlink" title="2.1 检测安装"></a>2.1 检测安装</h2><p>首先验证 Tesseract 是否成功安装</p>
 <pre><code>$ tesseract -v
 </code></pre><p>返回如下，成功安装</p>
 <pre><code>C:\Users\Surflyan\Desktop&gt;tesseract -v
 tesseract 3.05.01
  leptonica-1.74.1
   libgif 4.1.6(?) : libjpeg 8d (libjpeg-turbo 1.5.0) : libpng 1.6.20 : libtiff 4.0.6 : zlib 1.2.8 : libwebp 0.4.3 : libopenjp2 2.1.0
-</code></pre><h3 id="2-2-测试应用"><a href="#2-2-测试应用" class="headerlink" title="2.2 测试应用"></a>2.2 测试应用</h3><p>在终端直接输入 <code>tesseract</code> 获取 tesseract 详细语法。一般使用如下：</p>
+</code></pre><h2 id="2-2-测试应用"><a href="#2-2-测试应用" class="headerlink" title="2.2 测试应用"></a>2.2 测试应用</h2><p>在终端直接输入 <code>tesseract</code> 获取 tesseract 详细语法。一般使用如下：</p>
 <pre><code>&gt;tesseract input_file_name out_file/stdout -l lang -psm PageModes
 </code></pre><p>提供预处理过的图像，Tesseract OCR 获得准确的结果<br>我们使用如下图片作为测试样例：<br><img src="test.png" alt="test.png"><br>在终端输入：</p>
 <pre><code>tesseract test.png stdout

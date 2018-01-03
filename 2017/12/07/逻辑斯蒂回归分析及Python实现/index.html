@@ -94,14 +94,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -219,7 +219,7 @@
 </li>
 </ol>
 <hr>
-<h1 id="5-参数估计"><a href="#5-参数估计" class="headerlink" title="5. 参数估计"></a>5. 参数估计</h1><h3 id="5-1-梯度下降法："><a href="#5-1-梯度下降法：" class="headerlink" title="5.1 梯度下降法："></a>5.1 梯度下降法：</h3><p>根据梯度下降算法向量形式进行coding：</p>
+<h1 id="5-参数估计"><a href="#5-参数估计" class="headerlink" title="5. 参数估计"></a>5. 参数估计</h1><h2 id="5-1-梯度下降法："><a href="#5-1-梯度下降法：" class="headerlink" title="5.1 梯度下降法："></a>5.1 梯度下降法：</h2><p>根据梯度下降算法向量形式进行coding：</p>
 <script type="math/tex; mode=display">\theta = \theta - \alpha(X^T(X \cdot \theta - Y))</script><pre><code class="lang-python">def sigmoid(x):
     g = 1.0 / (1 + np.exp(-x))
     return g
@@ -249,7 +249,7 @@ def gradientAscendMatrix(theta,X,Y,maxIteration,alpha,lamd = 0) :
         maxIteration -= 1
     return theta
 </code></pre>
-<h3 id="5-2-牛顿法"><a href="#5-2-牛顿法" class="headerlink" title="5.2 牛顿法"></a>5.2 牛顿法</h3><p>梯度下降法，主要利用目标函数的局部性质，而牛顿法则利用局部的一阶和二阶偏导信息，去估计整个目标的趋势。相比梯度下降法，牛顿法有一定的对全局的预测性，收敛性质更加优秀。由于牛顿法是二阶收敛的，比梯度下降法收敛速度更快。<br>根据如下的迭代公式进行coding，具体推导可浏览文尾所附链接。</p>
+<h2 id="5-2-牛顿法"><a href="#5-2-牛顿法" class="headerlink" title="5.2 牛顿法"></a>5.2 牛顿法</h2><p>梯度下降法，主要利用目标函数的局部性质，而牛顿法则利用局部的一阶和二阶偏导信息，去估计整个目标的趋势。相比梯度下降法，牛顿法有一定的对全局的预测性，收敛性质更加优秀。由于牛顿法是二阶收敛的，比梯度下降法收敛速度更快。<br>根据如下的迭代公式进行coding，具体推导可浏览文尾所附链接。</p>
 <script type="math/tex; mode=display">\theta = \theta^k - \frac{J’(\theta^k)}{J’’(\theta^k)} = \theta^k - H_k^{-1}\cdot g_k</script><pre><code class="lang-python">def newtonMethod(theta,X, Y, maxIteration,lamd = 0) :
     &quot;&quot;&quot;
     牛顿法进行参数估计
